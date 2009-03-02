@@ -97,36 +97,27 @@ namespace AccelerationTimeHistoryGen
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dlg = new SaveFileDialog();
-            if (dlg.ShowDialog() == DialogResult.OK)
+            if (string.IsNullOrEmpty(txtExcelFile.Text))
             {
-                txtExcelFile.Text = dlg.FileName;
-                SurfaceATHMaker acm = new SurfaceATHMaker(txtATHSurfaceFile.Text);
-                acm.MaxValues = 8 * (int)nudATHCount.Value;
-                BaseATHMaker bm = new BaseATHMaker(txtATHBaseFile.Text);
-                ExcelReporter er = new ExcelReporter(txtExcelFile.Text);
-                er.MySurfaceATHMaker = acm;
-                er.MyBaseATHMaker = bm;
-                er.CreateReport();
-
-                if (File.Exists(txtExcelFile.Text))
+                SaveFileDialog dlg = new SaveFileDialog();
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    Process.Start(txtExcelFile.Text);
+                    txtExcelFile.Text = dlg.FileName;
+                    SurfaceATHMaker acm = new SurfaceATHMaker(txtATHSurfaceFile.Text);
+                    acm.MaxValues = 8 * (int)nudATHCount.Value;
+                    BaseATHMaker bm = new BaseATHMaker(txtATHBaseFile.Text);
+                    ExcelReporter er = new ExcelReporter(txtExcelFile.Text);
+                    er.MySurfaceATHMaker = acm;
+                    er.MyBaseATHMaker = bm;
+                    er.CreateReport();
+
+                    if (File.Exists(txtExcelFile.Text))
+                    {
+                        Process.Start(txtExcelFile.Text);
+                    }
                 }
             }
-
         }
-
-        private void txtATHBaseFile_DragEnter(object sender, DragEventArgs e)
-        {
-
-        }
-
-        private void txtATHBaseFile_DragDrop(object sender, DragEventArgs e)
-        {
-
-        }
-
 
     }
 }

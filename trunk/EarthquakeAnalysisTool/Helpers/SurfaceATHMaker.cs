@@ -19,7 +19,7 @@ namespace AccelerationTimeHistoryGen
         /// <summary>
         /// Time Interval in Milliseconds
         /// </summary>
-        public int DT { get; set; }
+        // public int DT { get; set; }
         /// <summary>
         /// Maximum Values that the ATH should hold
         /// </summary>
@@ -27,7 +27,7 @@ namespace AccelerationTimeHistoryGen
 
         public SurfaceATHMaker(string p)
         {
-            this.DT = 20;
+           // this.DT = 20;
             this.MaxValues = 8 * 128;
             this.mPath = p;
         }
