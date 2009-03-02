@@ -81,8 +81,7 @@ namespace AccelerationTimeHistoryGen
 
             FillData(mWSheet1);
             AutofitColumns(mWSheet1, "A1", "N1");
-            ExcelFilePath = Path.Combine(Path.GetDirectoryName(mPath), Path.GetFileNameWithoutExtension(mPath) + ".xlsx");
-            SaveAs(ExcelFilePath);
+            ExcelFilePath = SaveAs2003(Path.GetDirectoryName(mPath), Path.GetFileNameWithoutExtension(mPath));
             mExcelApp.Quit();
         }
 
@@ -120,12 +119,12 @@ namespace AccelerationTimeHistoryGen
                 Axis xAxis = (Axis)xlChart.Axes(XlAxisType.xlCategory,
                     XlAxisGroup.xlPrimary);
                 xAxis.HasTitle = true;
-                xAxis.AxisTitle.Text = "Time (seconds)";
+                xAxis.AxisTitle.Text = "Time (s)";
 
-                //Axis yAxis = (Axis)xlChart.Axes(XlAxisType.xlSeriesAxis,
-                //    XlAxisGroup.xlSecondary);
-                //yAxis.HasTitle = true;
-                //yAxis.AxisTitle.Text = "Acceleration (m/ss)";
+                Axis yAxis = (Axis)xlChart.Axes(XlAxisType.xlValue,
+                    XlAxisGroup.xlPrimary);
+                yAxis.HasTitle = true;
+                yAxis.AxisTitle.Text = "Acceleration (g)";
 
                 // Add title:
                 xlChart.HasTitle = true;
@@ -134,15 +133,40 @@ namespace AccelerationTimeHistoryGen
                 // Remove legend:
                 xlChart.HasLegend = false;
             }
-            catch
+            catch(Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 mExcelApp.Quit();
             }
 
         }
 
-        public void SaveAs(string filePath)
+        public string SaveAs2003(string dir, string fileName)
         {
+            string filePath = Path.Combine(dir, fileName + ".xls");
+
+            mWorkBook.SaveAs(filePath,
+                             Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal,
+                             Missing.Value,
+                             Missing.Value,
+                             Missing.Value,
+                             Missing.Value,
+                             Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange,
+                             Missing.Value,
+                             Missing.Value,
+                             Missing.Value,
+                             Missing.Value,
+                             Missing.Value);
+
+            mExcelApp.DisplayAlerts = true;
+
+            return filePath;
+
+        }
+
+        public string SaveAs2007(string dir, string fileName)
+        {
+            string filePath = Path.Combine(dir, fileName + ".xlsx");
 
             mWorkBook.SaveAs(filePath,
                              Microsoft.Office.Interop.Excel.XlFileFormat.xlOpenXMLWorkbook,
@@ -158,6 +182,8 @@ namespace AccelerationTimeHistoryGen
                              Missing.Value);
 
             mExcelApp.DisplayAlerts = true;
+
+            return filePath;
 
         }
 
