@@ -100,6 +100,8 @@ namespace AccelerationTimeHistoryGen
             if (string.IsNullOrEmpty(txtExcelFile.Text))
             {
                 SaveFileDialog dlg = new SaveFileDialog();
+                dlg.Filter = "Excel Workbook (*.xlsx)|*.xlsx|Excel 97-2003 Workbook (*.xls)|*.xls";
+
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     txtExcelFile.Text = dlg.FileName;
