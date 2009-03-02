@@ -113,13 +113,18 @@ namespace AccelerationTimeHistoryGen.Helpers
             {
                 // Now create the chart.
                 ChartObjects chartObjs = (ChartObjects)ws.ChartObjects(Type.Missing);
-                ChartObject chartObj = chartObjs.Add(100, 20, 960, 540);
+                ChartObject chartObj = chartObjs.Add(200, 20, 960, 540);
                 Chart xlChart = chartObj.Chart;
 
                 SeriesCollection seriesCollection = (SeriesCollection)xlChart.SeriesCollection(Type.Missing);
                 seriesCollection.NewSeries();
+                seriesCollection.Item(1).Name = "Surface";
                 seriesCollection.Item(1).XValues = "=Sheet1!$A:$A";
                 seriesCollection.Item(1).Values = "=Sheet1!$B:$B";
+                seriesCollection.NewSeries();
+                seriesCollection.Item(2).Name = "Base";
+                seriesCollection.Item(2).XValues = "=Sheet1!$D:$D";
+                seriesCollection.Item(2).Values = "=Sheet1!$E:$E";
                 xlChart.ChartType = XlChartType.xlXYScatterSmoothNoMarkers;
 
                 // Customize axes:
@@ -136,9 +141,8 @@ namespace AccelerationTimeHistoryGen.Helpers
                 // Add title:
                 xlChart.HasTitle = true;
                 xlChart.ChartTitle.Text = "Acceleration Time History";
-
                 // Remove legend:
-                xlChart.HasLegend = false;
+                xlChart.HasLegend = true;
             }
             catch (Exception ex)
             {

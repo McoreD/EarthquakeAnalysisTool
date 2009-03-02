@@ -74,6 +74,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Samples\COYOTELK_G01-UP\G01-UP.AT2" />
+    <None Include="Samples\DUZCE_ATS030\ATS030.AT2" />
+    <None Include="Samples\KOCAELI_BLK090\BLK090.AT2" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
