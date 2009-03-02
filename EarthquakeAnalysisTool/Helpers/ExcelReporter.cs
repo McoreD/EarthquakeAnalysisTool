@@ -59,8 +59,7 @@ namespace AccelerationTimeHistoryGen.Helpers
             mWorkSheets = mWorkBook.Worksheets;
             mWSheet1 = (Microsoft.Office.Interop.Excel.Worksheet)mWorkSheets.get_Item("Sheet1");
 
-            FillSurfaceATHData(mWSheet1);
-            FillBaseATHData(mWSheet1);
+            FillATHData(mWSheet1);
 
             GenerateChart(mWSheet1);
 
@@ -81,31 +80,26 @@ namespace AccelerationTimeHistoryGen.Helpers
 
         }
 
-        private void FillBaseATHData(Microsoft.Office.Interop.Excel.Worksheet ws)
+        private void FillATHData(Microsoft.Office.Interop.Excel.Worksheet ws)
         {
-            List<string> acc = MyBaseATHMaker.ReadATH();
-            int dt = MyBaseATHMaker.DT;
+            List<string> accBase = MyBaseATHMaker.ReadATH();
+            int dtBase = MyBaseATHMaker.DT;
 
-            for (int i = 0; i < acc.Count; i++)
+            for (int i = 0; i < accBase.Count; i++)
             {
-                ws.Cells[i + 1, 4] = (decimal)(i * dt / 1000.0);
-                ws.Cells[i + 1, 5] = acc[i];
+                ws.Cells[i + 1, 4] = (double)(i * dtBase / 1000.0);
+                ws.Cells[i + 1, 5] = accBase[i];
             }
-        }
 
-        private void FillSurfaceATHData(Microsoft.Office.Interop.Excel.Worksheet ws)
-        {
             List<string> acc = MySurfaceATHMaker.ReadATH();
-            int dt = MySurfaceATHMaker.DT;
-
+            double dt = ((double)accBase.Count / (double)acc.Count) * dtBase;
             for (int i = 0; i < acc.Count; i++)
             {
-                ws.Cells[i + 1, 1] = (decimal)(i * dt / 1000.0);
+                ws.Cells[i + 1, 1] = (double)(i * dt / 1000.0);
                 ws.Cells[i + 1, 2] = acc[i];
             }
-        }
 
- 
+        }
 
         private void GenerateChart(Worksheet ws)
         {
@@ -113,7 +107,7 @@ namespace AccelerationTimeHistoryGen.Helpers
             {
                 // Now create the chart.
                 ChartObjects chartObjs = (ChartObjects)ws.ChartObjects(Type.Missing);
-                ChartObject chartObj = chartObjs.Add(200, 20, 960, 540);
+                ChartObject chartObj = chartObjs.Add(300, 20, 960, 540);
                 Chart xlChart = chartObj.Chart;
 
                 SeriesCollection seriesCollection = (SeriesCollection)xlChart.SeriesCollection(Type.Missing);

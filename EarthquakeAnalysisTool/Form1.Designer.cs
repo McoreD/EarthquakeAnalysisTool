@@ -43,6 +43,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpATHGen = new System.Windows.Forms.TabPage();
             this.tpATHExcel = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.txtExcelFile = new System.Windows.Forms.TextBox();
             this.btnExport = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnBrowseSurfaceATH = new System.Windows.Forms.Button();
@@ -55,18 +57,16 @@
             this.label7 = new System.Windows.Forms.Label();
             this.nudDT = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtExcelFile = new System.Windows.Forms.TextBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpATHGen.SuspendLayout();
             this.tpATHExcel.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDT)).BeginInit();
-            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -195,8 +195,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tpATHGen);
             this.tabControl1.Controls.Add(this.tpATHExcel);
+            this.tabControl1.Controls.Add(this.tpATHGen);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -213,7 +213,7 @@
             this.tpATHGen.Padding = new System.Windows.Forms.Padding(3);
             this.tpATHGen.Size = new System.Drawing.Size(677, 512);
             this.tpATHGen.TabIndex = 0;
-            this.tpATHGen.Text = "ATH Generator";
+            this.tpATHGen.Text = "ATH Generator (Experimental)";
             this.tpATHGen.UseVisualStyleBackColor = true;
             this.tpATHGen.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpATHGen_DragEnter);
             // 
@@ -222,6 +222,8 @@
             this.tpATHExcel.Controls.Add(this.groupBox5);
             this.tpATHExcel.Controls.Add(this.groupBox4);
             this.tpATHExcel.Controls.Add(this.groupBox3);
+            this.tpATHExcel.Controls.Add(this.nudDT);
+            this.tpATHExcel.Controls.Add(this.label6);
             this.tpATHExcel.Location = new System.Drawing.Point(4, 22);
             this.tpATHExcel.Name = "tpATHExcel";
             this.tpATHExcel.Padding = new System.Windows.Forms.Padding(3);
@@ -229,6 +231,24 @@
             this.tpATHExcel.TabIndex = 1;
             this.tpATHExcel.Text = "Accelerogram Maker";
             this.tpATHExcel.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.txtExcelFile);
+            this.groupBox5.Controls.Add(this.btnExport);
+            this.groupBox5.Location = new System.Drawing.Point(17, 263);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(623, 83);
+            this.groupBox5.TabIndex = 20;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Export Accelerogram";
+            // 
+            // txtExcelFile
+            // 
+            this.txtExcelFile.Location = new System.Drawing.Point(31, 32);
+            this.txtExcelFile.Name = "txtExcelFile";
+            this.txtExcelFile.Size = new System.Drawing.Size(472, 20);
+            this.txtExcelFile.TabIndex = 19;
             // 
             // btnExport
             // 
@@ -244,7 +264,7 @@
             // 
             this.groupBox4.Controls.Add(this.btnBrowseSurfaceATH);
             this.groupBox4.Controls.Add(this.txtATHSurfaceFile);
-            this.groupBox4.Location = new System.Drawing.Point(17, 196);
+            this.groupBox4.Location = new System.Drawing.Point(17, 169);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(623, 77);
             this.groupBox4.TabIndex = 17;
@@ -275,11 +295,9 @@
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.nudATHCount);
             this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.nudDT);
-            this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Location = new System.Drawing.Point(17, 15);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(623, 175);
+            this.groupBox3.Size = new System.Drawing.Size(623, 139);
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "ATH (Base - from http://peer.berkeley.edu/smcat/search.html)";
@@ -301,8 +319,6 @@
             this.txtATHBaseFile.Name = "txtATHBaseFile";
             this.txtATHBaseFile.Size = new System.Drawing.Size(472, 20);
             this.txtATHBaseFile.TabIndex = 12;
-            this.txtATHBaseFile.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtATHBaseFile_DragDrop);
-            this.txtATHBaseFile.DragEnter += new System.Windows.Forms.DragEventHandler(this.txtATHBaseFile_DragEnter);
             // 
             // label8
             // 
@@ -346,7 +362,7 @@
             // 
             // nudDT
             // 
-            this.nudDT.Location = new System.Drawing.Point(105, 122);
+            this.nudDT.Location = new System.Drawing.Point(122, 397);
             this.nudDT.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -365,33 +381,17 @@
             0,
             0,
             0});
+            this.nudDT.Visible = false;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(55, 124);
+            this.label6.Location = new System.Drawing.Point(72, 399);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(44, 13);
             this.label6.TabIndex = 5;
             this.label6.Text = "DT (ms)";
-            // 
-            // txtExcelFile
-            // 
-            this.txtExcelFile.Location = new System.Drawing.Point(31, 32);
-            this.txtExcelFile.Name = "txtExcelFile";
-            this.txtExcelFile.Size = new System.Drawing.Size(472, 20);
-            this.txtExcelFile.TabIndex = 19;
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.txtExcelFile);
-            this.groupBox5.Controls.Add(this.btnExport);
-            this.groupBox5.Location = new System.Drawing.Point(17, 290);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(623, 83);
-            this.groupBox5.TabIndex = 20;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Export Accelerogram";
+            this.label6.Visible = false;
             // 
             // MainWindow
             // 
@@ -413,14 +413,15 @@
             this.tpATHGen.ResumeLayout(false);
             this.tpATHGen.PerformLayout();
             this.tpATHExcel.ResumeLayout(false);
+            this.tpATHExcel.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDT)).EndInit();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
