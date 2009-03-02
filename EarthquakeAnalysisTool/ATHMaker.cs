@@ -7,12 +7,12 @@ using System.Globalization;
 
 namespace AccelerationTimeHistoryGen
 {
-    class cAthGen
+    class ATHMaker
     {
         private List<string> mFiles = new List<string>();
         private List<StringBuilder> mOutputs = new List<StringBuilder>();
 
-        public cAthGen(string[] files)
+        public ATHMaker(string[] files)
         {
             foreach (string f in files)
             {
