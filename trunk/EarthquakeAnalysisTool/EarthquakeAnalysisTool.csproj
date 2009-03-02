@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ATHColumnMaker.cs" />
+    <Compile Include="Helpers\BaseATHMaker.cs" />
+    <Compile Include="Helpers\ExcelReporter.cs" />
+    <Compile Include="Helpers\SurfaceATHMaker.cs" />
     <Compile Include="SciFormat.cs" />
-    <Compile Include="ATHMaker.cs" />
+    <Compile Include="Helpers\ATHMaker.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

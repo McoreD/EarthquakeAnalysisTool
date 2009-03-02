@@ -43,18 +43,30 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpATHGen = new System.Windows.Forms.TabPage();
             this.tpATHExcel = new System.Windows.Forms.TabPage();
-            this.nudDT = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnBrowseSurfaceATH = new System.Windows.Forms.Button();
+            this.txtATHSurfaceFile = new System.Windows.Forms.TextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnBrowseBaseATH = new System.Windows.Forms.Button();
+            this.txtATHBaseFile = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.nudATHCount = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.nudDT = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtExcelFile = new System.Windows.Forms.TextBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpATHGen.SuspendLayout();
             this.tpATHExcel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDT)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDT)).BeginInit();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -207,56 +219,103 @@
             // 
             // tpATHExcel
             // 
-            this.tpATHExcel.AllowDrop = true;
-            this.tpATHExcel.Controls.Add(this.label8);
-            this.tpATHExcel.Controls.Add(this.nudATHCount);
-            this.tpATHExcel.Controls.Add(this.label7);
-            this.tpATHExcel.Controls.Add(this.nudDT);
-            this.tpATHExcel.Controls.Add(this.label6);
+            this.tpATHExcel.Controls.Add(this.groupBox5);
+            this.tpATHExcel.Controls.Add(this.groupBox4);
+            this.tpATHExcel.Controls.Add(this.groupBox3);
             this.tpATHExcel.Location = new System.Drawing.Point(4, 22);
             this.tpATHExcel.Name = "tpATHExcel";
             this.tpATHExcel.Padding = new System.Windows.Forms.Padding(3);
             this.tpATHExcel.Size = new System.Drawing.Size(677, 512);
             this.tpATHExcel.TabIndex = 1;
-            this.tpATHExcel.Text = "ATH to Excel";
+            this.tpATHExcel.Text = "Accelerogram Maker";
             this.tpATHExcel.UseVisualStyleBackColor = true;
-            this.tpATHExcel.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpATHExcel_DragDrop);
-            this.tpATHExcel.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpATHExcel_DragEnter);
             // 
-            // nudDT
+            // btnExport
             // 
-            this.nudDT.Location = new System.Drawing.Point(103, 83);
-            this.nudDT.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.nudDT.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudDT.Name = "nudDT";
-            this.nudDT.Size = new System.Drawing.Size(120, 20);
-            this.nudDT.TabIndex = 6;
-            this.nudDT.Value = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
+            this.btnExport.Location = new System.Drawing.Point(509, 30);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.TabIndex = 18;
+            this.btnExport.Text = "&Export...";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
-            // label6
+            // groupBox4
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(53, 85);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(44, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "DT (ms)";
+            this.groupBox4.Controls.Add(this.btnBrowseSurfaceATH);
+            this.groupBox4.Controls.Add(this.txtATHSurfaceFile);
+            this.groupBox4.Location = new System.Drawing.Point(17, 196);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(623, 77);
+            this.groupBox4.TabIndex = 17;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "ATH (Surface - from Shake91)";
+            // 
+            // btnBrowseSurfaceATH
+            // 
+            this.btnBrowseSurfaceATH.Location = new System.Drawing.Point(509, 29);
+            this.btnBrowseSurfaceATH.Name = "btnBrowseSurfaceATH";
+            this.btnBrowseSurfaceATH.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseSurfaceATH.TabIndex = 15;
+            this.btnBrowseSurfaceATH.Text = "&Browse";
+            this.btnBrowseSurfaceATH.UseVisualStyleBackColor = true;
+            this.btnBrowseSurfaceATH.Click += new System.EventHandler(this.btnBrowseSurfaceATH_Click);
+            // 
+            // txtATHSurfaceFile
+            // 
+            this.txtATHSurfaceFile.Location = new System.Drawing.Point(31, 31);
+            this.txtATHSurfaceFile.Name = "txtATHSurfaceFile";
+            this.txtATHSurfaceFile.Size = new System.Drawing.Size(472, 20);
+            this.txtATHSurfaceFile.TabIndex = 13;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.btnBrowseBaseATH);
+            this.groupBox3.Controls.Add(this.txtATHBaseFile);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.nudATHCount);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.nudDT);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Location = new System.Drawing.Point(17, 15);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(623, 175);
+            this.groupBox3.TabIndex = 16;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "ATH (Base - from http://peer.berkeley.edu/smcat/search.html)";
+            // 
+            // btnBrowseBaseATH
+            // 
+            this.btnBrowseBaseATH.Location = new System.Drawing.Point(509, 28);
+            this.btnBrowseBaseATH.Name = "btnBrowseBaseATH";
+            this.btnBrowseBaseATH.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseBaseATH.TabIndex = 14;
+            this.btnBrowseBaseATH.Text = "&Browse";
+            this.btnBrowseBaseATH.UseVisualStyleBackColor = true;
+            this.btnBrowseBaseATH.Click += new System.EventHandler(this.btnBrowseBaseATH_Click);
+            // 
+            // txtATHBaseFile
+            // 
+            this.txtATHBaseFile.AllowDrop = true;
+            this.txtATHBaseFile.Location = new System.Drawing.Point(31, 30);
+            this.txtATHBaseFile.Name = "txtATHBaseFile";
+            this.txtATHBaseFile.Size = new System.Drawing.Size(472, 20);
+            this.txtATHBaseFile.TabIndex = 12;
+            this.txtATHBaseFile.DragDrop += new System.Windows.Forms.DragEventHandler(this.txtATHBaseFile_DragDrop);
+            this.txtATHBaseFile.DragEnter += new System.Windows.Forms.DragEventHandler(this.txtATHBaseFile_DragEnter);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(28, 64);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(197, 13);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Drag && Drop a Shake91 Time History file";
             // 
             // nudATHCount
             // 
-            this.nudATHCount.Location = new System.Drawing.Point(103, 57);
+            this.nudATHCount.Location = new System.Drawing.Point(105, 96);
             this.nudATHCount.Maximum = new decimal(new int[] {
             99999,
             0,
@@ -279,20 +338,60 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(39, 59);
+            this.label7.Location = new System.Drawing.Point(41, 98);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(58, 13);
             this.label7.TabIndex = 7;
             this.label7.Text = "Line Count";
             // 
-            // label8
+            // nudDT
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(19, 15);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(197, 13);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Drag && Drop a Shake91 Time History file";
+            this.nudDT.Location = new System.Drawing.Point(105, 122);
+            this.nudDT.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudDT.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudDT.Name = "nudDT";
+            this.nudDT.Size = new System.Drawing.Size(120, 20);
+            this.nudDT.TabIndex = 6;
+            this.nudDT.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(55, 124);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(44, 13);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "DT (ms)";
+            // 
+            // txtExcelFile
+            // 
+            this.txtExcelFile.Location = new System.Drawing.Point(31, 32);
+            this.txtExcelFile.Name = "txtExcelFile";
+            this.txtExcelFile.Size = new System.Drawing.Size(472, 20);
+            this.txtExcelFile.TabIndex = 19;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.txtExcelFile);
+            this.groupBox5.Controls.Add(this.btnExport);
+            this.groupBox5.Location = new System.Drawing.Point(17, 290);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(623, 83);
+            this.groupBox5.TabIndex = 20;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Export Accelerogram";
             // 
             // MainWindow
             // 
@@ -314,9 +413,14 @@
             this.tpATHGen.ResumeLayout(false);
             this.tpATHGen.PerformLayout();
             this.tpATHExcel.ResumeLayout(false);
-            this.tpATHExcel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDT)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDT)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -343,6 +447,15 @@
         private System.Windows.Forms.NumericUpDown nudATHCount;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnBrowseSurfaceATH;
+        private System.Windows.Forms.Button btnBrowseBaseATH;
+        private System.Windows.Forms.TextBox txtATHSurfaceFile;
+        private System.Windows.Forms.TextBox txtATHBaseFile;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox txtExcelFile;
     }
 }
 
