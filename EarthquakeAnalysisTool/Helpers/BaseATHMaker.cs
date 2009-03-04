@@ -15,12 +15,13 @@ namespace AccelerationTimeHistoryGen
         /// <summary>
         /// Acceleration Time Histories
         /// </summary>
-        private List<string> mATH = new List<string>();
+        public List<string> ATH { get; private set; }
         private int NTPS;
         private decimal mDT;
 
         public BaseATHMaker(string fp)
         {
+            ATH = new List<string>();
             this.mPath = fp;
         }
 
@@ -55,14 +56,17 @@ namespace AccelerationTimeHistoryGen
         {
             using (StreamReader sr = new StreamReader(mPath))
             {
-                mATH.Clear();
+                ATH.Clear();
                 string line = sr.ReadLine();
                 line = sr.ReadLine();
                 line = sr.ReadLine();
                 line = sr.ReadLine(); // NPTS=  5366, DT= .00500 SEC
-                GroupCollection gc = Regex.Match(line, "NPTS=  (?<NTPS>.+), DT= (?<DT>.+) SEC").Groups;
+                RemoveDoubleSpaces(ref line);
+                GroupCollection gc = Regex.Match(line, "NPTS= (?<NTPS>.+), DT= (?<DT>.+) SEC").Groups;
                 int.TryParse(gc[1].Value, out this.NTPS);
                 decimal.TryParse(gc[2].Value, out this.mDT);
+                if (this.mDT == 0)
+                    throw new Exception("DT is Zero");
 
                 while (!sr.EndOfStream)
                 {
@@ -70,10 +74,10 @@ namespace AccelerationTimeHistoryGen
                     RemoveDoubleSpaces(ref line);
                     foreach (string s in SplitLine(line))
                     {
-                        mATH.Add(s);
-                        if (mATH.Count == NTPS)
+                        ATH.Add(s);
+                        if (ATH.Count == NTPS)
                         {
-                            return mATH;
+                            return ATH;
                         }
                     }
                 }
@@ -81,7 +85,7 @@ namespace AccelerationTimeHistoryGen
             }
 
 
-            return mATH;
+            return ATH;
         }
 
 

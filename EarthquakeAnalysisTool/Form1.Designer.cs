@@ -41,7 +41,6 @@
             this.chkCopyFile = new System.Windows.Forms.CheckBox();
             this.txtShake91 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tpATHGen = new System.Windows.Forms.TabPage();
             this.tpATHExcel = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.txtExcelFile = new System.Windows.Forms.TextBox();
@@ -57,16 +56,22 @@
             this.label7 = new System.Windows.Forms.Label();
             this.nudDT = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
+            this.tpATHGen = new System.Windows.Forms.TabPage();
+            this.bwApp = new System.ComponentModel.BackgroundWorker();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusApp = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pbarApp = new System.Windows.Forms.ToolStripProgressBar();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tpATHGen.SuspendLayout();
             this.tpATHExcel.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDT)).BeginInit();
+            this.tpATHGen.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -195,27 +200,16 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tpATHExcel);
             this.tabControl1.Controls.Add(this.tpATHGen);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(8, 8);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(685, 538);
+            this.tabControl1.Size = new System.Drawing.Size(680, 488);
             this.tabControl1.TabIndex = 13;
-            // 
-            // tpATHGen
-            // 
-            this.tpATHGen.Controls.Add(this.label4);
-            this.tpATHGen.Controls.Add(this.groupBox2);
-            this.tpATHGen.Controls.Add(this.groupBox1);
-            this.tpATHGen.Location = new System.Drawing.Point(4, 22);
-            this.tpATHGen.Name = "tpATHGen";
-            this.tpATHGen.Padding = new System.Windows.Forms.Padding(3);
-            this.tpATHGen.Size = new System.Drawing.Size(677, 512);
-            this.tpATHGen.TabIndex = 0;
-            this.tpATHGen.Text = "ATH Generator (Experimental)";
-            this.tpATHGen.UseVisualStyleBackColor = true;
-            this.tpATHGen.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpATHGen_DragEnter);
             // 
             // tpATHExcel
             // 
@@ -227,7 +221,7 @@
             this.tpATHExcel.Location = new System.Drawing.Point(4, 22);
             this.tpATHExcel.Name = "tpATHExcel";
             this.tpATHExcel.Padding = new System.Windows.Forms.Padding(3);
-            this.tpATHExcel.Size = new System.Drawing.Size(677, 512);
+            this.tpATHExcel.Size = new System.Drawing.Size(672, 462);
             this.tpATHExcel.TabIndex = 1;
             this.tpATHExcel.Text = "Accelerogram Maker";
             this.tpATHExcel.UseVisualStyleBackColor = true;
@@ -393,12 +387,59 @@
             this.label6.Text = "DT (ms)";
             this.label6.Visible = false;
             // 
+            // tpATHGen
+            // 
+            this.tpATHGen.Controls.Add(this.label4);
+            this.tpATHGen.Controls.Add(this.groupBox2);
+            this.tpATHGen.Controls.Add(this.groupBox1);
+            this.tpATHGen.Location = new System.Drawing.Point(4, 22);
+            this.tpATHGen.Name = "tpATHGen";
+            this.tpATHGen.Padding = new System.Windows.Forms.Padding(3);
+            this.tpATHGen.Size = new System.Drawing.Size(677, 512);
+            this.tpATHGen.TabIndex = 0;
+            this.tpATHGen.Text = "ATH Generator (Experimental)";
+            this.tpATHGen.UseVisualStyleBackColor = true;
+            this.tpATHGen.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpATHGen_DragEnter);
+            // 
+            // bwApp
+            // 
+            this.bwApp.WorkerReportsProgress = true;
+            this.bwApp.WorkerSupportsCancellation = true;
+            this.bwApp.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwApp_DoWork);
+            this.bwApp.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwApp_RunWorkerCompleted);
+            this.bwApp.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwApp_ProgressChanged);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusApp,
+            this.pbarApp});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 504);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(707, 22);
+            this.statusStrip1.TabIndex = 14;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // statusApp
+            // 
+            this.statusApp.Name = "statusApp";
+            this.statusApp.Size = new System.Drawing.Size(559, 17);
+            this.statusApp.Spring = true;
+            this.statusApp.Text = "Ready";
+            this.statusApp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pbarApp
+            // 
+            this.pbarApp.Name = "pbarApp";
+            this.pbarApp.Size = new System.Drawing.Size(100, 16);
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(712, 562);
+            this.ClientSize = new System.Drawing.Size(707, 526);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -410,8 +451,6 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            this.tpATHGen.ResumeLayout(false);
-            this.tpATHGen.PerformLayout();
             this.tpATHExcel.ResumeLayout(false);
             this.tpATHExcel.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -422,7 +461,12 @@
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDT)).EndInit();
+            this.tpATHGen.ResumeLayout(false);
+            this.tpATHGen.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -457,6 +501,10 @@
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TextBox txtExcelFile;
+        private System.ComponentModel.BackgroundWorker bwApp;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel statusApp;
+        private System.Windows.Forms.ToolStripProgressBar pbarApp;
     }
 }
 

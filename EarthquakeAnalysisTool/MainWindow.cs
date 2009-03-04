@@ -105,20 +105,49 @@ namespace AccelerationTimeHistoryGen
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     txtExcelFile.Text = dlg.FileName;
-                    SurfaceATHMaker acm = new SurfaceATHMaker(txtATHSurfaceFile.Text);
-                    acm.MaxValues = 8 * (int)nudATHCount.Value;
-                    BaseATHMaker bm = new BaseATHMaker(txtATHBaseFile.Text);
-                    ExcelReporter er = new ExcelReporter(txtExcelFile.Text);
-                    er.MySurfaceATHMaker = acm;
-                    er.MyBaseATHMaker = bm;
-                    er.CreateReport();
-
-                    if (File.Exists(txtExcelFile.Text))
-                    {
-                        Process.Start(txtExcelFile.Text);
-                    }
                 }
             }
+
+            bwApp.RunWorkerAsync();
+            btnExport.Enabled = false;
+
+        }
+
+        private void bwApp_DoWork(object sender, DoWorkEventArgs e)
+        {
+            SurfaceATHMaker acm = new SurfaceATHMaker(txtATHSurfaceFile.Text);
+            acm.MaxValues = 8 * (int)nudATHCount.Value;
+            BaseATHMaker bm = new BaseATHMaker(txtATHBaseFile.Text);
+            ExcelReporter er = new ExcelReporter(this.bwApp, txtExcelFile.Text);
+            er.MySurfaceATHMaker = acm;
+            er.MyBaseATHMaker = bm;
+            er.CreateReport();
+
+            if (File.Exists(txtExcelFile.Text))
+            {
+                Process.Start(txtExcelFile.Text);
+            }
+        }
+
+        private void bwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            switch (e.ProgressPercentage){
+                case 0: // Update Progress Max
+                    pbarApp.Maximum = (int)e.UserState;
+                    pbarApp.Value = 0;
+                    break;
+                case 1: // Increment Progress
+                    pbarApp.Increment(1);
+                    break;
+                case 2: // Update Message
+                    statusApp.Text = e.UserState.ToString();
+                    break;
+            }
+        }
+
+        private void bwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            btnExport.Enabled = true;
         }
 
     }
