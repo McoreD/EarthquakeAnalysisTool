@@ -120,11 +120,14 @@ namespace AccelerationTimeHistoryGen.Helpers
             try
             {
                 // Now create the chart.
-                ChartObjects chartObjs = (ChartObjects)ws.ChartObjects(Type.Missing);
-                ChartObject chartObj = chartObjs.Add(300, 20, 960, 540);
-                Chart xlChart = chartObj.Chart;
-                SeriesCollection seriesCollection = (SeriesCollection)xlChart.SeriesCollection(Type.Missing);
 
+                Chart xlChart = (Chart)mWorkBook.Charts.Add(Missing.Value, Missing.Value,
+                                                            Missing.Value, Missing.Value);
+
+                //ChartObjects chartObjs = (ChartObjects)ws.ChartObjects(Type.Missing);
+                //ChartObject chartObj = chartObjs.Add(300, 20, 960, 540);
+                // Chart xlChart = chartObj.Chart;
+                SeriesCollection seriesCollection = (SeriesCollection)xlChart.SeriesCollection(Type.Missing);
                 seriesCollection.NewSeries();
                 seriesCollection.Item(1).Name = "Base";
                 seriesCollection.Item(1).XValues = string.Format("=Sheet1!$A{0}:$A{1}", startRow, MyBaseATHMaker.ATH.Count);
