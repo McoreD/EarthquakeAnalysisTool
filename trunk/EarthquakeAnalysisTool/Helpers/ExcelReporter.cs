@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Office.Interop.Excel;
 using System.Text.RegularExpressions;
+using System.ComponentModel;
 
 namespace AccelerationTimeHistoryGen.Helpers
 {
@@ -29,19 +30,23 @@ namespace AccelerationTimeHistoryGen.Helpers
         private string mXlsFilePath = Path.Combine(System.Windows.Forms.Application.StartupPath, "data.xlsx");
 
         private Microsoft.Office.Interop.Excel.Worksheet mWSheet1 = new Microsoft.Office.Interop.Excel.WorksheetClass();
+        private BackgroundWorker mBwApp;
 
         public Microsoft.Office.Interop.Excel.Worksheet WorkSheet1
         {
             get { return mWSheet1; }
         }
 
+        int startRow = 3;
+
         /// <summary>
         /// Filepath of the Excel Report file
         /// </summary>
         /// <param name="fp"></param>
-        public ExcelReporter(string fp)
+        public ExcelReporter(BackgroundWorker bwApp, string fp)
         {
             this.mPath = fp;
+            this.mBwApp = bwApp;
         }
 
         /// <summary>
@@ -63,7 +68,7 @@ namespace AccelerationTimeHistoryGen.Helpers
 
             GenerateChart(mWSheet1);
 
-            AutofitColumns(mWSheet1, "A1", "N1");
+            AutofitColumns(mWSheet1, "A1", "E1");
 
             string ext = Path.GetExtension(mPath);
 
@@ -85,19 +90,28 @@ namespace AccelerationTimeHistoryGen.Helpers
             List<string> accBase = MyBaseATHMaker.ReadATH();
             int dtBase = MyBaseATHMaker.DT;
 
+            mBwApp.ReportProgress(0, accBase.Count);
+            mBwApp.ReportProgress(2, "Filling Base ATH...");
             for (int i = 0; i < accBase.Count; i++)
             {
-                ws.Cells[i + 1, 4] = (double)(i * dtBase / 1000.0);
-                ws.Cells[i + 1, 5] = accBase[i];
+                ws.Cells[i + startRow, 1] = (double)(i * dtBase / 1000.0);
+                ws.Cells[i + startRow, 2] = accBase[i];
+                mBwApp.ReportProgress(1);
             }
 
-            List<string> acc = MySurfaceATHMaker.ReadATH();
-            double dt = ((double)accBase.Count / (double)acc.Count) * dtBase;
-            for (int i = 0; i < acc.Count; i++)
+            List<string> accSurface = MySurfaceATHMaker.ReadATH();
+            double dt = ((double)accBase.Count / (double)accSurface.Count) * dtBase;
+
+            mBwApp.ReportProgress(0, accSurface.Count);
+            mBwApp.ReportProgress(2, "Filling Surface ATH...");
+            for (int i = 0; i < accSurface.Count; i++)
             {
-                ws.Cells[i + 1, 1] = (double)(i * dt / 1000.0);
-                ws.Cells[i + 1, 2] = acc[i];
+                ws.Cells[i + startRow, 4] = (double)(i * dt / 1000.0);
+                ws.Cells[i + startRow, 5] = accSurface[i];
+                mBwApp.ReportProgress(1);
             }
+
+            mBwApp.ReportProgress(2, "Ready");
 
         }
 
@@ -109,16 +123,18 @@ namespace AccelerationTimeHistoryGen.Helpers
                 ChartObjects chartObjs = (ChartObjects)ws.ChartObjects(Type.Missing);
                 ChartObject chartObj = chartObjs.Add(300, 20, 960, 540);
                 Chart xlChart = chartObj.Chart;
-
                 SeriesCollection seriesCollection = (SeriesCollection)xlChart.SeriesCollection(Type.Missing);
+
                 seriesCollection.NewSeries();
-                seriesCollection.Item(1).Name = "Surface";
-                seriesCollection.Item(1).XValues = "=Sheet1!$A:$A";
-                seriesCollection.Item(1).Values = "=Sheet1!$B:$B";
+                seriesCollection.Item(1).Name = "Base";
+                seriesCollection.Item(1).XValues = string.Format("=Sheet1!$A{0}:$A{1}", startRow, MyBaseATHMaker.ATH.Count);
+                seriesCollection.Item(1).Values = string.Format("=Sheet1!$B{0}:$B{1}", startRow, MyBaseATHMaker.ATH.Count);
+
                 seriesCollection.NewSeries();
-                seriesCollection.Item(2).Name = "Base";
-                seriesCollection.Item(2).XValues = "=Sheet1!$D:$D";
-                seriesCollection.Item(2).Values = "=Sheet1!$E:$E";
+                seriesCollection.Item(2).Name = "Surface";
+                seriesCollection.Item(2).XValues = string.Format("=Sheet1!$D{0}:$D{1}", startRow, MySurfaceATHMaker.ATH.Count);
+                seriesCollection.Item(2).Values = string.Format("=Sheet1!$E{0}:$E{1}", startRow, MySurfaceATHMaker.ATH.Count);
+
                 xlChart.ChartType = XlChartType.xlXYScatterSmoothNoMarkers;
 
                 // Customize axes:

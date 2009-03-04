@@ -15,7 +15,7 @@ namespace AccelerationTimeHistoryGen
         /// <summary>
         /// Acceleration Time Histories
         /// </summary>
-        private List<string> mATH = new List<string>();
+        public List<string> ATH { get; private set; }
         /// <summary>
         /// Time Interval in Milliseconds
         /// </summary>
@@ -27,7 +27,8 @@ namespace AccelerationTimeHistoryGen
 
         public SurfaceATHMaker(string p)
         {
-           // this.DT = 20;
+            ATH = new List<string>();
+            // this.DT = 20;
             this.MaxValues = 8 * 128;
             this.mPath = p;
         }
@@ -37,7 +38,7 @@ namespace AccelerationTimeHistoryGen
         /// </summary>
         public List<string> ReadATH()
         {
-            mATH.Clear();
+            ATH.Clear();
 
             using (StreamReader sr = new StreamReader(mPath))
             {
@@ -45,21 +46,21 @@ namespace AccelerationTimeHistoryGen
                 line = sr.ReadLine();
                 line = sr.ReadLine();
 
-                while (mATH.Count < this.MaxValues)
+                while (ATH.Count < this.MaxValues)
                 {
                     AddAccelelations(line);
                     line = sr.ReadLine();
                 }
             }
 
-            return mATH;
+            return ATH;
         }
 
         public void WriteATH()
         {
             string dest = Path.Combine(Path.GetDirectoryName(mPath), Path.GetFileNameWithoutExtension(mPath) + "-for-excel.txt");
             StreamWriter sw = new StreamWriter(dest);
-            foreach (string s in mATH)
+            foreach (string s in ATH)
             {
                 sw.WriteLine(s);
             }
@@ -71,7 +72,7 @@ namespace AccelerationTimeHistoryGen
             List<string> nums = SplitLine(line);
             for (int i = 0; i < nums.Count; i++)
             {
-                mATH.Add(nums[i]);
+                ATH.Add(nums[i]);
             }
         }
 
@@ -85,7 +86,6 @@ namespace AccelerationTimeHistoryGen
                 for (int i = 0; i < chars.Length; i++)
                 {
                     string num = line.Substring(i, 9);
-                    Console.WriteLine(num);
                     acc.Add(num);
                     i = i + 8;
                     if (acc.Count == 8)
