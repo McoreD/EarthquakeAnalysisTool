@@ -61,6 +61,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusApp = new System.Windows.Forms.ToolStripStatusLabel();
             this.pbarApp = new System.Windows.Forms.ToolStripProgressBar();
+            this.chkCalcDisp = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -228,25 +229,26 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.chkCalcDisp);
             this.groupBox5.Controls.Add(this.txtExcelFile);
             this.groupBox5.Controls.Add(this.btnExport);
             this.groupBox5.Location = new System.Drawing.Point(17, 263);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(623, 83);
+            this.groupBox5.Size = new System.Drawing.Size(623, 105);
             this.groupBox5.TabIndex = 20;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Export Accelerogram";
             // 
             // txtExcelFile
             // 
-            this.txtExcelFile.Location = new System.Drawing.Point(31, 32);
+            this.txtExcelFile.Location = new System.Drawing.Point(24, 48);
             this.txtExcelFile.Name = "txtExcelFile";
             this.txtExcelFile.Size = new System.Drawing.Size(472, 20);
             this.txtExcelFile.TabIndex = 19;
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(509, 30);
+            this.btnExport.Location = new System.Drawing.Point(512, 48);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(75, 23);
             this.btnExport.TabIndex = 18;
@@ -267,7 +269,7 @@
             // 
             // btnBrowseSurfaceATH
             // 
-            this.btnBrowseSurfaceATH.Location = new System.Drawing.Point(509, 29);
+            this.btnBrowseSurfaceATH.Location = new System.Drawing.Point(512, 32);
             this.btnBrowseSurfaceATH.Name = "btnBrowseSurfaceATH";
             this.btnBrowseSurfaceATH.Size = new System.Drawing.Size(75, 23);
             this.btnBrowseSurfaceATH.TabIndex = 15;
@@ -277,7 +279,7 @@
             // 
             // txtATHSurfaceFile
             // 
-            this.txtATHSurfaceFile.Location = new System.Drawing.Point(31, 31);
+            this.txtATHSurfaceFile.Location = new System.Drawing.Point(32, 32);
             this.txtATHSurfaceFile.Name = "txtATHSurfaceFile";
             this.txtATHSurfaceFile.Size = new System.Drawing.Size(472, 20);
             this.txtATHSurfaceFile.TabIndex = 13;
@@ -298,7 +300,7 @@
             // 
             // btnBrowseBaseATH
             // 
-            this.btnBrowseBaseATH.Location = new System.Drawing.Point(509, 28);
+            this.btnBrowseBaseATH.Location = new System.Drawing.Point(512, 32);
             this.btnBrowseBaseATH.Name = "btnBrowseBaseATH";
             this.btnBrowseBaseATH.Size = new System.Drawing.Size(75, 23);
             this.btnBrowseBaseATH.TabIndex = 14;
@@ -309,7 +311,7 @@
             // txtATHBaseFile
             // 
             this.txtATHBaseFile.AllowDrop = true;
-            this.txtATHBaseFile.Location = new System.Drawing.Point(31, 30);
+            this.txtATHBaseFile.Location = new System.Drawing.Point(32, 32);
             this.txtATHBaseFile.Name = "txtATHBaseFile";
             this.txtATHBaseFile.Size = new System.Drawing.Size(472, 20);
             this.txtATHBaseFile.TabIndex = 12;
@@ -356,7 +358,7 @@
             // 
             // nudDT
             // 
-            this.nudDT.Location = new System.Drawing.Point(122, 397);
+            this.nudDT.Location = new System.Drawing.Point(88, 424);
             this.nudDT.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -380,7 +382,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(72, 399);
+            this.label6.Location = new System.Drawing.Point(38, 426);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(44, 13);
             this.label6.TabIndex = 5;
@@ -395,7 +397,7 @@
             this.tpATHGen.Location = new System.Drawing.Point(4, 22);
             this.tpATHGen.Name = "tpATHGen";
             this.tpATHGen.Padding = new System.Windows.Forms.Padding(3);
-            this.tpATHGen.Size = new System.Drawing.Size(677, 512);
+            this.tpATHGen.Size = new System.Drawing.Size(672, 462);
             this.tpATHGen.TabIndex = 0;
             this.tpATHGen.Text = "ATH Generator (Experimental)";
             this.tpATHGen.UseVisualStyleBackColor = true;
@@ -423,7 +425,7 @@
             // statusApp
             // 
             this.statusApp.Name = "statusApp";
-            this.statusApp.Size = new System.Drawing.Size(559, 17);
+            this.statusApp.Size = new System.Drawing.Size(590, 17);
             this.statusApp.Spring = true;
             this.statusApp.Text = "Ready";
             this.statusApp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -432,6 +434,16 @@
             // 
             this.pbarApp.Name = "pbarApp";
             this.pbarApp.Size = new System.Drawing.Size(100, 16);
+            // 
+            // chkCalcDisp
+            // 
+            this.chkCalcDisp.AutoSize = true;
+            this.chkCalcDisp.Location = new System.Drawing.Point(24, 24);
+            this.chkCalcDisp.Name = "chkCalcDisp";
+            this.chkCalcDisp.Size = new System.Drawing.Size(150, 17);
+            this.chkCalcDisp.TabIndex = 21;
+            this.chkCalcDisp.Text = "Calculation Displacements";
+            this.chkCalcDisp.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
@@ -505,6 +517,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel statusApp;
         private System.Windows.Forms.ToolStripProgressBar pbarApp;
+        private System.Windows.Forms.CheckBox chkCalcDisp;
     }
 }
 

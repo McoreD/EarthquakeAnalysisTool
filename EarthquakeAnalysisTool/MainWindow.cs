@@ -95,9 +95,24 @@ namespace AccelerationTimeHistoryGen
             BrowseFile(ref txtATHSurfaceFile);
         }
 
+        private bool IsValidWorkbook(string fp)
+        {
+            if (!string.IsNullOrEmpty(fp))
+            {
+                string fext = Path.GetExtension(fp);
+                string[] exts = new string[] { ".xls", ".xlsx", ".xlsm" };
+                foreach (string ext in exts)
+                {
+                    if (ext == fext)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         private void btnExport_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtExcelFile.Text))
+            if (!IsValidWorkbook(txtExcelFile.Text))
             {
                 SaveFileDialog dlg = new SaveFileDialog();
                 dlg.Filter = "Excel Workbook (*.xlsx)|*.xlsx|Excel 97-2003 Workbook (*.xls)|*.xls";
@@ -108,8 +123,11 @@ namespace AccelerationTimeHistoryGen
                 }
             }
 
-            bwApp.RunWorkerAsync();
-            btnExport.Enabled = false;
+            if (IsValidWorkbook(txtExcelFile.Text))
+            {
+                bwApp.RunWorkerAsync();
+                btnExport.Enabled = false;
+            }
 
         }
 
@@ -118,7 +136,11 @@ namespace AccelerationTimeHistoryGen
             SurfaceATHMaker acm = new SurfaceATHMaker(txtATHSurfaceFile.Text);
             acm.MaxValues = 8 * (int)nudATHCount.Value;
             BaseATHMaker bm = new BaseATHMaker(txtATHBaseFile.Text);
-            ExcelReporter er = new ExcelReporter(this.bwApp, txtExcelFile.Text);
+            ExcelReporterOptions ropt = new ExcelReporterOptions();
+            ropt.Worker = this.bwApp;
+            ropt.WorkbookFilePath = txtExcelFile.Text;
+            ropt.CalculateDisplacements = chkCalcDisp.Checked;
+            ExcelReporter er = new ExcelReporter(ropt);
             er.MySurfaceATHMaker = acm;
             er.MyBaseATHMaker = bm;
             er.CreateReport();
@@ -127,11 +149,13 @@ namespace AccelerationTimeHistoryGen
             {
                 Process.Start(txtExcelFile.Text);
             }
+
         }
 
         private void bwApp_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            switch (e.ProgressPercentage){
+            switch (e.ProgressPercentage)
+            {
                 case 0: // Update Progress Max
                     pbarApp.Maximum = (int)e.UserState;
                     pbarApp.Value = 0;
