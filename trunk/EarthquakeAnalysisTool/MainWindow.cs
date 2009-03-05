@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using AccelerationTimeHistoryGen.Helpers;
+using AccelerationTimeHistoryGen.Properties;
 
 namespace AccelerationTimeHistoryGen
 {
@@ -133,7 +134,10 @@ namespace AccelerationTimeHistoryGen
 
         private void bwApp_DoWork(object sender, DoWorkEventArgs e)
         {
-            SurfaceATHMaker acm = new SurfaceATHMaker(txtATHSurfaceFile.Text);
+            SurfaceATHMakerOptions sao = new SurfaceATHMakerOptions();
+            sao.InputFilePath = txtATHSurfaceFile.Text;
+            sao.IgnoreZeroAcc = chkIgnoreZeroAccel.Checked;
+            SurfaceATHMaker acm = new SurfaceATHMaker(sao);
             acm.MaxValues = 8 * (int)nudATHCount.Value;
             BaseATHMaker bm = new BaseATHMaker(txtATHBaseFile.Text);
             ExcelReporterOptions ropt = new ExcelReporterOptions();
@@ -172,6 +176,11 @@ namespace AccelerationTimeHistoryGen
         private void bwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             btnExport.Enabled = true;
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Settings.Default.Save();
         }
 
     }

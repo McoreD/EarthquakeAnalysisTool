@@ -82,5 +82,77 @@ namespace AccelerationTimeHistoryGen.Properties {
                 this["CopyTHFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ATHBase {
+            get {
+                return ((string)(this["ATHBase"]));
+            }
+            set {
+                this["ATHBase"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ATHSurface {
+            get {
+                return ((string)(this["ATHSurface"]));
+            }
+            set {
+                this["ATHSurface"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ExcelFilePath {
+            get {
+                return ((string)(this["ExcelFilePath"]));
+            }
+            set {
+                this["ExcelFilePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("512")]
+        public decimal ATHLineCount {
+            get {
+                return ((decimal)(this["ATHLineCount"]));
+            }
+            set {
+                this["ATHLineCount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CalcDisp {
+            get {
+                return ((bool)(this["CalcDisp"]));
+            }
+            set {
+                this["CalcDisp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IgnoreZeroBaseAccel {
+            get {
+                return ((bool)(this["IgnoreZeroBaseAccel"]));
+            }
+            set {
+                this["IgnoreZeroBaseAccel"] = value;
+            }
+        }
     }
 }
