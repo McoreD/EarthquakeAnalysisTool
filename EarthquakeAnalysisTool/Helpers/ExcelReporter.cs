@@ -108,7 +108,7 @@ namespace AccelerationTimeHistoryGen.Helpers
             double[,] arrData = new double[accBase.Count, 1];
             string[,] arrString = new string[accBase.Count, 1];
 
-            Range headings = ws.get_Range("A1", "B12");
+            Range headings = ws.get_Range("A1", "L2");
             headings.Font.Bold = true;
 
             ws.Cells[1, 1] = "Base";
@@ -152,7 +152,7 @@ namespace AccelerationTimeHistoryGen.Helpers
                 Range rVth = ws.get_Range(string.Format("D{0}", startRow + 1), string.Format("D{0}", startRow + accBase.Count - 1));
                 for (int i = 0; i < accBase.Count; i++)
                 {
-                    arrString[i, 0] = "=R[-1]C+0.5*(R[-1]C[-1]+RC[-1])*(RC[-3]-R[-1]C[-3])";
+                    arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])+R[-1]C";
                 }
                 rVth.FormulaArray = arrString;
                 rVth.Style = "Calculation";
@@ -163,7 +163,7 @@ namespace AccelerationTimeHistoryGen.Helpers
                 Range rDth = ws.get_Range(string.Format("E{0}", startRow + 1), string.Format("E{0}", startRow + accBase.Count - 1));
                 for (int i = 0; i < accBase.Count; i++)
                 {
-                    arrString[i, 0] = "=R[-1]C+R[-1]C[-1]*(RC[-4]-R[-1]C[-4])+0.5*R[-1]C[-3]*(RC[-4]-R[-1]C[-4])^2";
+                    arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])+R[-1]C";
                 }
                 rDth.FormulaArray = arrString;
                 rDth.Style = "Output";
@@ -220,7 +220,7 @@ namespace AccelerationTimeHistoryGen.Helpers
                 Range rVthS = ws.get_Range(string.Format("K{0}", startRow + 1), string.Format("K{0}", startRow + accSurface.Count - 1));
                 for (int i = 0; i < accSurface.Count; i++)
                 {
-                    arrString[i, 0] = "=R[-1]C+0.5*(R[-1]C[-1]+RC[-1])*(RC[-3]-R[-1]C[-3])";
+                    arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])+R[-1]C";
                 }
                 rVthS.FormulaArray = arrString;
                 rVthS.Style = "Calculation";
@@ -231,7 +231,7 @@ namespace AccelerationTimeHistoryGen.Helpers
                 Range rDthS = ws.get_Range(string.Format("L{0}", startRow + 1), string.Format("L{0}", startRow + accSurface.Count - 1));
                 for (int i = 0; i < accSurface.Count; i++)
                 {
-                    arrString[i, 0] = "=R[-1]C+R[-1]C[-1]*(RC[-4]-R[-1]C[-4])+0.5*R[-1]C[-3]*(RC[-4]-R[-1]C[-4])^2";
+                    arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])+R[-1]C";
                 }
                 rDthS.FormulaArray = arrString;
                 rDthS.Style = "Output";
@@ -239,8 +239,16 @@ namespace AccelerationTimeHistoryGen.Helpers
 
             }
 
+            SetNumberFormat(ws, "B1", "E1", "0.0000E+00");
+            SetNumberFormat(ws, "I1", "L1", "0.0000E+00");
             mBwApp.ReportProgress(2, "Ready");
 
+        }
+
+        private void SetNumberFormat(Worksheet ws, string colStart, string colFinish, string numberFormat)
+        {
+            Range rng = ws.get_Range(colStart, colFinish);
+            rng.NumberFormat = numberFormat;
         }
 
         //private void FillRangeFormula(Worksheet ws, string column, int rows, string data)
