@@ -58,7 +58,7 @@ namespace AccelerationTimeHistoryGen
                 line = sr.ReadLine();
                 line = sr.ReadLine();
 
-                while (!sr.EndOfStream || ATH.Count < this.MaxValues)
+                while (!sr.EndOfStream && ATH.Count < this.MaxValues)
                 {
                     AddAccelelations(line);
                     line = sr.ReadLine();
@@ -105,7 +105,7 @@ namespace AccelerationTimeHistoryGen
                     {
                         double a = 0.0;
                         double.TryParse(num, out a);
-                        if (a > 0)
+                        if (a != 0)
                         {
                             acc.Add(num);
                         }
