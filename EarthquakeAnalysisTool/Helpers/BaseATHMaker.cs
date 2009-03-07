@@ -19,7 +19,6 @@ namespace THTool
         public List<string> ATH { get; private set; }
         private int NTPS;
         private decimal mDT;
-        public string Title { get; private set; }
 
         public BaseATHMaker(string fp)
         {

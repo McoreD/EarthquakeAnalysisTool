@@ -45,6 +45,8 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.chkCalcDisp = new System.Windows.Forms.CheckBox();
             this.txtExcelFile = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.nudYieldAccel = new System.Windows.Forms.NumericUpDown();
             this.btnExport = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chkIgnoreZeroAccel = new System.Windows.Forms.CheckBox();
@@ -60,19 +62,17 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusApp = new System.Windows.Forms.ToolStripStatusLabel();
             this.pbarApp = new System.Windows.Forms.ToolStripProgressBar();
-            this.nudYieldAccel = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpATHExcel.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.tpATHGen.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -209,7 +209,7 @@
             this.tabControl1.Location = new System.Drawing.Point(8, 8);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(680, 488);
+            this.tabControl1.Size = new System.Drawing.Size(680, 367);
             this.tabControl1.TabIndex = 13;
             // 
             // tpATHExcel
@@ -220,7 +220,7 @@
             this.tpATHExcel.Location = new System.Drawing.Point(4, 22);
             this.tpATHExcel.Name = "tpATHExcel";
             this.tpATHExcel.Padding = new System.Windows.Forms.Padding(3);
-            this.tpATHExcel.Size = new System.Drawing.Size(672, 462);
+            this.tpATHExcel.Size = new System.Drawing.Size(672, 341);
             this.tpATHExcel.TabIndex = 1;
             this.tpATHExcel.Text = "Accelerogram Maker";
             this.tpATHExcel.UseVisualStyleBackColor = true;
@@ -259,6 +259,30 @@
             this.txtExcelFile.Size = new System.Drawing.Size(472, 20);
             this.txtExcelFile.TabIndex = 19;
             this.txtExcelFile.Text = global::THTool.Properties.Settings.Default.ExcelFilePath;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(16, 88);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(107, 13);
+            this.label6.TabIndex = 22;
+            this.label6.Text = "Yield Acceleration (g)";
+            // 
+            // nudYieldAccel
+            // 
+            this.nudYieldAccel.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "YieldAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudYieldAccel.DecimalPlaces = 4;
+            this.nudYieldAccel.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.nudYieldAccel.Location = new System.Drawing.Point(128, 88);
+            this.nudYieldAccel.Name = "nudYieldAccel";
+            this.nudYieldAccel.Size = new System.Drawing.Size(120, 20);
+            this.nudYieldAccel.TabIndex = 21;
+            this.nudYieldAccel.Value = global::THTool.Properties.Settings.Default.YieldAccel;
             // 
             // btnExport
             // 
@@ -382,7 +406,7 @@
             this.tpATHGen.Location = new System.Drawing.Point(4, 22);
             this.tpATHGen.Name = "tpATHGen";
             this.tpATHGen.Padding = new System.Windows.Forms.Padding(3);
-            this.tpATHGen.Size = new System.Drawing.Size(672, 462);
+            this.tpATHGen.Size = new System.Drawing.Size(672, 360);
             this.tpATHGen.TabIndex = 0;
             this.tpATHGen.Text = "ATH Generator (Experimental)";
             this.tpATHGen.UseVisualStyleBackColor = true;
@@ -401,7 +425,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusApp,
             this.pbarApp});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 504);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 383);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(707, 22);
             this.statusStrip1.TabIndex = 14;
@@ -420,36 +444,12 @@
             this.pbarApp.Name = "pbarApp";
             this.pbarApp.Size = new System.Drawing.Size(100, 16);
             // 
-            // nudYieldAccel
-            // 
-            this.nudYieldAccel.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "YieldAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.nudYieldAccel.DecimalPlaces = 4;
-            this.nudYieldAccel.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.nudYieldAccel.Location = new System.Drawing.Point(128, 88);
-            this.nudYieldAccel.Name = "nudYieldAccel";
-            this.nudYieldAccel.Size = new System.Drawing.Size(120, 20);
-            this.nudYieldAccel.TabIndex = 21;
-            this.nudYieldAccel.Value = global::THTool.Properties.Settings.Default.YieldAccel;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(16, 88);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(107, 13);
-            this.label6.TabIndex = 22;
-            this.label6.Text = "Yield Acceleration (g)";
-            // 
             // MainWindow
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(707, 526);
+            this.ClientSize = new System.Drawing.Size(707, 405);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -466,6 +466,7 @@
             this.tpATHExcel.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).EndInit();
@@ -475,7 +476,6 @@
             this.tpATHGen.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
