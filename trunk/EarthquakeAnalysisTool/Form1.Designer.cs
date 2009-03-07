@@ -1,4 +1,4 @@
-﻿namespace AccelerationTimeHistoryGen
+﻿namespace THTool
 {
     partial class MainWindow
     {
@@ -119,30 +119,30 @@
             // 
             // txtLP
             // 
-            this.txtLP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "LP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtLP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "LP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtLP.Location = new System.Drawing.Point(82, 56);
             this.txtLP.Name = "txtLP";
             this.txtLP.Size = new System.Drawing.Size(100, 20);
             this.txtLP.TabIndex = 8;
-            this.txtLP.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.LP;
+            this.txtLP.Text = global::THTool.Properties.Settings.Default.LP;
             // 
             // txtHP
             // 
-            this.txtHP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "HP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtHP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "HP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtHP.Location = new System.Drawing.Point(82, 30);
             this.txtHP.Name = "txtHP";
             this.txtHP.Size = new System.Drawing.Size(100, 20);
             this.txtHP.TabIndex = 6;
-            this.txtHP.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.HP;
+            this.txtHP.Text = global::THTool.Properties.Settings.Default.HP;
             // 
             // txtDT
             // 
-            this.txtDT.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "DT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtDT.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "DT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtDT.Location = new System.Drawing.Point(82, 84);
             this.txtDT.Name = "txtDT";
             this.txtDT.Size = new System.Drawing.Size(100, 20);
             this.txtDT.TabIndex = 4;
-            this.txtDT.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.DT;
+            this.txtDT.Text = global::THTool.Properties.Settings.Default.DT;
             // 
             // label4
             // 
@@ -178,9 +178,9 @@
             // chkCopyFile
             // 
             this.chkCopyFile.AutoSize = true;
-            this.chkCopyFile.Checked = global::AccelerationTimeHistoryGen.Properties.Settings.Default.CopyTHFile;
+            this.chkCopyFile.Checked = global::THTool.Properties.Settings.Default.CopyTHFile;
             this.chkCopyFile.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkCopyFile.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "CopyTHFile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkCopyFile.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "CopyTHFile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkCopyFile.Location = new System.Drawing.Point(27, 55);
             this.chkCopyFile.Name = "chkCopyFile";
             this.chkCopyFile.Size = new System.Drawing.Size(214, 17);
@@ -192,12 +192,12 @@
             // 
             this.txtShake91.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtShake91.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
-            this.txtShake91.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "Shake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtShake91.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "Shake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtShake91.Location = new System.Drawing.Point(113, 26);
             this.txtShake91.Name = "txtShake91";
             this.txtShake91.Size = new System.Drawing.Size(330, 20);
             this.txtShake91.TabIndex = 12;
-            this.txtShake91.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.Shake91;
+            this.txtShake91.Text = global::THTool.Properties.Settings.Default.Shake91;
             // 
             // tabControl1
             // 
@@ -242,8 +242,8 @@
             // chkCalcDisp
             // 
             this.chkCalcDisp.AutoSize = true;
-            this.chkCalcDisp.Checked = global::AccelerationTimeHistoryGen.Properties.Settings.Default.CalcDisp;
-            this.chkCalcDisp.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "CalcDisp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkCalcDisp.Checked = global::THTool.Properties.Settings.Default.CalcDisp;
+            this.chkCalcDisp.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "CalcDisp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkCalcDisp.Location = new System.Drawing.Point(16, 56);
             this.chkCalcDisp.Name = "chkCalcDisp";
             this.chkCalcDisp.Size = new System.Drawing.Size(142, 17);
@@ -253,12 +253,12 @@
             // 
             // txtExcelFile
             // 
-            this.txtExcelFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "ExcelFilePath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtExcelFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "ExcelFilePath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtExcelFile.Location = new System.Drawing.Point(16, 24);
             this.txtExcelFile.Name = "txtExcelFile";
             this.txtExcelFile.Size = new System.Drawing.Size(472, 20);
             this.txtExcelFile.TabIndex = 19;
-            this.txtExcelFile.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.ExcelFilePath;
+            this.txtExcelFile.Text = global::THTool.Properties.Settings.Default.ExcelFilePath;
             // 
             // btnExport
             // 
@@ -287,8 +287,8 @@
             // chkIgnoreZeroAccel
             // 
             this.chkIgnoreZeroAccel.AutoSize = true;
-            this.chkIgnoreZeroAccel.Checked = global::AccelerationTimeHistoryGen.Properties.Settings.Default.IgnoreZeroBaseAccel;
-            this.chkIgnoreZeroAccel.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "IgnoreZeroBaseAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkIgnoreZeroAccel.Checked = global::THTool.Properties.Settings.Default.IgnoreZeroBaseAccel;
+            this.chkIgnoreZeroAccel.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "IgnoreZeroBaseAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkIgnoreZeroAccel.Location = new System.Drawing.Point(232, 64);
             this.chkIgnoreZeroAccel.Name = "chkIgnoreZeroAccel";
             this.chkIgnoreZeroAccel.Size = new System.Drawing.Size(148, 17);
@@ -308,16 +308,16 @@
             // 
             // txtATHSurfaceFile
             // 
-            this.txtATHSurfaceFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "ATHSurface", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtATHSurfaceFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "ATHSurface", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtATHSurfaceFile.Location = new System.Drawing.Point(16, 24);
             this.txtATHSurfaceFile.Name = "txtATHSurfaceFile";
             this.txtATHSurfaceFile.Size = new System.Drawing.Size(472, 20);
             this.txtATHSurfaceFile.TabIndex = 13;
-            this.txtATHSurfaceFile.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.ATHSurface;
+            this.txtATHSurfaceFile.Text = global::THTool.Properties.Settings.Default.ATHSurface;
             // 
             // nudATHCount
             // 
-            this.nudATHCount.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "ATHLineCount", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudATHCount.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "ATHLineCount", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.nudATHCount.Location = new System.Drawing.Point(80, 62);
             this.nudATHCount.Maximum = new decimal(new int[] {
             99999,
@@ -332,7 +332,7 @@
             this.nudATHCount.Name = "nudATHCount";
             this.nudATHCount.Size = new System.Drawing.Size(120, 20);
             this.nudATHCount.TabIndex = 8;
-            this.nudATHCount.Value = global::AccelerationTimeHistoryGen.Properties.Settings.Default.ATHLineCount;
+            this.nudATHCount.Value = global::THTool.Properties.Settings.Default.ATHLineCount;
             // 
             // label7
             // 
@@ -367,12 +367,12 @@
             // txtATHBaseFile
             // 
             this.txtATHBaseFile.AllowDrop = true;
-            this.txtATHBaseFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "ATHBase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtATHBaseFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "ATHBase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtATHBaseFile.Location = new System.Drawing.Point(16, 24);
             this.txtATHBaseFile.Name = "txtATHBaseFile";
             this.txtATHBaseFile.Size = new System.Drawing.Size(472, 20);
             this.txtATHBaseFile.TabIndex = 12;
-            this.txtATHBaseFile.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.ATHBase;
+            this.txtATHBaseFile.Text = global::THTool.Properties.Settings.Default.ATHBase;
             // 
             // tpATHGen
             // 
@@ -422,7 +422,7 @@
             // 
             // nudYieldAccel
             // 
-            this.nudYieldAccel.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "YieldAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudYieldAccel.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "YieldAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.nudYieldAccel.DecimalPlaces = 4;
             this.nudYieldAccel.Increment = new decimal(new int[] {
             1,
@@ -433,7 +433,7 @@
             this.nudYieldAccel.Name = "nudYieldAccel";
             this.nudYieldAccel.Size = new System.Drawing.Size(120, 20);
             this.nudYieldAccel.TabIndex = 21;
-            this.nudYieldAccel.Value = global::AccelerationTimeHistoryGen.Properties.Settings.Default.YieldAccel;
+            this.nudYieldAccel.Value = global::THTool.Properties.Settings.Default.YieldAccel;
             // 
             // label6
             // 

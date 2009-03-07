@@ -8,8 +8,8 @@
     <ProjectGuid>{35087AC0-5B2E-4640-BF40-788EC6590EC4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AccelerationTimeHistoryGen</RootNamespace>
-    <AssemblyName>AccelerationTimeHistoryGen</AssemblyName>
+    <RootNamespace>THTool</RootNamespace>
+    <AssemblyName>THTool</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,6 +44,7 @@
     <Compile Include="Helpers\BaseATHMaker.cs" />
     <Compile Include="Helpers\ExcelReporter.cs" />
     <Compile Include="Helpers\SurfaceATHMaker.cs" />
+    <Compile Include="Helpers\THProcessor.cs" />
     <Compile Include="SciFormat.cs" />
     <Compile Include="Helpers\ATHMaker.cs" />
     <Compile Include="MainWindow.cs">
@@ -65,6 +66,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">

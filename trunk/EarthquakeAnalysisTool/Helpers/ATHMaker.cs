@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using AccelerationTimeHistoryGen.Properties;
+using THTool.Properties;
 using System.Globalization;
 
-namespace AccelerationTimeHistoryGen
+namespace THTool
 {
     /// <summary>
     /// Creates a Shake91 compatible input file from a list of accelerations (experimental)

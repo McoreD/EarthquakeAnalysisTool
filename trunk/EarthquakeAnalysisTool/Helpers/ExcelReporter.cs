@@ -6,7 +6,7 @@ using Microsoft.Office.Interop.Excel;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 
-namespace AccelerationTimeHistoryGen.Helpers
+namespace THTool.Helpers
 {
     public struct ExcelReporterOptions
     {
@@ -38,7 +38,7 @@ namespace AccelerationTimeHistoryGen.Helpers
 
         public string ExcelFilePath { get; set; }
 
-        private string mXlsFilePath = Path.Combine(System.Windows.Forms.Application.StartupPath, "data.xlsx");
+        //private string mXlsFilePath = Path.Combine(System.Windows.Forms.Application.StartupPath, "data.xlsx");
 
         private Microsoft.Office.Interop.Excel.Worksheet mWSheet1 = new Microsoft.Office.Interop.Excel.WorksheetClass();
         private BackgroundWorker mBwApp;
@@ -86,6 +86,13 @@ namespace AccelerationTimeHistoryGen.Helpers
 
             AutofitColumns(mWSheet1, "A1", "Z1");
 
+            Range time1 = (Range)mWSheet1.Columns["A", Missing.Value];
+            time1.ColumnWidth = 8.5;
+            time1 = (Range)mWSheet1.Columns["H", Missing.Value];
+            time1.ColumnWidth = 8.5;
+
+            mWSheet1.Select(true);
+
             string ext = Path.GetExtension(mPath);
 
             if (ext.ToLower().Equals(".xlsx"))
@@ -115,7 +122,7 @@ namespace AccelerationTimeHistoryGen.Helpers
             Range headings = ws.get_Range("A1", "Z2");
             headings.Font.Bold = true;
 
-            ws.Cells[1, 1] = "Base";
+            ws.Cells[1, 1] = "Base: " + MyBaseATHMaker.Title;
 
             // Times
             ws.Cells[2, 1] = "Time (s)";
@@ -183,7 +190,7 @@ namespace AccelerationTimeHistoryGen.Helpers
 
             mBwApp.ReportProgress(2, "Filling Base ATH, VTH and DTH...");
 
-            ws.Cells[1, 8] = "Surface";
+            ws.Cells[1, 8] = "Surface: " + MySurfaceATHMaker.Title;
 
             // Times
             ws.Cells[2, 8] = "Time (s)";
@@ -245,11 +252,12 @@ namespace AccelerationTimeHistoryGen.Helpers
                 ws.Cells[2, 12] = "disp (m)";
 
                 ws.Cells[1, 15] = "Yield Accel (g)";
-                ws.Cells[2, 15] = "Disp (m)";
+                ws.Cells[2, 15] = "Disp  (m)";
                 ws.Cells[3, 15] = "Disp (mm)";
                 Range ay = (Range)ws.Cells[1, 16];
                 ay.Name = "ay";
                 ay.Value2 = this.Options.YieldAccel;
+                ay.Style = "Input";
                 Range rDthAy = ws.get_Range(string.Format("M{0}", startRow + 1), string.Format("M{0}", startRow + accSurface.Count - 1));
                 for (int i = 0; i < accSurface.Count; i++)
                 {
@@ -273,7 +281,8 @@ namespace AccelerationTimeHistoryGen.Helpers
 
             SetNumberFormat(ws, "B1", "E1", "0.0000E+00");
             SetNumberFormat(ws, "I1", "L1", "0.0000E+00");
-            mBwApp.ReportProgress(2, "Ready");
+
+             mBwApp.ReportProgress(2, "Ready");
 
         }
 
