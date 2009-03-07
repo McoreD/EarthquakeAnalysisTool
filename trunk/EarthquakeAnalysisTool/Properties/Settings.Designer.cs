@@ -154,5 +154,17 @@ namespace AccelerationTimeHistoryGen.Properties {
                 this["IgnoreZeroBaseAccel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0500")]
+        public decimal YieldAccel {
+            get {
+                return ((decimal)(this["YieldAccel"]));
+            }
+            set {
+                this["YieldAccel"] = value;
+            }
+        }
     }
 }

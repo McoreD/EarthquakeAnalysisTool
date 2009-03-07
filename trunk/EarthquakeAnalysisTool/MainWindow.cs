@@ -144,6 +144,7 @@ namespace AccelerationTimeHistoryGen
             ropt.Worker = this.bwApp;
             ropt.WorkbookFilePath = txtExcelFile.Text;
             ropt.CalculateDisplacements = chkCalcDisp.Checked;
+            ropt.YieldAccel = nudYieldAccel.Value;
             ExcelReporter er = new ExcelReporter(ropt);
             er.MySurfaceATHMaker = acm;
             er.MyBaseATHMaker = bm;

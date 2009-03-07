@@ -13,6 +13,10 @@ namespace AccelerationTimeHistoryGen.Helpers
         public BackgroundWorker Worker { get; set; }
         public string WorkbookFilePath { get; set; }
         public bool CalculateDisplacements { get; set; }
+        /// <summary>
+        /// Yield Acceleration in g
+        /// </summary>
+        public decimal YieldAccel { get; set; }
     }
 
     class ExcelReporter
@@ -80,7 +84,7 @@ namespace AccelerationTimeHistoryGen.Helpers
 
             GenerateCharts(mWSheet1);
 
-            AutofitColumns(mWSheet1, "A1", "L1");
+            AutofitColumns(mWSheet1, "A1", "Z1");
 
             string ext = Path.GetExtension(mPath);
 
@@ -108,7 +112,7 @@ namespace AccelerationTimeHistoryGen.Helpers
             double[,] arrData = new double[accBase.Count, 1];
             string[,] arrString = new string[accBase.Count, 1];
 
-            Range headings = ws.get_Range("A1", "L2");
+            Range headings = ws.get_Range("A1", "Z2");
             headings.Font.Bold = true;
 
             ws.Cells[1, 1] = "Base";
@@ -231,10 +235,38 @@ namespace AccelerationTimeHistoryGen.Helpers
                 Range rDthS = ws.get_Range(string.Format("L{0}", startRow + 1), string.Format("L{0}", startRow + accSurface.Count - 1));
                 for (int i = 0; i < accSurface.Count; i++)
                 {
-                    arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])+R[-1]C";
+                    arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])";
                 }
                 rDthS.FormulaArray = arrString;
                 rDthS.Style = "Output";
+                mBwApp.ReportProgress(1);
+
+                // DTH (m) above yield acceleration
+                ws.Cells[2, 12] = "disp (m)";
+
+                ws.Cells[1, 15] = "Yield Accel (g)";
+                ws.Cells[2, 15] = "Disp (m)";
+                ws.Cells[3, 15] = "Disp (mm)";
+                Range ay = (Range)ws.Cells[1, 16];
+                ay.Name = "ay";
+                ay.Value2 = this.Options.YieldAccel;
+                Range rDthAy = ws.get_Range(string.Format("M{0}", startRow + 1), string.Format("M{0}", startRow + accSurface.Count - 1));
+                for (int i = 0; i < accSurface.Count; i++)
+                {
+                    arrString[i, 0] = "=IF(RC[-4]>ay,RC[-1],0)";
+                }
+                rDthAy.FormulaArray = arrString;
+                rDthAy.Style = "Output";
+
+                // Total Positive Displacement above Yield Acceleration
+                ws.Cells[2, 13] = "disp (above a_y)";
+                Range disp = (Range)ws.Cells[2, 16];
+                disp.FormulaR1C1 = string.Format("=SUM(R[{0}]C[-3]:R[{1}]C[-3])", startRow - 1, accSurface.Count + startRow - 1);
+                disp.Style = "Calculation";
+                // also show in mm
+                Range disp_mm = (Range)ws.Cells[3, 16];
+                disp_mm.FormulaR1C1 = "=R[-1]C*1000";
+                disp_mm.Style = "Output";
                 mBwApp.ReportProgress(1);
 
             }
