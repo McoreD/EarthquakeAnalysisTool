@@ -7,10 +7,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
-using AccelerationTimeHistoryGen.Helpers;
-using AccelerationTimeHistoryGen.Properties;
+using THTool.Helpers;
+using THTool.Properties;
 
-namespace AccelerationTimeHistoryGen
+namespace THTool
 {
     public partial class MainWindow : Form
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace AccelerationTimeHistoryGen
+namespace THTool
 {
     static class Program
     {

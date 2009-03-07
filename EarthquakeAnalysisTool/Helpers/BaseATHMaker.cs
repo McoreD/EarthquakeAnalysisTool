@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
+using THTool.Helpers;
 
-namespace AccelerationTimeHistoryGen
+namespace THTool
 {
     /// <summary>
     /// Reads Shake91 input file and generates an accelerogram in Excel
     /// </summary>
-    class BaseATHMaker
+    class BaseATHMaker : THProcessor
     {
         private string mPath;
         /// <summary>
@@ -18,6 +19,7 @@ namespace AccelerationTimeHistoryGen
         public List<string> ATH { get; private set; }
         private int NTPS;
         private decimal mDT;
+        public string Title { get; private set; }
 
         public BaseATHMaker(string fp)
         {
@@ -58,7 +60,7 @@ namespace AccelerationTimeHistoryGen
             {
                 ATH.Clear();
                 string line = sr.ReadLine();
-                line = sr.ReadLine();
+                this.Title = sr.ReadLine(); // Title
                 line = sr.ReadLine();
                 line = sr.ReadLine(); // NPTS=  5366, DT= .00500 SEC
                 RemoveDoubleSpaces(ref line);

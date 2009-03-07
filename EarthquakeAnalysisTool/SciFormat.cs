@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AccelerationTimeHistoryGen
+namespace THTool
 {
     public class SciFormat : IFormatProvider, ICustomFormatter
     {
