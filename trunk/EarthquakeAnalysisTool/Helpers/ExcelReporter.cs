@@ -104,6 +104,8 @@ namespace THTool.Helpers
                 ExcelFilePath = SaveAs2003(mPath);
             }
 
+            mExcelApp.DisplayAlerts = true;
+
             mExcelApp.Quit();
 
         }
