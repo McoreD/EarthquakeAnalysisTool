@@ -32,48 +32,47 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtLP = new System.Windows.Forms.TextBox();
+            this.txtHP = new System.Windows.Forms.TextBox();
+            this.txtDT = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkCopyFile = new System.Windows.Forms.CheckBox();
+            this.txtShake91 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpATHExcel = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.chkCalcDisp = new System.Windows.Forms.CheckBox();
+            this.txtExcelFile = new System.Windows.Forms.TextBox();
             this.btnExport = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.chkIgnoreZeroAccel = new System.Windows.Forms.CheckBox();
             this.btnBrowseSurfaceATH = new System.Windows.Forms.Button();
+            this.txtATHSurfaceFile = new System.Windows.Forms.TextBox();
+            this.nudATHCount = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnBrowseBaseATH = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.nudDT = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
+            this.txtATHBaseFile = new System.Windows.Forms.TextBox();
             this.tpATHGen = new System.Windows.Forms.TabPage();
             this.bwApp = new System.ComponentModel.BackgroundWorker();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusApp = new System.Windows.Forms.ToolStripStatusLabel();
             this.pbarApp = new System.Windows.Forms.ToolStripProgressBar();
-            this.chkCalcDisp = new System.Windows.Forms.CheckBox();
-            this.txtExcelFile = new System.Windows.Forms.TextBox();
-            this.txtATHSurfaceFile = new System.Windows.Forms.TextBox();
-            this.chkIgnoreZeroAccel = new System.Windows.Forms.CheckBox();
-            this.txtATHBaseFile = new System.Windows.Forms.TextBox();
-            this.nudATHCount = new System.Windows.Forms.NumericUpDown();
-            this.chkCopyFile = new System.Windows.Forms.CheckBox();
-            this.txtShake91 = new System.Windows.Forms.TextBox();
-            this.txtLP = new System.Windows.Forms.TextBox();
-            this.txtHP = new System.Windows.Forms.TextBox();
-            this.txtDT = new System.Windows.Forms.TextBox();
+            this.nudYieldAccel = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpATHExcel.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDT)).BeginInit();
             this.tpATHGen.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -118,6 +117,33 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
             // 
+            // txtLP
+            // 
+            this.txtLP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "LP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtLP.Location = new System.Drawing.Point(82, 56);
+            this.txtLP.Name = "txtLP";
+            this.txtLP.Size = new System.Drawing.Size(100, 20);
+            this.txtLP.TabIndex = 8;
+            this.txtLP.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.LP;
+            // 
+            // txtHP
+            // 
+            this.txtHP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "HP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtHP.Location = new System.Drawing.Point(82, 30);
+            this.txtHP.Name = "txtHP";
+            this.txtHP.Size = new System.Drawing.Size(100, 20);
+            this.txtHP.TabIndex = 6;
+            this.txtHP.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.HP;
+            // 
+            // txtDT
+            // 
+            this.txtDT.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "DT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtDT.Location = new System.Drawing.Point(82, 84);
+            this.txtDT.Name = "txtDT";
+            this.txtDT.Size = new System.Drawing.Size(100, 20);
+            this.txtDT.TabIndex = 4;
+            this.txtDT.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.DT;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -149,6 +175,30 @@
             this.groupBox2.Text = "Options";
             this.groupBox2.Visible = false;
             // 
+            // chkCopyFile
+            // 
+            this.chkCopyFile.AutoSize = true;
+            this.chkCopyFile.Checked = global::AccelerationTimeHistoryGen.Properties.Settings.Default.CopyTHFile;
+            this.chkCopyFile.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCopyFile.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "CopyTHFile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkCopyFile.Location = new System.Drawing.Point(27, 55);
+            this.chkCopyFile.Name = "chkCopyFile";
+            this.chkCopyFile.Size = new System.Drawing.Size(214, 17);
+            this.chkCopyFile.TabIndex = 13;
+            this.chkCopyFile.Text = "&Copy Time History file to Shake91 folder";
+            this.chkCopyFile.UseVisualStyleBackColor = true;
+            // 
+            // txtShake91
+            // 
+            this.txtShake91.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtShake91.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
+            this.txtShake91.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "Shake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtShake91.Location = new System.Drawing.Point(113, 26);
+            this.txtShake91.Name = "txtShake91";
+            this.txtShake91.Size = new System.Drawing.Size(330, 20);
+            this.txtShake91.TabIndex = 12;
+            this.txtShake91.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.Shake91;
+            // 
             // tabControl1
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -167,8 +217,6 @@
             this.tpATHExcel.Controls.Add(this.groupBox5);
             this.tpATHExcel.Controls.Add(this.groupBox4);
             this.tpATHExcel.Controls.Add(this.groupBox3);
-            this.tpATHExcel.Controls.Add(this.nudDT);
-            this.tpATHExcel.Controls.Add(this.label6);
             this.tpATHExcel.Location = new System.Drawing.Point(4, 22);
             this.tpATHExcel.Name = "tpATHExcel";
             this.tpATHExcel.Padding = new System.Windows.Forms.Padding(3);
@@ -181,17 +229,40 @@
             // 
             this.groupBox5.Controls.Add(this.chkCalcDisp);
             this.groupBox5.Controls.Add(this.txtExcelFile);
+            this.groupBox5.Controls.Add(this.label6);
+            this.groupBox5.Controls.Add(this.nudYieldAccel);
             this.groupBox5.Controls.Add(this.btnExport);
-            this.groupBox5.Location = new System.Drawing.Point(17, 248);
+            this.groupBox5.Location = new System.Drawing.Point(16, 200);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(623, 88);
+            this.groupBox5.Size = new System.Drawing.Size(623, 120);
             this.groupBox5.TabIndex = 20;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Export Accelerogram";
             // 
+            // chkCalcDisp
+            // 
+            this.chkCalcDisp.AutoSize = true;
+            this.chkCalcDisp.Checked = global::AccelerationTimeHistoryGen.Properties.Settings.Default.CalcDisp;
+            this.chkCalcDisp.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "CalcDisp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkCalcDisp.Location = new System.Drawing.Point(16, 56);
+            this.chkCalcDisp.Name = "chkCalcDisp";
+            this.chkCalcDisp.Size = new System.Drawing.Size(142, 17);
+            this.chkCalcDisp.TabIndex = 21;
+            this.chkCalcDisp.Text = "Calculate Displacements";
+            this.chkCalcDisp.UseVisualStyleBackColor = true;
+            // 
+            // txtExcelFile
+            // 
+            this.txtExcelFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "ExcelFilePath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtExcelFile.Location = new System.Drawing.Point(16, 24);
+            this.txtExcelFile.Name = "txtExcelFile";
+            this.txtExcelFile.Size = new System.Drawing.Size(472, 20);
+            this.txtExcelFile.TabIndex = 19;
+            this.txtExcelFile.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.ExcelFilePath;
+            // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(512, 48);
+            this.btnExport.Location = new System.Drawing.Point(496, 24);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(75, 23);
             this.btnExport.TabIndex = 18;
@@ -206,16 +277,28 @@
             this.groupBox4.Controls.Add(this.txtATHSurfaceFile);
             this.groupBox4.Controls.Add(this.nudATHCount);
             this.groupBox4.Controls.Add(this.label7);
-            this.groupBox4.Location = new System.Drawing.Point(17, 128);
+            this.groupBox4.Location = new System.Drawing.Point(16, 88);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(623, 103);
             this.groupBox4.TabIndex = 17;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "ATH (Surface - from Shake91)";
             // 
+            // chkIgnoreZeroAccel
+            // 
+            this.chkIgnoreZeroAccel.AutoSize = true;
+            this.chkIgnoreZeroAccel.Checked = global::AccelerationTimeHistoryGen.Properties.Settings.Default.IgnoreZeroBaseAccel;
+            this.chkIgnoreZeroAccel.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "IgnoreZeroBaseAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkIgnoreZeroAccel.Location = new System.Drawing.Point(232, 64);
+            this.chkIgnoreZeroAccel.Name = "chkIgnoreZeroAccel";
+            this.chkIgnoreZeroAccel.Size = new System.Drawing.Size(148, 17);
+            this.chkIgnoreZeroAccel.TabIndex = 15;
+            this.chkIgnoreZeroAccel.Text = "Ignore Zero Accelerations";
+            this.chkIgnoreZeroAccel.UseVisualStyleBackColor = true;
+            // 
             // btnBrowseSurfaceATH
             // 
-            this.btnBrowseSurfaceATH.Location = new System.Drawing.Point(512, 32);
+            this.btnBrowseSurfaceATH.Location = new System.Drawing.Point(496, 24);
             this.btnBrowseSurfaceATH.Name = "btnBrowseSurfaceATH";
             this.btnBrowseSurfaceATH.Size = new System.Drawing.Size(75, 23);
             this.btnBrowseSurfaceATH.TabIndex = 15;
@@ -223,21 +306,57 @@
             this.btnBrowseSurfaceATH.UseVisualStyleBackColor = true;
             this.btnBrowseSurfaceATH.Click += new System.EventHandler(this.btnBrowseSurfaceATH_Click);
             // 
+            // txtATHSurfaceFile
+            // 
+            this.txtATHSurfaceFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "ATHSurface", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtATHSurfaceFile.Location = new System.Drawing.Point(16, 24);
+            this.txtATHSurfaceFile.Name = "txtATHSurfaceFile";
+            this.txtATHSurfaceFile.Size = new System.Drawing.Size(472, 20);
+            this.txtATHSurfaceFile.TabIndex = 13;
+            this.txtATHSurfaceFile.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.ATHSurface;
+            // 
+            // nudATHCount
+            // 
+            this.nudATHCount.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "ATHLineCount", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudATHCount.Location = new System.Drawing.Point(80, 62);
+            this.nudATHCount.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.nudATHCount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudATHCount.Name = "nudATHCount";
+            this.nudATHCount.Size = new System.Drawing.Size(120, 20);
+            this.nudATHCount.TabIndex = 8;
+            this.nudATHCount.Value = global::AccelerationTimeHistoryGen.Properties.Settings.Default.ATHLineCount;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(16, 64);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(58, 13);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Line Count";
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.btnBrowseBaseATH);
             this.groupBox3.Controls.Add(this.txtATHBaseFile);
-            this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Location = new System.Drawing.Point(17, 15);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(623, 97);
+            this.groupBox3.Size = new System.Drawing.Size(623, 65);
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "ATH (Base - from http://peer.berkeley.edu/smcat/search.html)";
             // 
             // btnBrowseBaseATH
             // 
-            this.btnBrowseBaseATH.Location = new System.Drawing.Point(512, 32);
+            this.btnBrowseBaseATH.Location = new System.Drawing.Point(496, 24);
             this.btnBrowseBaseATH.Name = "btnBrowseBaseATH";
             this.btnBrowseBaseATH.Size = new System.Drawing.Size(75, 23);
             this.btnBrowseBaseATH.TabIndex = 14;
@@ -245,56 +364,15 @@
             this.btnBrowseBaseATH.UseVisualStyleBackColor = true;
             this.btnBrowseBaseATH.Click += new System.EventHandler(this.btnBrowseBaseATH_Click);
             // 
-            // label8
+            // txtATHBaseFile
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(28, 64);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(197, 13);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Drag && Drop a Shake91 Time History file";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(32, 66);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(58, 13);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "Line Count";
-            // 
-            // nudDT
-            // 
-            this.nudDT.Location = new System.Drawing.Point(88, 424);
-            this.nudDT.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.nudDT.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudDT.Name = "nudDT";
-            this.nudDT.Size = new System.Drawing.Size(120, 20);
-            this.nudDT.TabIndex = 6;
-            this.nudDT.Value = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.nudDT.Visible = false;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(38, 426);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(44, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "DT (ms)";
-            this.label6.Visible = false;
+            this.txtATHBaseFile.AllowDrop = true;
+            this.txtATHBaseFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "ATHBase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtATHBaseFile.Location = new System.Drawing.Point(16, 24);
+            this.txtATHBaseFile.Name = "txtATHBaseFile";
+            this.txtATHBaseFile.Size = new System.Drawing.Size(472, 20);
+            this.txtATHBaseFile.TabIndex = 12;
+            this.txtATHBaseFile.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.ATHBase;
             // 
             // tpATHGen
             // 
@@ -342,127 +420,29 @@
             this.pbarApp.Name = "pbarApp";
             this.pbarApp.Size = new System.Drawing.Size(100, 16);
             // 
-            // chkCalcDisp
+            // nudYieldAccel
             // 
-            this.chkCalcDisp.AutoSize = true;
-            this.chkCalcDisp.Checked = global::AccelerationTimeHistoryGen.Properties.Settings.Default.CalcDisp;
-            this.chkCalcDisp.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "CalcDisp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkCalcDisp.Location = new System.Drawing.Point(24, 24);
-            this.chkCalcDisp.Name = "chkCalcDisp";
-            this.chkCalcDisp.Size = new System.Drawing.Size(142, 17);
-            this.chkCalcDisp.TabIndex = 21;
-            this.chkCalcDisp.Text = "Calculate Displacements";
-            this.chkCalcDisp.UseVisualStyleBackColor = true;
-            // 
-            // txtExcelFile
-            // 
-            this.txtExcelFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "ExcelFilePath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtExcelFile.Location = new System.Drawing.Point(24, 48);
-            this.txtExcelFile.Name = "txtExcelFile";
-            this.txtExcelFile.Size = new System.Drawing.Size(472, 20);
-            this.txtExcelFile.TabIndex = 19;
-            this.txtExcelFile.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.ExcelFilePath;
-            // 
-            // txtATHSurfaceFile
-            // 
-            this.txtATHSurfaceFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "ATHSurface", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtATHSurfaceFile.Location = new System.Drawing.Point(32, 32);
-            this.txtATHSurfaceFile.Name = "txtATHSurfaceFile";
-            this.txtATHSurfaceFile.Size = new System.Drawing.Size(472, 20);
-            this.txtATHSurfaceFile.TabIndex = 13;
-            this.txtATHSurfaceFile.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.ATHSurface;
-            // 
-            // chkIgnoreZeroAccel
-            // 
-            this.chkIgnoreZeroAccel.AutoSize = true;
-            this.chkIgnoreZeroAccel.Checked = global::AccelerationTimeHistoryGen.Properties.Settings.Default.IgnoreZeroBaseAccel;
-            this.chkIgnoreZeroAccel.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "IgnoreZeroBaseAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkIgnoreZeroAccel.Location = new System.Drawing.Point(256, 70);
-            this.chkIgnoreZeroAccel.Name = "chkIgnoreZeroAccel";
-            this.chkIgnoreZeroAccel.Size = new System.Drawing.Size(148, 17);
-            this.chkIgnoreZeroAccel.TabIndex = 15;
-            this.chkIgnoreZeroAccel.Text = "Ignore Zero Accelerations";
-            this.chkIgnoreZeroAccel.UseVisualStyleBackColor = true;
-            // 
-            // txtATHBaseFile
-            // 
-            this.txtATHBaseFile.AllowDrop = true;
-            this.txtATHBaseFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "ATHBase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtATHBaseFile.Location = new System.Drawing.Point(32, 32);
-            this.txtATHBaseFile.Name = "txtATHBaseFile";
-            this.txtATHBaseFile.Size = new System.Drawing.Size(472, 20);
-            this.txtATHBaseFile.TabIndex = 12;
-            this.txtATHBaseFile.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.ATHBase;
-            // 
-            // nudATHCount
-            // 
-            this.nudATHCount.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "ATHLineCount", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.nudATHCount.Location = new System.Drawing.Point(96, 64);
-            this.nudATHCount.Maximum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            0});
-            this.nudATHCount.Minimum = new decimal(new int[] {
+            this.nudYieldAccel.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "YieldAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudYieldAccel.DecimalPlaces = 4;
+            this.nudYieldAccel.Increment = new decimal(new int[] {
             1,
             0,
             0,
-            0});
-            this.nudATHCount.Name = "nudATHCount";
-            this.nudATHCount.Size = new System.Drawing.Size(120, 20);
-            this.nudATHCount.TabIndex = 8;
-            this.nudATHCount.Value = global::AccelerationTimeHistoryGen.Properties.Settings.Default.ATHLineCount;
+            65536});
+            this.nudYieldAccel.Location = new System.Drawing.Point(128, 88);
+            this.nudYieldAccel.Name = "nudYieldAccel";
+            this.nudYieldAccel.Size = new System.Drawing.Size(120, 20);
+            this.nudYieldAccel.TabIndex = 21;
+            this.nudYieldAccel.Value = global::AccelerationTimeHistoryGen.Properties.Settings.Default.YieldAccel;
             // 
-            // chkCopyFile
+            // label6
             // 
-            this.chkCopyFile.AutoSize = true;
-            this.chkCopyFile.Checked = global::AccelerationTimeHistoryGen.Properties.Settings.Default.CopyTHFile;
-            this.chkCopyFile.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkCopyFile.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "CopyTHFile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkCopyFile.Location = new System.Drawing.Point(27, 55);
-            this.chkCopyFile.Name = "chkCopyFile";
-            this.chkCopyFile.Size = new System.Drawing.Size(214, 17);
-            this.chkCopyFile.TabIndex = 13;
-            this.chkCopyFile.Text = "&Copy Time History file to Shake91 folder";
-            this.chkCopyFile.UseVisualStyleBackColor = true;
-            // 
-            // txtShake91
-            // 
-            this.txtShake91.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.txtShake91.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
-            this.txtShake91.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "Shake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtShake91.Location = new System.Drawing.Point(113, 26);
-            this.txtShake91.Name = "txtShake91";
-            this.txtShake91.Size = new System.Drawing.Size(330, 20);
-            this.txtShake91.TabIndex = 12;
-            this.txtShake91.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.Shake91;
-            // 
-            // txtLP
-            // 
-            this.txtLP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "LP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtLP.Location = new System.Drawing.Point(82, 56);
-            this.txtLP.Name = "txtLP";
-            this.txtLP.Size = new System.Drawing.Size(100, 20);
-            this.txtLP.TabIndex = 8;
-            this.txtLP.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.LP;
-            // 
-            // txtHP
-            // 
-            this.txtHP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "HP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtHP.Location = new System.Drawing.Point(82, 30);
-            this.txtHP.Name = "txtHP";
-            this.txtHP.Size = new System.Drawing.Size(100, 20);
-            this.txtHP.TabIndex = 6;
-            this.txtHP.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.HP;
-            // 
-            // txtDT
-            // 
-            this.txtDT.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AccelerationTimeHistoryGen.Properties.Settings.Default, "DT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtDT.Location = new System.Drawing.Point(82, 84);
-            this.txtDT.Name = "txtDT";
-            this.txtDT.Size = new System.Drawing.Size(100, 20);
-            this.txtDT.TabIndex = 4;
-            this.txtDT.Text = global::AccelerationTimeHistoryGen.Properties.Settings.Default.DT;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(16, 88);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(107, 13);
+            this.label6.TabIndex = 22;
+            this.label6.Text = "Yield Acceleration (g)";
             // 
             // MainWindow
             // 
@@ -484,19 +464,18 @@
             this.groupBox2.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tpATHExcel.ResumeLayout(false);
-            this.tpATHExcel.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDT)).EndInit();
             this.tpATHGen.ResumeLayout(false);
             this.tpATHGen.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -519,11 +498,8 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tpATHGen;
         private System.Windows.Forms.TabPage tpATHExcel;
-        private System.Windows.Forms.NumericUpDown nudDT;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.NumericUpDown nudATHCount;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnBrowseSurfaceATH;
         private System.Windows.Forms.Button btnBrowseBaseATH;
         private System.Windows.Forms.TextBox txtATHSurfaceFile;
@@ -539,6 +515,8 @@
         private System.Windows.Forms.ToolStripProgressBar pbarApp;
         private System.Windows.Forms.CheckBox chkCalcDisp;
         private System.Windows.Forms.CheckBox chkIgnoreZeroAccel;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown nudYieldAccel;
     }
 }
 
