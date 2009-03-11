@@ -134,17 +134,29 @@ namespace THTool
 
         private void bwApp_DoWork(object sender, DoWorkEventArgs e)
         {
-            SurfaceATHMakerOptions sao = new SurfaceATHMakerOptions();
-            sao.InputFilePath = txtATHSurfaceFile.Text;
-            sao.IgnoreZeroAcc = chkIgnoreZeroAccel.Checked;
-            SurfaceATHMaker acm = new SurfaceATHMaker(sao);
-            acm.MaxValues = 8 * (int)nudATHCount.Value;
-            BaseATHMaker bm = new BaseATHMaker(txtATHBaseFile.Text);
+
             ExcelReporterOptions ropt = new ExcelReporterOptions();
             ropt.Worker = this.bwApp;
             ropt.WorkbookFilePath = txtExcelFile.Text;
             ropt.CalculateDisplacements = chkCalcDisp.Checked;
             ropt.YieldAccel = nudYieldAccel.Value;
+
+            SurfaceATHMakerOptions sao = new SurfaceATHMakerOptions();
+            sao.InputFilePath = txtATHSurfaceFile.Text;
+            sao.IgnoreZeroAcc = chkIgnoreZeroAccel.Checked;
+
+            SurfaceATHMaker acm = new SurfaceATHMaker(sao);
+            acm.MaxValues = 8 * (int)nudATHCount.Value;
+            BaseATHMaker bm = new BaseATHMaker(txtATHBaseFile.Text);
+
+            if (File.Exists(txtRPShake91.Text))
+            {
+                RPSiteMakerOptions rpsm_opt = new RPSiteMakerOptions();
+                rpsm_opt.FilePath = txtRPShake91.Text;
+                RPSiteMaker rpsm = new RPSiteMaker(rpsm_opt);
+                ropt.MyRPSiteMaker = rpsm;
+            }
+
             ExcelReporter er = new ExcelReporter(ropt);
             er.MySurfaceATHMaker = acm;
             er.MyBaseATHMaker = bm;
