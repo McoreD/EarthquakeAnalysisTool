@@ -13,13 +13,14 @@ namespace THTool.Helpers
         public BackgroundWorker Worker { get; set; }
         public string WorkbookFilePath { get; set; }
         public bool CalculateDisplacements { get; set; }
+        public RPSiteMaker MyRPSiteMaker { get; set; }
         /// <summary>
         /// Yield Acceleration in g
         /// </summary>
         public decimal YieldAccel { get; set; }
     }
 
-    class ExcelReporter
+    public class ExcelReporter
     {
         private string mPath;
 
@@ -41,12 +42,9 @@ namespace THTool.Helpers
         //private string mXlsFilePath = Path.Combine(System.Windows.Forms.Application.StartupPath, "data.xlsx");
 
         private Microsoft.Office.Interop.Excel.Worksheet mWSheet1 = new Microsoft.Office.Interop.Excel.WorksheetClass();
-        private BackgroundWorker mBwApp;
+        private Worksheet mWSheet2 = new Worksheet();
 
-        public Microsoft.Office.Interop.Excel.Worksheet WorkSheet1
-        {
-            get { return mWSheet1; }
-        }
+        private BackgroundWorker mBwApp;
 
         private ExcelReporterOptions Options { get; set; }
 
@@ -78,11 +76,21 @@ namespace THTool.Helpers
             mWorkBook = mExcelApp.Workbooks.Add(Missing.Value);
 
             mWorkSheets = mWorkBook.Worksheets;
-            mWSheet1 = (Microsoft.Office.Interop.Excel.Worksheet)mWorkSheets.get_Item("Sheet1");
 
-            FillATHData(mWSheet1);
+            mWSheet1 = (Worksheet)mWorkSheets.get_Item("Sheet1");
+            mWSheet1.Name = "ATH and DTH";
+            mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
+            mWSheet2.Name = "Response Spectra";
 
-            GenerateCharts(mWSheet1);
+            if (this.MyBaseATHMaker != null && this.MySurfaceATHMaker != null)
+            {
+                FillATHData(mWSheet1);
+                GenerateChartATH(mWSheet1);
+            }
+            if (this.Options.MyRPSiteMaker != null)
+            {
+                FillRPData(mWSheet2);
+            }
 
             AutofitColumns(mWSheet1, "A1", "Z1");
 
@@ -110,7 +118,14 @@ namespace THTool.Helpers
 
         }
 
-        private void FillATHData(Microsoft.Office.Interop.Excel.Worksheet ws)
+        private void FillRPData(Worksheet ws)
+        {
+            this.Options.MyRPSiteMaker.ReadData();
+            Console.WriteLine(this.Options.MyRPSiteMaker.ATH.Count);
+
+        }
+
+        private void FillATHData(Worksheet ws)
         {
             List<string> accBase = MyBaseATHMaker.ReadATH();
             int dtBase = MyBaseATHMaker.DT;
@@ -284,7 +299,7 @@ namespace THTool.Helpers
             SetNumberFormat(ws, "B1", "E1", "0.0000E+00");
             SetNumberFormat(ws, "I1", "L1", "0.0000E+00");
 
-             mBwApp.ReportProgress(2, "Ready");
+            mBwApp.ReportProgress(2, "Ready");
 
         }
 
@@ -294,18 +309,9 @@ namespace THTool.Helpers
             rng.NumberFormat = numberFormat;
         }
 
-        //private void FillRangeFormula(Worksheet ws, string column, int rows, string data)
-        //{
-        //    Range range = ws.get_Range("
-        //    string[,] arrData = new string[range.Count, 1];
-        //    for (int i = 0; i < arrData.Length; i++)
-        //    {
-        //        arrData[i, 0] = data;
-        //    }
-        //    range.FormulaArray = data;
-        //}
 
-        private void GenerateCharts(Worksheet ws)
+
+        private void GenerateChartATH(Worksheet ws)
         {
             try
             {
@@ -321,13 +327,13 @@ namespace THTool.Helpers
 
                 seriesCollection.NewSeries();
                 seriesCollection.Item(1).Name = "Base";
-                seriesCollection.Item(1).XValues = string.Format("=Sheet1!$A{0}:$A{1}", startRow, MyBaseATHMaker.ATH.Count);
-                seriesCollection.Item(1).Values = string.Format("=Sheet1!$B{0}:$B{1}", startRow, MyBaseATHMaker.ATH.Count);
+                seriesCollection.Item(1).XValues = string.Format("={0}!$A{1}:$A{2}", ws.Name, startRow, MyBaseATHMaker.ATH.Count);
+                seriesCollection.Item(1).Values = string.Format("={0}!$B{1}:$B{2}", ws.Name, startRow, MyBaseATHMaker.ATH.Count);
 
                 seriesCollection.NewSeries();
                 seriesCollection.Item(2).Name = "Surface";
-                seriesCollection.Item(2).XValues = string.Format("=Sheet1!R{0}C8:R{1}C8", startRow, MySurfaceATHMaker.ATH.Count);
-                seriesCollection.Item(2).Values = string.Format("=Sheet1!R{0}C9:R{1}C9", startRow, MySurfaceATHMaker.ATH.Count);
+                seriesCollection.Item(2).XValues = string.Format("={0}!R{1}C8:R{2}C8", ws.Name, startRow, MySurfaceATHMaker.ATH.Count);
+                seriesCollection.Item(2).Values = string.Format("={0}!R{1}C9:R{2}C9", ws.Name, startRow, MySurfaceATHMaker.ATH.Count);
 
                 xlChart.ChartType = XlChartType.xlXYScatterSmoothNoMarkers;
 

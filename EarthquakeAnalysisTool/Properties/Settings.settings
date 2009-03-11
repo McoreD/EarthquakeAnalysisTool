@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AccelerationTimeHistoryGen.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="THTool.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="DT" Type="System.String" Scope="User">
@@ -37,6 +37,9 @@
     </Setting>
     <Setting Name="YieldAccel" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0.0500</Value>
+    </Setting>
+    <Setting Name="RPShake91" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

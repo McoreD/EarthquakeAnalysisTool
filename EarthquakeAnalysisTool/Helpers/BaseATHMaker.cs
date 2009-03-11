@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
 using THTool.Helpers;
@@ -10,7 +9,7 @@ namespace THTool
     /// <summary>
     /// Reads Shake91 input file and generates an accelerogram in Excel
     /// </summary>
-    class BaseATHMaker : THProcessor
+    public class BaseATHMaker : FileProcessor
     {
         private string mPath;
         /// <summary>
@@ -28,36 +27,11 @@ namespace THTool
 
         public int DT { get { return (int)(mDT * 1000); } private set { ; } }
 
-        private void RemoveDoubleSpaces(ref string line)
-        {
-            line = line.Trim();
-            while (line.Contains("  "))
-            {
-                line = Regex.Replace(line, "  ", " ");
-            }
-        }
-
-        private List<string> SplitLine(string line)
-        {
-            List<string> acc = new List<string>();
-            string[] nums = Regex.Split(line, " ");
-            foreach (string s in nums)
-            {
-                acc.Add(s);
-            }
-            return acc;
-        }
-
-        private bool IsValidLine(string line)
-        {
-            return SplitLine(line).Count > 0;
-        }
-
         public List<string> ReadATH()
         {
             using (StreamReader sr = new StreamReader(mPath))
             {
-                ATH.Clear();
+                this.ATH.Clear();
                 string line = sr.ReadLine();
                 this.Title = sr.ReadLine(); // Title
                 line = sr.ReadLine();
@@ -72,21 +46,19 @@ namespace THTool
                 while (!sr.EndOfStream)
                 {
                     line = sr.ReadLine();
-                    RemoveDoubleSpaces(ref line);
-                    foreach (string s in SplitLine(line))
+                    foreach (string s in SplitLineToRow(line))
                     {
-                        ATH.Add(s);
+                        this.ATH.Add(s);
                         if (ATH.Count == NTPS)
                         {
-                            return ATH;
+                            return this.ATH;
                         }
                     }
                 }
 
             }
 
-
-            return ATH;
+            return this.ATH;
         }
 
 

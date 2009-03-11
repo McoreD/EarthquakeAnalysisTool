@@ -43,8 +43,9 @@
   <ItemGroup>
     <Compile Include="Helpers\BaseATHMaker.cs" />
     <Compile Include="Helpers\ExcelReporter.cs" />
+    <Compile Include="Helpers\RPSiteMaker.cs" />
     <Compile Include="Helpers\SurfaceATHMaker.cs" />
-    <Compile Include="Helpers\THProcessor.cs" />
+    <Compile Include="Helpers\FileProcessor.cs" />
     <Compile Include="SciFormat.cs" />
     <Compile Include="Helpers\ATHMaker.cs" />
     <Compile Include="MainWindow.cs">
