@@ -39,8 +39,6 @@ namespace THTool.Helpers
 
         public string ExcelFilePath { get; set; }
 
-        //private string mXlsFilePath = Path.Combine(System.Windows.Forms.Application.StartupPath, "data.xlsx");
-
         private Microsoft.Office.Interop.Excel.Worksheet mWSheet1 = new Microsoft.Office.Interop.Excel.WorksheetClass();
         private Worksheet mWSheet2 = new Worksheet();
 
@@ -78,9 +76,9 @@ namespace THTool.Helpers
             mWorkSheets = mWorkBook.Worksheets;
 
             mWSheet1 = (Worksheet)mWorkSheets.get_Item("Sheet1");
-            mWSheet1.Name = "ATH and DTH";
+           // mWSheet1.Name = "ATH and DTH";
             mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
-            mWSheet2.Name = "Response Spectra";
+          //  mWSheet2.Name = "Response Spectra";
 
             if (this.MyBaseATHMaker != null && this.MySurfaceATHMaker != null)
             {
@@ -90,6 +88,7 @@ namespace THTool.Helpers
             if (this.Options.MyRPSiteMaker != null)
             {
                 FillRPData(mWSheet2);
+                GenerateChartRP(mWSheet2);
             }
 
             AutofitColumns(mWSheet1, "A1", "Z1");
@@ -99,6 +98,8 @@ namespace THTool.Helpers
             time1 = (Range)mWSheet1.Columns["H", Missing.Value];
             time1.ColumnWidth = 8.5;
 
+            mWSheet1.Name = "ATH and DTH";
+            mWSheet2.Name = "Response Spectra";
             mWSheet1.Select(true);
 
             string ext = Path.GetExtension(mPath);
@@ -120,9 +121,23 @@ namespace THTool.Helpers
 
         private void FillRPData(Worksheet ws)
         {
-            this.Options.MyRPSiteMaker.ReadData();
-            Console.WriteLine(this.Options.MyRPSiteMaker.ATH.Count);
+            ws.Cells[2, 1] = "Period (s)";
+            ws.Cells[2, 2] = "Accl(m/ss)"; 
 
+            this.Options.MyRPSiteMaker.ReadData();
+            if (this.Options.MyRPSiteMaker.ATH.Count > 0 && this.Options.MyRPSiteMaker.PeriodList.Count > 0)
+            {
+                List<string> p = this.Options.MyRPSiteMaker.PeriodList;
+                List<string> acc = this.Options.MyRPSiteMaker.ATH;
+                double[,] arrData = new double[p.Count, 2];
+                for (int i = 0; i < p.Count; i++)
+                {
+                    double.TryParse(p[i], out arrData[i, 0]);
+                    double.TryParse(acc[i], out arrData[i, 1]);
+                }
+                Range rng = ws.get_Range(string.Format("A{0}", startRow), string.Format("B{0}", startRow + acc.Count - 1));
+                rng.Value2 = arrData;
+            }
         }
 
         private void FillATHData(Worksheet ws)
@@ -309,7 +324,41 @@ namespace THTool.Helpers
             rng.NumberFormat = numberFormat;
         }
 
+        private void GenerateChartRP(Worksheet ws)
+        {
+            ChartObjects chartObjs = (ChartObjects)ws.ChartObjects(Type.Missing);
+            ChartObject chartObj = chartObjs.Add(300, 20, 640, 480);
+            Chart xlChart = chartObj.Chart;
 
+            SeriesCollection seriesCollection = (SeriesCollection)xlChart.SeriesCollection(Type.Missing);
+
+            seriesCollection.NewSeries();
+            seriesCollection.Item(1).Name = "Shake91";
+            seriesCollection.Item(1).XValues = string.Format("={0}!$A{1}:$A{2}", ws.Name, startRow, this.Options.MyRPSiteMaker.PeriodList.Count);
+            seriesCollection.Item(1).Values = string.Format("={0}!$B{1}:$B{2}", ws.Name, startRow, this.Options.MyRPSiteMaker.ATH.Count);
+
+            xlChart.ChartType = XlChartType.xlXYScatterSmoothNoMarkers;
+
+            // Customize axes:
+            Axis xAxis = (Axis)xlChart.Axes(XlAxisType.xlCategory,
+                XlAxisGroup.xlPrimary);
+            xAxis.HasTitle = true;
+            xAxis.AxisTitle.Text = "Period (s)";
+
+            Axis yAxis = (Axis)xlChart.Axes(XlAxisType.xlValue,
+                XlAxisGroup.xlPrimary);
+            yAxis.HasTitle = true;
+            yAxis.AxisTitle.Text = "Acceleration (g)";
+
+            // Add title:
+            xlChart.HasTitle = true;
+            xlChart.ChartTitle.Text = "Response Spectra (Shake91)";
+            // Remove legend:
+            xlChart.HasLegend = true;
+
+            xlChart.Location(XlChartLocation.xlLocationAsNewSheet, "RP (Shake91)");
+
+        }
 
         private void GenerateChartATH(Worksheet ws)
         {
