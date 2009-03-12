@@ -67,6 +67,7 @@
             this.statusApp = new System.Windows.Forms.ToolStripStatusLabel();
             this.pbarApp = new System.Windows.Forms.ToolStripProgressBar();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.btnExportATH = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -426,6 +427,8 @@
             // 
             // tpATHGen
             // 
+            this.tpATHGen.AllowDrop = true;
+            this.tpATHGen.Controls.Add(this.btnExportATH);
             this.tpATHGen.Controls.Add(this.label4);
             this.tpATHGen.Controls.Add(this.groupBox2);
             this.tpATHGen.Controls.Add(this.groupBox1);
@@ -436,6 +439,7 @@
             this.tpATHGen.TabIndex = 0;
             this.tpATHGen.Text = "ATH Generator (Experimental)";
             this.tpATHGen.UseVisualStyleBackColor = true;
+            this.tpATHGen.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpATHGen_DragDrop);
             this.tpATHGen.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpATHGen_DragEnter);
             // 
             // txtExcelFile
@@ -449,7 +453,7 @@
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(496, 32);
+            this.btnExport.Location = new System.Drawing.Point(512, 32);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(75, 23);
             this.btnExport.TabIndex = 18;
@@ -493,12 +497,22 @@
             // 
             this.groupBox7.Controls.Add(this.txtExcelFile);
             this.groupBox7.Controls.Add(this.btnExport);
-            this.groupBox7.Location = new System.Drawing.Point(40, 392);
+            this.groupBox7.Location = new System.Drawing.Point(32, 392);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(616, 72);
+            this.groupBox7.Size = new System.Drawing.Size(632, 72);
             this.groupBox7.TabIndex = 20;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Export to Excel";
+            // 
+            // btnExportATH
+            // 
+            this.btnExportATH.Location = new System.Drawing.Point(528, 296);
+            this.btnExportATH.Name = "btnExportATH";
+            this.btnExportATH.Size = new System.Drawing.Size(75, 23);
+            this.btnExportATH.TabIndex = 13;
+            this.btnExportATH.Text = "&Export";
+            this.btnExportATH.UseVisualStyleBackColor = true;
+            this.btnExportATH.Click += new System.EventHandler(this.btnExportATH_Click);
             // 
             // MainWindow
             // 
@@ -584,6 +598,7 @@
         private System.Windows.Forms.Button btnBrowseRP1;
         private System.Windows.Forms.TextBox txtRPShake91;
         private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button btnExportATH;
     }
 }
 

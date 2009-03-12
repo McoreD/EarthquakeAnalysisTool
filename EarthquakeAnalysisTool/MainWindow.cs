@@ -56,15 +56,6 @@ namespace THTool
             }
         }
 
-        private void Form1_DragDrop(object sender, DragEventArgs e)
-        {
-            string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            if (paths.Length >= 1)
-            {
-                mAthGen = new ATHMaker(paths);
-            }
-        }
-
         private void tpATHGen_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -194,6 +185,20 @@ namespace THTool
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             Settings.Default.Save();
+        }
+
+        private void tpATHGen_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
+            if (paths.Length >= 1)
+            {
+                mAthGen = new ATHMaker(paths);
+            }
+        }
+
+        private void btnExportATH_Click(object sender, EventArgs e)
+        {
+
         }
 
     }
