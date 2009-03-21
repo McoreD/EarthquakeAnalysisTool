@@ -32,6 +32,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nudDT = new System.Windows.Forms.NumericUpDown();
+            this.nudLP = new System.Windows.Forms.NumericUpDown();
+            this.nudHP = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -66,12 +69,12 @@
             this.txtRPShake91 = new System.Windows.Forms.TextBox();
             this.txtExcelFile = new System.Windows.Forms.TextBox();
             this.txtShake91ATH = new System.Windows.Forms.TextBox();
-            this.txtLP = new System.Windows.Forms.TextBox();
-            this.txtHP = new System.Windows.Forms.TextBox();
-            this.txtDT = new System.Windows.Forms.TextBox();
             this.chkCopyFile = new System.Windows.Forms.CheckBox();
             this.txtShake91 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDT)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLP)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHP)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tcExcel.SuspendLayout();
             this.tpATHExcel.SuspendLayout();
@@ -92,7 +95,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(29, 87);
+            this.label2.Location = new System.Drawing.Point(16, 72);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(36, 13);
             this.label2.TabIndex = 2;
@@ -101,7 +104,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 33);
+            this.label1.Location = new System.Drawing.Point(16, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 5;
@@ -110,7 +113,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(29, 59);
+            this.label3.Location = new System.Drawing.Point(16, 48);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(42, 13);
             this.label3.TabIndex = 7;
@@ -118,11 +121,11 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.txtLP);
+            this.groupBox1.Controls.Add(this.nudDT);
+            this.groupBox1.Controls.Add(this.nudLP);
+            this.groupBox1.Controls.Add(this.nudHP);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.txtHP);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txtDT);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(16, 16);
             this.groupBox1.Name = "groupBox1";
@@ -130,6 +133,36 @@
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
+            // 
+            // nudDT
+            // 
+            this.nudDT.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "DT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudDT.DecimalPlaces = 3;
+            this.nudDT.Location = new System.Drawing.Point(80, 72);
+            this.nudDT.Name = "nudDT";
+            this.nudDT.Size = new System.Drawing.Size(120, 20);
+            this.nudDT.TabIndex = 11;
+            this.nudDT.Value = global::THTool.Properties.Settings.Default.DT;
+            // 
+            // nudLP
+            // 
+            this.nudLP.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "LP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudLP.DecimalPlaces = 2;
+            this.nudLP.Location = new System.Drawing.Point(80, 48);
+            this.nudLP.Name = "nudLP";
+            this.nudLP.Size = new System.Drawing.Size(120, 20);
+            this.nudLP.TabIndex = 10;
+            this.nudLP.Value = global::THTool.Properties.Settings.Default.LP;
+            // 
+            // nudHP
+            // 
+            this.nudHP.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "HP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudHP.DecimalPlaces = 2;
+            this.nudHP.Location = new System.Drawing.Point(80, 24);
+            this.nudHP.Name = "nudHP";
+            this.nudHP.Size = new System.Drawing.Size(120, 20);
+            this.nudHP.TabIndex = 9;
+            this.nudHP.Value = global::THTool.Properties.Settings.Default.HP;
             // 
             // label4
             // 
@@ -497,33 +530,6 @@
             this.txtShake91ATH.TabIndex = 20;
             this.txtShake91ATH.Text = global::THTool.Properties.Settings.Default.Shake91ATHFile;
             // 
-            // txtLP
-            // 
-            this.txtLP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "LP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtLP.Location = new System.Drawing.Point(82, 56);
-            this.txtLP.Name = "txtLP";
-            this.txtLP.Size = new System.Drawing.Size(100, 20);
-            this.txtLP.TabIndex = 8;
-            this.txtLP.Text = global::THTool.Properties.Settings.Default.LP;
-            // 
-            // txtHP
-            // 
-            this.txtHP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "HP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtHP.Location = new System.Drawing.Point(82, 30);
-            this.txtHP.Name = "txtHP";
-            this.txtHP.Size = new System.Drawing.Size(100, 20);
-            this.txtHP.TabIndex = 6;
-            this.txtHP.Text = global::THTool.Properties.Settings.Default.HP;
-            // 
-            // txtDT
-            // 
-            this.txtDT.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "DT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtDT.Location = new System.Drawing.Point(82, 84);
-            this.txtDT.Name = "txtDT";
-            this.txtDT.Size = new System.Drawing.Size(100, 20);
-            this.txtDT.TabIndex = 4;
-            this.txtDT.Text = global::THTool.Properties.Settings.Default.DT;
-            // 
             // chkCopyFile
             // 
             this.chkCopyFile.AutoSize = true;
@@ -564,6 +570,9 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDT)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLP)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHP)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tcExcel.ResumeLayout(false);
@@ -595,10 +604,7 @@
         #endregion
 
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtDT;
-        private System.Windows.Forms.TextBox txtHP;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtLP;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label4;
@@ -637,6 +643,9 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TextBox txtShake91ATH;
+        private System.Windows.Forms.NumericUpDown nudLP;
+        private System.Windows.Forms.NumericUpDown nudHP;
+        private System.Windows.Forms.NumericUpDown nudDT;
     }
 }
 

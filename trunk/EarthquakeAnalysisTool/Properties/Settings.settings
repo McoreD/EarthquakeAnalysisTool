@@ -2,13 +2,13 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="THTool.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="DT" Type="System.String" Scope="User">
-      <Value Profile="(Default)">.0100</Value>
+    <Setting Name="DT" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.0100</Value>
     </Setting>
-    <Setting Name="LP" Type="System.String" Scope="User">
+    <Setting Name="LP" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">15.0</Value>
     </Setting>
-    <Setting Name="HP" Type="System.String" Scope="User">
+    <Setting Name="HP" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0.2</Value>
     </Setting>
     <Setting Name="Shake91" Type="System.String" Scope="User">

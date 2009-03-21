@@ -25,10 +25,10 @@ namespace THTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".0100")]
-        public string DT {
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0100")]
+        public decimal DT {
             get {
-                return ((string)(this["DT"]));
+                return ((decimal)(this["DT"]));
             }
             set {
                 this["DT"] = value;
@@ -38,9 +38,9 @@ namespace THTool.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("15.0")]
-        public string LP {
+        public decimal LP {
             get {
-                return ((string)(this["LP"]));
+                return ((decimal)(this["LP"]));
             }
             set {
                 this["LP"] = value;
@@ -50,9 +50,9 @@ namespace THTool.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.2")]
-        public string HP {
+        public decimal HP {
             get {
-                return ((string)(this["HP"]));
+                return ((decimal)(this["HP"]));
             }
             set {
                 this["HP"] = value;
