@@ -32,56 +32,61 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtLP = new System.Windows.Forms.TextBox();
-            this.txtHP = new System.Windows.Forms.TextBox();
-            this.txtDT = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.chkCopyFile = new System.Windows.Forms.CheckBox();
-            this.txtShake91 = new System.Windows.Forms.TextBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tcExcel = new System.Windows.Forms.TabControl();
             this.tpATHExcel = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.chkCalcDisp = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.nudYieldAccel = new System.Windows.Forms.NumericUpDown();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.chkIgnoreZeroAccel = new System.Windows.Forms.CheckBox();
             this.btnBrowseSurfaceATH = new System.Windows.Forms.Button();
-            this.txtATHSurfaceFile = new System.Windows.Forms.TextBox();
-            this.nudATHCount = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnBrowseBaseATH = new System.Windows.Forms.Button();
-            this.txtATHBaseFile = new System.Windows.Forms.TextBox();
             this.tpRP = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.btnBrowseRP1 = new System.Windows.Forms.Button();
-            this.txtRPShake91 = new System.Windows.Forms.TextBox();
-            this.tpATHGen = new System.Windows.Forms.TabPage();
-            this.txtExcelFile = new System.Windows.Forms.TextBox();
+            this.btnExportATH = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.bwApp = new System.ComponentModel.BackgroundWorker();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusApp = new System.Windows.Forms.ToolStripStatusLabel();
             this.pbarApp = new System.Windows.Forms.ToolStripProgressBar();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.btnExportATH = new System.Windows.Forms.Button();
+            this.tcMain = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.chkCalcDisp = new System.Windows.Forms.CheckBox();
+            this.nudYieldAccel = new System.Windows.Forms.NumericUpDown();
+            this.chkIgnoreZeroAccel = new System.Windows.Forms.CheckBox();
+            this.txtATHSurfaceFile = new System.Windows.Forms.TextBox();
+            this.nudATHCount = new System.Windows.Forms.NumericUpDown();
+            this.txtATHBaseFile = new System.Windows.Forms.TextBox();
+            this.txtRPShake91 = new System.Windows.Forms.TextBox();
+            this.txtExcelFile = new System.Windows.Forms.TextBox();
+            this.txtShake91ATH = new System.Windows.Forms.TextBox();
+            this.txtLP = new System.Windows.Forms.TextBox();
+            this.txtHP = new System.Windows.Forms.TextBox();
+            this.txtDT = new System.Windows.Forms.TextBox();
+            this.chkCopyFile = new System.Windows.Forms.CheckBox();
+            this.txtShake91 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tcExcel.SuspendLayout();
             this.tpATHExcel.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).BeginInit();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.tpRP.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.tpATHGen.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.tcMain.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -119,48 +124,21 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtDT);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(23, 44);
+            this.groupBox1.Location = new System.Drawing.Point(16, 16);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(317, 124);
+            this.groupBox1.Size = new System.Drawing.Size(480, 124);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
             // 
-            // txtLP
-            // 
-            this.txtLP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "LP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtLP.Location = new System.Drawing.Point(82, 56);
-            this.txtLP.Name = "txtLP";
-            this.txtLP.Size = new System.Drawing.Size(100, 20);
-            this.txtLP.TabIndex = 8;
-            this.txtLP.Text = global::THTool.Properties.Settings.Default.LP;
-            // 
-            // txtHP
-            // 
-            this.txtHP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "HP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtHP.Location = new System.Drawing.Point(82, 30);
-            this.txtHP.Name = "txtHP";
-            this.txtHP.Size = new System.Drawing.Size(100, 20);
-            this.txtHP.TabIndex = 6;
-            this.txtHP.Text = global::THTool.Properties.Settings.Default.HP;
-            // 
-            // txtDT
-            // 
-            this.txtDT.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "DT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtDT.Location = new System.Drawing.Point(82, 84);
-            this.txtDT.Name = "txtDT";
-            this.txtDT.Size = new System.Drawing.Size(100, 20);
-            this.txtDT.TabIndex = 4;
-            this.txtDT.Text = global::THTool.Properties.Settings.Default.DT;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 17);
+            this.label4.Location = new System.Drawing.Point(16, 152);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(290, 13);
+            this.label4.Size = new System.Drawing.Size(235, 13);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Drag && Drop one or more raw acceleration time history files...";
+            this.label4.Text = "Drag && Drop a raw acceleration time history file...";
             // 
             // label5
             // 
@@ -176,7 +154,7 @@
             this.groupBox2.Controls.Add(this.chkCopyFile);
             this.groupBox2.Controls.Add(this.txtShake91);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Location = new System.Drawing.Point(23, 183);
+            this.groupBox2.Location = new System.Drawing.Point(16, 216);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(479, 88);
             this.groupBox2.TabIndex = 12;
@@ -184,40 +162,16 @@
             this.groupBox2.Text = "Options";
             this.groupBox2.Visible = false;
             // 
-            // chkCopyFile
+            // tcExcel
             // 
-            this.chkCopyFile.AutoSize = true;
-            this.chkCopyFile.Checked = global::THTool.Properties.Settings.Default.CopyTHFile;
-            this.chkCopyFile.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkCopyFile.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "CopyTHFile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkCopyFile.Location = new System.Drawing.Point(27, 55);
-            this.chkCopyFile.Name = "chkCopyFile";
-            this.chkCopyFile.Size = new System.Drawing.Size(214, 17);
-            this.chkCopyFile.TabIndex = 13;
-            this.chkCopyFile.Text = "&Copy Time History file to Shake91 folder";
-            this.chkCopyFile.UseVisualStyleBackColor = true;
-            // 
-            // txtShake91
-            // 
-            this.txtShake91.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.txtShake91.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
-            this.txtShake91.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "Shake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtShake91.Location = new System.Drawing.Point(113, 26);
-            this.txtShake91.Name = "txtShake91";
-            this.txtShake91.Size = new System.Drawing.Size(330, 20);
-            this.txtShake91.TabIndex = 12;
-            this.txtShake91.Text = global::THTool.Properties.Settings.Default.Shake91;
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tpATHExcel);
-            this.tabControl1.Controls.Add(this.tpRP);
-            this.tabControl1.Controls.Add(this.tpATHGen);
-            this.tabControl1.Location = new System.Drawing.Point(16, 16);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(664, 368);
-            this.tabControl1.TabIndex = 13;
+            this.tcExcel.Controls.Add(this.tpATHExcel);
+            this.tcExcel.Controls.Add(this.tpRP);
+            this.tcExcel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tcExcel.Location = new System.Drawing.Point(3, 3);
+            this.tcExcel.Name = "tcExcel";
+            this.tcExcel.SelectedIndex = 0;
+            this.tcExcel.Size = new System.Drawing.Size(690, 368);
+            this.tcExcel.TabIndex = 13;
             // 
             // tpATHExcel
             // 
@@ -227,7 +181,7 @@
             this.tpATHExcel.Location = new System.Drawing.Point(4, 22);
             this.tpATHExcel.Name = "tpATHExcel";
             this.tpATHExcel.Padding = new System.Windows.Forms.Padding(3);
-            this.tpATHExcel.Size = new System.Drawing.Size(656, 342);
+            this.tpATHExcel.Size = new System.Drawing.Size(682, 342);
             this.tpATHExcel.TabIndex = 1;
             this.tpATHExcel.Text = "Accelerogram Maker";
             this.tpATHExcel.UseVisualStyleBackColor = true;
@@ -244,18 +198,6 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Options";
             // 
-            // chkCalcDisp
-            // 
-            this.chkCalcDisp.AutoSize = true;
-            this.chkCalcDisp.Checked = global::THTool.Properties.Settings.Default.CalcDisp;
-            this.chkCalcDisp.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "CalcDisp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkCalcDisp.Location = new System.Drawing.Point(16, 24);
-            this.chkCalcDisp.Name = "chkCalcDisp";
-            this.chkCalcDisp.Size = new System.Drawing.Size(142, 17);
-            this.chkCalcDisp.TabIndex = 21;
-            this.chkCalcDisp.Text = "Calculate Displacements";
-            this.chkCalcDisp.UseVisualStyleBackColor = true;
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -264,21 +206,6 @@
             this.label6.Size = new System.Drawing.Size(107, 13);
             this.label6.TabIndex = 22;
             this.label6.Text = "Yield Acceleration (g)";
-            // 
-            // nudYieldAccel
-            // 
-            this.nudYieldAccel.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "YieldAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.nudYieldAccel.DecimalPlaces = 4;
-            this.nudYieldAccel.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.nudYieldAccel.Location = new System.Drawing.Point(128, 56);
-            this.nudYieldAccel.Name = "nudYieldAccel";
-            this.nudYieldAccel.Size = new System.Drawing.Size(120, 20);
-            this.nudYieldAccel.TabIndex = 21;
-            this.nudYieldAccel.Value = global::THTool.Properties.Settings.Default.YieldAccel;
             // 
             // groupBox4
             // 
@@ -294,18 +221,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "ATH (Surface - from Shake91)";
             // 
-            // chkIgnoreZeroAccel
-            // 
-            this.chkIgnoreZeroAccel.AutoSize = true;
-            this.chkIgnoreZeroAccel.Checked = global::THTool.Properties.Settings.Default.IgnoreZeroBaseAccel;
-            this.chkIgnoreZeroAccel.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "IgnoreZeroBaseAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkIgnoreZeroAccel.Location = new System.Drawing.Point(232, 64);
-            this.chkIgnoreZeroAccel.Name = "chkIgnoreZeroAccel";
-            this.chkIgnoreZeroAccel.Size = new System.Drawing.Size(148, 17);
-            this.chkIgnoreZeroAccel.TabIndex = 15;
-            this.chkIgnoreZeroAccel.Text = "Ignore Zero Accelerations";
-            this.chkIgnoreZeroAccel.UseVisualStyleBackColor = true;
-            // 
             // btnBrowseSurfaceATH
             // 
             this.btnBrowseSurfaceATH.Location = new System.Drawing.Point(496, 24);
@@ -315,34 +230,6 @@
             this.btnBrowseSurfaceATH.Text = "&Browse";
             this.btnBrowseSurfaceATH.UseVisualStyleBackColor = true;
             this.btnBrowseSurfaceATH.Click += new System.EventHandler(this.btnBrowseSurfaceATH_Click);
-            // 
-            // txtATHSurfaceFile
-            // 
-            this.txtATHSurfaceFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "ATHSurface", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtATHSurfaceFile.Location = new System.Drawing.Point(16, 24);
-            this.txtATHSurfaceFile.Name = "txtATHSurfaceFile";
-            this.txtATHSurfaceFile.Size = new System.Drawing.Size(472, 20);
-            this.txtATHSurfaceFile.TabIndex = 13;
-            this.txtATHSurfaceFile.Text = global::THTool.Properties.Settings.Default.ATHSurface;
-            // 
-            // nudATHCount
-            // 
-            this.nudATHCount.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "ATHLineCount", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.nudATHCount.Location = new System.Drawing.Point(80, 62);
-            this.nudATHCount.Maximum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            0});
-            this.nudATHCount.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudATHCount.Name = "nudATHCount";
-            this.nudATHCount.Size = new System.Drawing.Size(120, 20);
-            this.nudATHCount.TabIndex = 8;
-            this.nudATHCount.Value = global::THTool.Properties.Settings.Default.ATHLineCount;
             // 
             // label7
             // 
@@ -374,23 +261,13 @@
             this.btnBrowseBaseATH.UseVisualStyleBackColor = true;
             this.btnBrowseBaseATH.Click += new System.EventHandler(this.btnBrowseBaseATH_Click);
             // 
-            // txtATHBaseFile
-            // 
-            this.txtATHBaseFile.AllowDrop = true;
-            this.txtATHBaseFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "ATHBase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtATHBaseFile.Location = new System.Drawing.Point(16, 24);
-            this.txtATHBaseFile.Name = "txtATHBaseFile";
-            this.txtATHBaseFile.Size = new System.Drawing.Size(472, 20);
-            this.txtATHBaseFile.TabIndex = 12;
-            this.txtATHBaseFile.Text = global::THTool.Properties.Settings.Default.ATHBase;
-            // 
             // tpRP
             // 
             this.tpRP.Controls.Add(this.groupBox6);
             this.tpRP.Location = new System.Drawing.Point(4, 22);
             this.tpRP.Name = "tpRP";
             this.tpRP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpRP.Size = new System.Drawing.Size(656, 342);
+            this.tpRP.Size = new System.Drawing.Size(682, 342);
             this.tpRP.TabIndex = 2;
             this.tpRP.Text = "Reponse Spectra Generator";
             this.tpRP.UseVisualStyleBackColor = true;
@@ -415,41 +292,15 @@
             this.btnBrowseRP1.Text = "&Browse";
             this.btnBrowseRP1.UseVisualStyleBackColor = true;
             // 
-            // txtRPShake91
+            // btnExportATH
             // 
-            this.txtRPShake91.AllowDrop = true;
-            this.txtRPShake91.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "RPShake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtRPShake91.Location = new System.Drawing.Point(16, 24);
-            this.txtRPShake91.Name = "txtRPShake91";
-            this.txtRPShake91.Size = new System.Drawing.Size(472, 20);
-            this.txtRPShake91.TabIndex = 12;
-            this.txtRPShake91.Text = global::THTool.Properties.Settings.Default.RPShake91;
-            // 
-            // tpATHGen
-            // 
-            this.tpATHGen.AllowDrop = true;
-            this.tpATHGen.Controls.Add(this.btnExportATH);
-            this.tpATHGen.Controls.Add(this.label4);
-            this.tpATHGen.Controls.Add(this.groupBox2);
-            this.tpATHGen.Controls.Add(this.groupBox1);
-            this.tpATHGen.Location = new System.Drawing.Point(4, 22);
-            this.tpATHGen.Name = "tpATHGen";
-            this.tpATHGen.Padding = new System.Windows.Forms.Padding(3);
-            this.tpATHGen.Size = new System.Drawing.Size(656, 342);
-            this.tpATHGen.TabIndex = 0;
-            this.tpATHGen.Text = "ATH Generator (Experimental)";
-            this.tpATHGen.UseVisualStyleBackColor = true;
-            this.tpATHGen.DragDrop += new System.Windows.Forms.DragEventHandler(this.tpATHGen_DragDrop);
-            this.tpATHGen.DragEnter += new System.Windows.Forms.DragEventHandler(this.tpATHGen_DragEnter);
-            // 
-            // txtExcelFile
-            // 
-            this.txtExcelFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "ExcelFilePath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtExcelFile.Location = new System.Drawing.Point(16, 32);
-            this.txtExcelFile.Name = "txtExcelFile";
-            this.txtExcelFile.Size = new System.Drawing.Size(472, 20);
-            this.txtExcelFile.TabIndex = 19;
-            this.txtExcelFile.Text = global::THTool.Properties.Settings.Default.ExcelFilePath;
+            this.btnExportATH.Location = new System.Drawing.Point(501, 173);
+            this.btnExportATH.Name = "btnExportATH";
+            this.btnExportATH.Size = new System.Drawing.Size(75, 23);
+            this.btnExportATH.TabIndex = 13;
+            this.btnExportATH.Text = "&Export";
+            this.btnExportATH.UseVisualStyleBackColor = true;
+            this.btnExportATH.Click += new System.EventHandler(this.btnExportATH_Click);
             // 
             // btnExport
             // 
@@ -474,16 +325,16 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusApp,
             this.pbarApp});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 479);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 506);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(707, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(724, 22);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // statusApp
             // 
             this.statusApp.Name = "statusApp";
-            this.statusApp.Size = new System.Drawing.Size(590, 17);
+            this.statusApp.Size = new System.Drawing.Size(607, 17);
             this.statusApp.Spring = true;
             this.statusApp.Text = "Ready";
             this.statusApp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -497,32 +348,214 @@
             // 
             this.groupBox7.Controls.Add(this.txtExcelFile);
             this.groupBox7.Controls.Add(this.btnExport);
-            this.groupBox7.Location = new System.Drawing.Point(32, 392);
+            this.groupBox7.Location = new System.Drawing.Point(16, 376);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(632, 72);
             this.groupBox7.TabIndex = 20;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Export to Excel";
             // 
-            // btnExportATH
+            // tcMain
             // 
-            this.btnExportATH.Location = new System.Drawing.Point(528, 296);
-            this.btnExportATH.Name = "btnExportATH";
-            this.btnExportATH.Size = new System.Drawing.Size(75, 23);
-            this.btnExportATH.TabIndex = 13;
-            this.btnExportATH.Text = "&Export";
-            this.btnExportATH.UseVisualStyleBackColor = true;
-            this.btnExportATH.Click += new System.EventHandler(this.btnExportATH_Click);
+            this.tcMain.Controls.Add(this.tabPage1);
+            this.tcMain.Controls.Add(this.tabPage2);
+            this.tcMain.Location = new System.Drawing.Point(8, 8);
+            this.tcMain.Name = "tcMain";
+            this.tcMain.SelectedIndex = 0;
+            this.tcMain.Size = new System.Drawing.Size(704, 488);
+            this.tcMain.TabIndex = 21;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.tcExcel);
+            this.tabPage1.Controls.Add(this.groupBox7);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(696, 462);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Excel Reporter";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.txtShake91ATH);
+            this.tabPage2.Controls.Add(this.btnExportATH);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.groupBox1);
+            this.tabPage2.Controls.Add(this.groupBox2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(696, 462);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "ATH Generator";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // chkCalcDisp
+            // 
+            this.chkCalcDisp.AutoSize = true;
+            this.chkCalcDisp.Checked = global::THTool.Properties.Settings.Default.CalcDisp;
+            this.chkCalcDisp.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "CalcDisp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkCalcDisp.Location = new System.Drawing.Point(16, 24);
+            this.chkCalcDisp.Name = "chkCalcDisp";
+            this.chkCalcDisp.Size = new System.Drawing.Size(142, 17);
+            this.chkCalcDisp.TabIndex = 21;
+            this.chkCalcDisp.Text = "Calculate Displacements";
+            this.chkCalcDisp.UseVisualStyleBackColor = true;
+            // 
+            // nudYieldAccel
+            // 
+            this.nudYieldAccel.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "YieldAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudYieldAccel.DecimalPlaces = 4;
+            this.nudYieldAccel.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.nudYieldAccel.Location = new System.Drawing.Point(128, 56);
+            this.nudYieldAccel.Name = "nudYieldAccel";
+            this.nudYieldAccel.Size = new System.Drawing.Size(120, 20);
+            this.nudYieldAccel.TabIndex = 21;
+            this.nudYieldAccel.Value = global::THTool.Properties.Settings.Default.YieldAccel;
+            // 
+            // chkIgnoreZeroAccel
+            // 
+            this.chkIgnoreZeroAccel.AutoSize = true;
+            this.chkIgnoreZeroAccel.Checked = global::THTool.Properties.Settings.Default.IgnoreZeroBaseAccel;
+            this.chkIgnoreZeroAccel.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "IgnoreZeroBaseAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkIgnoreZeroAccel.Location = new System.Drawing.Point(232, 64);
+            this.chkIgnoreZeroAccel.Name = "chkIgnoreZeroAccel";
+            this.chkIgnoreZeroAccel.Size = new System.Drawing.Size(148, 17);
+            this.chkIgnoreZeroAccel.TabIndex = 15;
+            this.chkIgnoreZeroAccel.Text = "Ignore Zero Accelerations";
+            this.chkIgnoreZeroAccel.UseVisualStyleBackColor = true;
+            // 
+            // txtATHSurfaceFile
+            // 
+            this.txtATHSurfaceFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "ATHSurface", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtATHSurfaceFile.Location = new System.Drawing.Point(16, 24);
+            this.txtATHSurfaceFile.Name = "txtATHSurfaceFile";
+            this.txtATHSurfaceFile.Size = new System.Drawing.Size(472, 20);
+            this.txtATHSurfaceFile.TabIndex = 13;
+            this.txtATHSurfaceFile.Text = global::THTool.Properties.Settings.Default.ATHSurface;
+            // 
+            // nudATHCount
+            // 
+            this.nudATHCount.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "ATHLineCount", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudATHCount.Location = new System.Drawing.Point(80, 62);
+            this.nudATHCount.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.nudATHCount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudATHCount.Name = "nudATHCount";
+            this.nudATHCount.Size = new System.Drawing.Size(120, 20);
+            this.nudATHCount.TabIndex = 8;
+            this.nudATHCount.Value = global::THTool.Properties.Settings.Default.ATHLineCount;
+            // 
+            // txtATHBaseFile
+            // 
+            this.txtATHBaseFile.AllowDrop = true;
+            this.txtATHBaseFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "ATHBase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtATHBaseFile.Location = new System.Drawing.Point(16, 24);
+            this.txtATHBaseFile.Name = "txtATHBaseFile";
+            this.txtATHBaseFile.Size = new System.Drawing.Size(472, 20);
+            this.txtATHBaseFile.TabIndex = 12;
+            this.txtATHBaseFile.Text = global::THTool.Properties.Settings.Default.ATHBase;
+            // 
+            // txtRPShake91
+            // 
+            this.txtRPShake91.AllowDrop = true;
+            this.txtRPShake91.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "RPShake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtRPShake91.Location = new System.Drawing.Point(16, 24);
+            this.txtRPShake91.Name = "txtRPShake91";
+            this.txtRPShake91.Size = new System.Drawing.Size(472, 20);
+            this.txtRPShake91.TabIndex = 12;
+            this.txtRPShake91.Text = global::THTool.Properties.Settings.Default.RPShake91;
+            // 
+            // txtExcelFile
+            // 
+            this.txtExcelFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "ExcelFilePath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtExcelFile.Location = new System.Drawing.Point(16, 32);
+            this.txtExcelFile.Name = "txtExcelFile";
+            this.txtExcelFile.Size = new System.Drawing.Size(472, 20);
+            this.txtExcelFile.TabIndex = 19;
+            this.txtExcelFile.Text = global::THTool.Properties.Settings.Default.ExcelFilePath;
+            // 
+            // txtShake91ATH
+            // 
+            this.txtShake91ATH.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "Shake91ATHFile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtShake91ATH.Location = new System.Drawing.Point(21, 173);
+            this.txtShake91ATH.Name = "txtShake91ATH";
+            this.txtShake91ATH.Size = new System.Drawing.Size(472, 20);
+            this.txtShake91ATH.TabIndex = 20;
+            this.txtShake91ATH.Text = global::THTool.Properties.Settings.Default.Shake91ATHFile;
+            // 
+            // txtLP
+            // 
+            this.txtLP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "LP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtLP.Location = new System.Drawing.Point(82, 56);
+            this.txtLP.Name = "txtLP";
+            this.txtLP.Size = new System.Drawing.Size(100, 20);
+            this.txtLP.TabIndex = 8;
+            this.txtLP.Text = global::THTool.Properties.Settings.Default.LP;
+            // 
+            // txtHP
+            // 
+            this.txtHP.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "HP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtHP.Location = new System.Drawing.Point(82, 30);
+            this.txtHP.Name = "txtHP";
+            this.txtHP.Size = new System.Drawing.Size(100, 20);
+            this.txtHP.TabIndex = 6;
+            this.txtHP.Text = global::THTool.Properties.Settings.Default.HP;
+            // 
+            // txtDT
+            // 
+            this.txtDT.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "DT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtDT.Location = new System.Drawing.Point(82, 84);
+            this.txtDT.Name = "txtDT";
+            this.txtDT.Size = new System.Drawing.Size(100, 20);
+            this.txtDT.TabIndex = 4;
+            this.txtDT.Text = global::THTool.Properties.Settings.Default.DT;
+            // 
+            // chkCopyFile
+            // 
+            this.chkCopyFile.AutoSize = true;
+            this.chkCopyFile.Checked = global::THTool.Properties.Settings.Default.CopyTHFile;
+            this.chkCopyFile.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCopyFile.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "CopyTHFile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkCopyFile.Location = new System.Drawing.Point(27, 55);
+            this.chkCopyFile.Name = "chkCopyFile";
+            this.chkCopyFile.Size = new System.Drawing.Size(214, 17);
+            this.chkCopyFile.TabIndex = 13;
+            this.chkCopyFile.Text = "&Copy Time History file to Shake91 folder";
+            this.chkCopyFile.UseVisualStyleBackColor = true;
+            // 
+            // txtShake91
+            // 
+            this.txtShake91.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtShake91.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
+            this.txtShake91.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "Shake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtShake91.Location = new System.Drawing.Point(113, 26);
+            this.txtShake91.Name = "txtShake91";
+            this.txtShake91.Size = new System.Drawing.Size(330, 20);
+            this.txtShake91.TabIndex = 12;
+            this.txtShake91.Text = global::THTool.Properties.Settings.Default.Shake91;
             // 
             // MainWindow
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(707, 501);
-            this.Controls.Add(this.groupBox7);
+            this.ClientSize = new System.Drawing.Size(724, 528);
+            this.Controls.Add(this.tcMain);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
@@ -533,25 +566,27 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
+            this.tcExcel.ResumeLayout(false);
             this.tpATHExcel.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tpRP.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            this.tpATHGen.ResumeLayout(false);
-            this.tpATHGen.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            this.tcMain.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -571,8 +606,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox chkCopyFile;
         private System.Windows.Forms.TextBox txtShake91;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tpATHGen;
+        private System.Windows.Forms.TabControl tcExcel;
         private System.Windows.Forms.TabPage tpATHExcel;
         private System.Windows.Forms.NumericUpDown nudATHCount;
         private System.Windows.Forms.Label label7;
@@ -599,6 +633,10 @@
         private System.Windows.Forms.TextBox txtRPShake91;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Button btnExportATH;
+        private System.Windows.Forms.TabControl tcMain;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TextBox txtShake91ATH;
     }
 }
 
