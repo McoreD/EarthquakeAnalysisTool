@@ -178,5 +178,17 @@ namespace THTool.Properties {
                 this["RPShake91"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Shake91ATHFile {
+            get {
+                return ((string)(this["Shake91ATHFile"]));
+            }
+            set {
+                this["Shake91ATHFile"] = value;
+            }
+        }
     }
 }

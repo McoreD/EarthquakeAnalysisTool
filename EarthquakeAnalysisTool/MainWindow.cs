@@ -32,6 +32,9 @@ namespace THTool
                 }
                 ctl = this.GetNextControl(ctl, true); // Get the next control in the tab order.
             }
+
+            decimal.Parse("0.00009181");
+
         }
 
         void TextBox_DragEnter(object sender, DragEventArgs e)
@@ -187,18 +190,12 @@ namespace THTool
             Settings.Default.Save();
         }
 
-        private void tpATHGen_DragDrop(object sender, DragEventArgs e)
-        {
-            string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
-            if (paths.Length >= 1)
-            {
-                mAthGen = new ATHMaker(paths);
-            }
-        }
-
         private void btnExportATH_Click(object sender, EventArgs e)
         {
-
+            if (File.Exists(txtShake91ATH.Text))
+            {
+                mAthGen = new ATHMaker(new string[] { txtShake91ATH.Text });
+            }
         }
 
     }

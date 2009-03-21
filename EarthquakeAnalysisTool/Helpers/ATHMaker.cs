@@ -65,6 +65,7 @@ namespace THTool
                                 //Console.WriteLine(l);
                                 //l = l.Replace("e-00", "E-0");
                                 //l = l.Replace("e+00", "E+0");
+                                Console.WriteLine(acc);
 
 
                             }

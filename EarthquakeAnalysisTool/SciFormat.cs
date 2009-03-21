@@ -19,7 +19,7 @@ namespace THTool
         public string Format(string fmt, object arg, IFormatProvider formatProvider)
         {
             // Convert argument to a string.
-            decimal num = decimal.Parse(arg.ToString());
+            double num = double.Parse(arg.ToString());
 
             //// If account number is less than 12 characters, pad with leading zeroes.
             //if (result.Length < ACCT_LENGTH)
