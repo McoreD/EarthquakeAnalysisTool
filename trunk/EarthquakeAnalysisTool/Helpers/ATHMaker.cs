@@ -72,6 +72,7 @@ namespace THTool
                             else
                             {
                                 Console.WriteLine(l);
+                                throw new Exception("Could not parse line...");
                             }
 
                             string gap = "  ";
