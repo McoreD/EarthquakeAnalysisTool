@@ -190,5 +190,17 @@ namespace THTool.Properties {
                 this["Shake91ATHFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.2")]
+        public decimal RPXaxisMaxScale {
+            get {
+                return ((decimal)(this["RPXaxisMaxScale"]));
+            }
+            set {
+                this["RPXaxisMaxScale"] = value;
+            }
+        }
     }
 }
