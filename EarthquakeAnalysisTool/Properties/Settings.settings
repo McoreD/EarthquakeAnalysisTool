@@ -44,5 +44,8 @@
     <Setting Name="Shake91ATHFile" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="RPXaxisMaxScale" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">3.2</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

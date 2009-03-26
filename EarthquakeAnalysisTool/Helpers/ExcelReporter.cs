@@ -417,7 +417,7 @@ namespace THTool.Helpers
                 XlAxisGroup.xlPrimary);
             xAxis.HasTitle = true;
             xAxis.AxisTitle.Text = "Period (s)";
-            xAxis.MaximumScale = 5.0;
+            xAxis.MaximumScale = this.Options.MyRPSiteMaker.Options.XaxisMaxScale;
 
             Axis yAxis = (Axis)xlChart.Axes(XlAxisType.xlValue,
                 XlAxisGroup.xlPrimary);

@@ -147,6 +147,7 @@ namespace THTool
             {
                 RPSiteMakerOptions rpsm_opt = new RPSiteMakerOptions();
                 rpsm_opt.FilePath = txtRPShake91.Text;
+                rpsm_opt.XaxisMaxScale = (double)nudXaxisMaxScale.Value;
                 RPSiteMaker rpsm = new RPSiteMaker(rpsm_opt);
                 ropt.MyRPSiteMaker = rpsm;
             }

@@ -11,6 +11,7 @@ namespace THTool.Helpers
     public class RPSiteMakerOptions
     {
         public string FilePath { get; set; }
+        public double XaxisMaxScale { get; set; }
     }
 
     /// <summary>
@@ -20,11 +21,14 @@ namespace THTool.Helpers
     {
         public List<string> PeriodList { get; private set; }
         public List<string> ATH { get; private set; }
-        private RPSiteMakerOptions Options { get; set; }
+        public RPSiteMakerOptions Options { get; private set; }
         private int ValidColumnCount = 8;
 
         public RPSiteMaker(RPSiteMakerOptions options)
         {
+            this.Options = new RPSiteMakerOptions();
+            this.Options.XaxisMaxScale = 5.0;
+
             this.PeriodList = new List<string>();
             this.ATH = new List<string>();
             this.Options = options;

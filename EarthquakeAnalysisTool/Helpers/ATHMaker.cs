@@ -34,7 +34,7 @@ namespace THTool
             foreach (string f in mFiles)
             {
                 StringBuilder sbFile = new StringBuilder();
-                sbFile.AppendLine("PEER STRONG MOTION DATABASE RECORD. PROCESSING BY MIHAJLO DELPOVIC.");
+                sbFile.AppendLine("PEER STRONG MOTION DATABASE RECORD. PROCESSING BY MIKE DELPACH.");
                 sbFile.AppendLine("IMPERIAL VALLEY 5/19/40 0439, EL CENTRO ARRAY #9, 180 (USGS STATION 117)");
                 sbFile.AppendLine(string.Format("ACCELERATION TIME HISTORY IN UNITS OF G. FILTER POINTS: HP={0} Hz LP={1} Hz",
                     Settings.Default.HP, Settings.Default.LP));
