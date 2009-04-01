@@ -7,31 +7,30 @@ using System.Globalization;
 
 namespace THTool
 {
+    public class ATHMakerOptions
+    {
+        public bool LimitTo4000Readings { get; set; }
+        public string[] Files { get; set; }
+    }
+
     /// <summary>
     /// Creates a Shake91 compatible input file from a list of accelerations (experimental)
     /// </summary>
     class ATHMaker
     {
-        private List<string> mFiles = new List<string>();
+        public ATHMakerOptions Options { get; private set; }
         private List<StringBuilder> mOutputs = new List<StringBuilder>();
 
-        public ATHMaker(string[] files)
+        public ATHMaker(ATHMakerOptions options)
         {
-            foreach (string f in files)
-            {
-                if (File.Exists(f))
-                {
-                    mFiles.Add(f);
-                }
-            }
-
+            this.Options = options;
             sMakeFiles();
 
         }
 
         public void sMakeFiles()
         {
-            foreach (string f in mFiles)
+            foreach (string f in this.Options.Files)
             {
                 StringBuilder sbFile = new StringBuilder();
                 sbFile.AppendLine("PEER STRONG MOTION DATABASE RECORD. PROCESSING BY MIKE DELPACH.");
@@ -45,80 +44,69 @@ namespace THTool
 
                 using (StreamReader sr = new StreamReader(f))
                 {
-
-                    NumberFormatInfo info = new NumberFormatInfo();
-                    int col = 0;
                     while (!sr.EndOfStream)
                     {
                         double acc = 0;
-                        string l = sr.ReadLine().Replace("", ""); //"0.140539E-03";
-
+                        string l = sr.ReadLine().Replace("", "");
                         if (!string.IsNullOrEmpty(l))
                         {
-                            if (Double.TryParse(l, NumberStyles.Float, info, out acc))
+                            if (Double.TryParse(l, out acc))
                             {
-
-                                l = String.Format(new SciFormat(), "{0:H}", acc);
-
                                 lNum.Add(acc);
-                                //l = string.Format("{0:e}", acc);
-                                //Console.WriteLine(l);
-                                //l = l.Replace("e-00", "E-0");
-                                //l = l.Replace("e+00", "E+0");
-                                Console.WriteLine(acc);
-
-
                             }
                             else
                             {
                                 Console.WriteLine(l);
                                 throw new Exception("Could not parse line...");
                             }
+                        }
+                    }
+                }
 
-                            string gap = "  ";
-                            // determine the first gap
-                            if (lNum.Count > 0 && lNum.Count > lNPTS)
-                            {
-                                // second or later number
-                                if (lNum[lNPTS] >= 0.0)
-                                {
-                                    gap = "   ";
-                                }
-                            }
-                            else
-                            {
-                                // first number
-                                if (acc > 0.0)
-                                {
-                                    gap = "   ";
-                                }
-                            }
+                int max = (this.Options.LimitTo4000Readings ? 4000 : lNum.Count);
+                int col = 0;
 
-                            if (!string.Equals("", l))
-                            {
-                                sbAcc.Append(gap);
-                                sbAcc.Append(l);
-                                lNPTS++;
-                                col++;
+                for (int i = 0; i < max; i++)
+                {
+                    double acc = lNum[i];
 
-                                if (col < 5)
-                                {
-                                    // sbAcc.Append(gap);
-                                }
-                                else
-                                {
-                                    sbAcc.AppendLine();
-                                    col = 0;
-                                }
-
-                            }
-
+                    string gap = "  ";
+                    // determine the first gap
+                    if (lNum.Count > 0 && lNum.Count > lNPTS)
+                    {
+                        // second or later number
+                        if (lNum[lNPTS] >= 0.0)
+                        {
+                            gap = "   ";
+                        }
+                    }
+                    else
+                    {
+                        // first number
+                        if (acc > 0.0)
+                        {
+                            gap = "   ";
                         }
                     }
 
-                    sbFile.AppendLine(string.Format("NPTS=  {0}, DT= {1} SEC", lNPTS, Settings.Default.DT));
-                    sbFile.AppendLine(sbAcc.ToString().TrimEnd());
+                    sbAcc.Append(gap);
+                    sbAcc.Append(String.Format(new SciFormat(), "{0:H}", acc));
+                    lNPTS++;
+                    col++;
+
+                    if (col < 5)
+                    {
+                        // sbAcc.Append(gap);
+                    }
+                    else
+                    {
+                        sbAcc.AppendLine();
+                        col = 0;
+                    }
                 }
+
+                sbFile.AppendLine(string.Format("NPTS=  {0}, DT= {1} SEC", lNPTS, Settings.Default.DT));
+                sbFile.AppendLine(sbAcc.ToString().TrimEnd());
 
                 //string r = Path.Combine(Path.GetDirectoryName(f), "diam.acc");
 

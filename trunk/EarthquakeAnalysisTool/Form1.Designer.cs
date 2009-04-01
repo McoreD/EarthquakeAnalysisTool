@@ -53,9 +53,12 @@
             this.nudATHCount = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.chkMax4000Readings = new System.Windows.Forms.CheckBox();
             this.btnBrowseBaseATH = new System.Windows.Forms.Button();
             this.txtATHBaseFile = new System.Windows.Forms.TextBox();
             this.tpRP = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
+            this.nudXaxisMaxScale = new System.Windows.Forms.NumericUpDown();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.btnBrowseRP1 = new System.Windows.Forms.Button();
             this.txtRPShake91 = new System.Windows.Forms.TextBox();
@@ -71,8 +74,6 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtShake91ATH = new System.Windows.Forms.TextBox();
-            this.nudXaxisMaxScale = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDT)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLP)).BeginInit();
@@ -86,13 +87,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.tpRP.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudXaxisMaxScale)).BeginInit();
             this.groupBox6.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudXaxisMaxScale)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -124,6 +125,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkMax4000Readings);
             this.groupBox1.Controls.Add(this.nudDT);
             this.groupBox1.Controls.Add(this.nudLP);
             this.groupBox1.Controls.Add(this.nudHP);
@@ -251,9 +253,9 @@
             this.groupBox5.Controls.Add(this.chkCalcDisp);
             this.groupBox5.Controls.Add(this.label6);
             this.groupBox5.Controls.Add(this.nudYieldAccel);
-            this.groupBox5.Location = new System.Drawing.Point(16, 200);
+            this.groupBox5.Location = new System.Drawing.Point(16, 208);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(624, 120);
+            this.groupBox5.Size = new System.Drawing.Size(624, 96);
             this.groupBox5.TabIndex = 20;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Options";
@@ -373,10 +375,23 @@
             this.groupBox3.Controls.Add(this.txtATHBaseFile);
             this.groupBox3.Location = new System.Drawing.Point(16, 16);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(623, 65);
+            this.groupBox3.Size = new System.Drawing.Size(623, 64);
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "ATH (Base - from http://peer.berkeley.edu/smcat/search.html)";
+            // 
+            // chkMax4000Readings
+            // 
+            this.chkMax4000Readings.AutoSize = true;
+            this.chkMax4000Readings.Checked = global::THTool.Properties.Settings.Default.Limit4000Readings;
+            this.chkMax4000Readings.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkMax4000Readings.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "Limit4000Readings", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkMax4000Readings.Location = new System.Drawing.Point(280, 24);
+            this.chkMax4000Readings.Name = "chkMax4000Readings";
+            this.chkMax4000Readings.Size = new System.Drawing.Size(129, 17);
+            this.chkMax4000Readings.TabIndex = 15;
+            this.chkMax4000Readings.Text = "Limit to 4000 readings";
+            this.chkMax4000Readings.UseVisualStyleBackColor = true;
             // 
             // btnBrowseBaseATH
             // 
@@ -410,6 +425,30 @@
             this.tpRP.TabIndex = 2;
             this.tpRP.Text = "Reponse Spectra Generator";
             this.tpRP.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(32, 96);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(112, 13);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "X-axis Maximum Scale";
+            // 
+            // nudXaxisMaxScale
+            // 
+            this.nudXaxisMaxScale.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "RPXaxisMaxScale", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudXaxisMaxScale.DecimalPlaces = 2;
+            this.nudXaxisMaxScale.Location = new System.Drawing.Point(152, 96);
+            this.nudXaxisMaxScale.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudXaxisMaxScale.Name = "nudXaxisMaxScale";
+            this.nudXaxisMaxScale.Size = new System.Drawing.Size(120, 20);
+            this.nudXaxisMaxScale.TabIndex = 18;
+            this.nudXaxisMaxScale.Value = global::THTool.Properties.Settings.Default.RPXaxisMaxScale;
             // 
             // groupBox6
             // 
@@ -559,30 +598,6 @@
             this.txtShake91ATH.TabIndex = 20;
             this.txtShake91ATH.Text = global::THTool.Properties.Settings.Default.Shake91ATHFile;
             // 
-            // nudXaxisMaxScale
-            // 
-            this.nudXaxisMaxScale.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "RPXaxisMaxScale", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.nudXaxisMaxScale.DecimalPlaces = 2;
-            this.nudXaxisMaxScale.Location = new System.Drawing.Point(152, 96);
-            this.nudXaxisMaxScale.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudXaxisMaxScale.Name = "nudXaxisMaxScale";
-            this.nudXaxisMaxScale.Size = new System.Drawing.Size(120, 20);
-            this.nudXaxisMaxScale.TabIndex = 18;
-            this.nudXaxisMaxScale.Value = global::THTool.Properties.Settings.Default.RPXaxisMaxScale;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(32, 96);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(112, 13);
-            this.label8.TabIndex = 19;
-            this.label8.Text = "X-axis Maximum Scale";
-            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -616,6 +631,7 @@
             this.groupBox3.PerformLayout();
             this.tpRP.ResumeLayout(false);
             this.tpRP.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudXaxisMaxScale)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -626,7 +642,6 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudXaxisMaxScale)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -679,6 +694,7 @@
         private System.Windows.Forms.NumericUpDown nudDT;
         private System.Windows.Forms.NumericUpDown nudXaxisMaxScale;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox chkMax4000Readings;
     }
 }
 
