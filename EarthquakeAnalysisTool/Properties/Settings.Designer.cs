@@ -202,5 +202,17 @@ namespace THTool.Properties {
                 this["RPXaxisMaxScale"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Limit4000Readings {
+            get {
+                return ((bool)(this["Limit4000Readings"]));
+            }
+            set {
+                this["Limit4000Readings"] = value;
+            }
+        }
     }
 }

@@ -195,7 +195,10 @@ namespace THTool
         {
             if (File.Exists(txtShake91ATH.Text))
             {
-                mAthGen = new ATHMaker(new string[] { txtShake91ATH.Text });
+                ATHMakerOptions amo = new ATHMakerOptions();
+                amo.Files = new string[] { txtShake91ATH.Text };
+                amo.LimitTo4000Readings = chkMax4000Readings.Checked;
+                mAthGen = new ATHMaker(amo);
             }
         }
 
