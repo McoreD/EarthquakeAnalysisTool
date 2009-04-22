@@ -242,7 +242,7 @@ namespace THTool.Helpers
                 arrData[i, 0] = value;
             }
             rAthG.Value2 = arrData;
-            rAthG.Style = "Input"; 
+            rAthG.Style = "Input";
             mBwApp.ReportProgress(1);
 
             if (this.Options.CalculateDisplacements)
@@ -386,13 +386,18 @@ namespace THTool.Helpers
             // Statistics
             //*************
 
+            int headingStatsRow = 6;
+            ws.Cells[headingStatsRow, 15] = "Statistics";
+            ((Range)ws.Cells[headingStatsRow, 15]).Style = "Heading 1"; 
+
             // Bracketed Duration
+            
             double a_threshold = 0.05;
-            ws.Cells[5, 15] = "Threshold Accel";
-            ws.Cells[5, 16] = a_threshold;
+            ws.Cells[headingStatsRow + 1, 15] = "Threshold Accel";
+            ws.Cells[headingStatsRow + 1, 16] = a_threshold;
 
             double t_first = 0.0;
-            double t_last = 0.0; 
+            double t_last = 0.0;
             bool bFirst = false;
 
             for (int i = 0; i < accBase.Count; i++)
@@ -411,9 +416,26 @@ namespace THTool.Helpers
                 }
             }
 
-            ws.Cells[6, 15] = "Duration (s)";
-            ws.Cells[6, 16] = t_last - t_first;
-            ((Range)ws.Cells[6, 16]).Style = "Output";
+            ws.Cells[headingStatsRow + 2, 15] = "Duration (s)";
+            ws.Cells[headingStatsRow + 2, 16] = t_last - t_first;
+            ((Range)ws.Cells[headingStatsRow + 2, 16]).Style = "Output";
+
+            // Peak Acceleration 
+            ws.Cells[headingStatsRow + 3, 15] = "Peak accel (g)";
+            ((Range)ws.Cells[headingStatsRow + 3, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[-6]:R{1}C[-6]),ABS(MIN(R{0}C[-6]:R{1}C[-6])))", startRow, startRow + accSurface.Count - 1);
+
+            if (this.Options.CalculateDisplacements)
+            {
+                // Peak Velocity 
+                ws.Cells[headingStatsRow + 4, 15] = "Peak velo (m/s)";
+                ((Range)ws.Cells[headingStatsRow + 4, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[-5]:R{1}C[-5]),ABS(MIN(R{0}C[-5]:R{1}C[-5])))", startRow + 1, startRow + accSurface.Count - 1);
+
+                // Peak Displacement 
+                ws.Cells[headingStatsRow + 5, 15] = "Peak disp (m)";
+                ((Range)ws.Cells[headingStatsRow + 5, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[-4]:R{1}C[-4]),ABS(MIN(R{0}C[-4]:R{1}C[-4])))", startRow + 1, startRow + accSurface.Count - 1);
+            }
+
+            // Number Formatting
 
             SetNumberFormat(ws, "B1", "E1", "0.0000E+00");
             SetNumberFormat(ws, "I1", "L1", "0.0000E+00");
