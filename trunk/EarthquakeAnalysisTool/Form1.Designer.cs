@@ -32,6 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkMax4000Readings = new System.Windows.Forms.CheckBox();
             this.nudDT = new System.Windows.Forms.NumericUpDown();
             this.nudLP = new System.Windows.Forms.NumericUpDown();
             this.nudHP = new System.Windows.Forms.NumericUpDown();
@@ -53,7 +54,6 @@
             this.nudATHCount = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.chkMax4000Readings = new System.Windows.Forms.CheckBox();
             this.btnBrowseBaseATH = new System.Windows.Forms.Button();
             this.txtATHBaseFile = new System.Windows.Forms.TextBox();
             this.tpRP = new System.Windows.Forms.TabPage();
@@ -138,6 +138,19 @@
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
+            // 
+            // chkMax4000Readings
+            // 
+            this.chkMax4000Readings.AutoSize = true;
+            this.chkMax4000Readings.Checked = global::THTool.Properties.Settings.Default.Limit4000Readings;
+            this.chkMax4000Readings.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkMax4000Readings.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "Limit4000Readings", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkMax4000Readings.Location = new System.Drawing.Point(280, 24);
+            this.chkMax4000Readings.Name = "chkMax4000Readings";
+            this.chkMax4000Readings.Size = new System.Drawing.Size(129, 17);
+            this.chkMax4000Readings.TabIndex = 15;
+            this.chkMax4000Readings.Text = "Limit to 4000 readings";
+            this.chkMax4000Readings.UseVisualStyleBackColor = true;
             // 
             // nudDT
             // 
@@ -308,7 +321,7 @@
             this.groupBox4.Size = new System.Drawing.Size(623, 103);
             this.groupBox4.TabIndex = 17;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "ATH (Shake91 Output File 2)";
+            this.groupBox4.Text = "ATH (Surface: Shake91 Output File 2)";
             // 
             // chkIgnoreZeroAccel
             // 
@@ -378,20 +391,7 @@
             this.groupBox3.Size = new System.Drawing.Size(623, 64);
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "ATH (Base - from http://peer.berkeley.edu/smcat/search.html)";
-            // 
-            // chkMax4000Readings
-            // 
-            this.chkMax4000Readings.AutoSize = true;
-            this.chkMax4000Readings.Checked = global::THTool.Properties.Settings.Default.Limit4000Readings;
-            this.chkMax4000Readings.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkMax4000Readings.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "Limit4000Readings", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkMax4000Readings.Location = new System.Drawing.Point(280, 24);
-            this.chkMax4000Readings.Name = "chkMax4000Readings";
-            this.chkMax4000Readings.Size = new System.Drawing.Size(129, 17);
-            this.chkMax4000Readings.TabIndex = 15;
-            this.chkMax4000Readings.Text = "Limit to 4000 readings";
-            this.chkMax4000Readings.UseVisualStyleBackColor = true;
+            this.groupBox3.Text = "ATH (Base: from http://peer.berkeley.edu/smcat/search.html)";
             // 
             // btnBrowseBaseATH
             // 
@@ -610,7 +610,8 @@
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Earthquake Analysis Tool";
+            this.Text = "EqAT - Earthquake Analysis Tool";
+            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

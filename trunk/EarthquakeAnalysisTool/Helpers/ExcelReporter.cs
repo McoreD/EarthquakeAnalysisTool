@@ -220,13 +220,16 @@ namespace THTool.Helpers
             ws.Cells[1, 1] = "Base: " + MyBaseATHMaker.Title;
 
             // Times
+            double[] timeStepsBase = new double[accBase.Count];
             ws.Cells[2, 1] = "Time (s)";
             Range rTime = ws.get_Range(string.Format("A{0}", startRow), string.Format("A{0}", startRow + accBase.Count - 1));
             for (int i = 0; i < accBase.Count; i++)
             {
-                arrData[i, 0] = (double)(i * dtBase / 1000.0);
+                timeStepsBase[i] = (double)(i * dtBase / 1000.0);
+                arrData[i, 0] = timeStepsBase[i];
             }
             rTime.Value2 = arrData;
+            rTime.Style = "Input";
             mBwApp.ReportProgress(1);
 
             // ATH (G)
@@ -239,6 +242,7 @@ namespace THTool.Helpers
                 arrData[i, 0] = value;
             }
             rAthG.Value2 = arrData;
+            rAthG.Style = "Input"; 
             mBwApp.ReportProgress(1);
 
             if (this.Options.CalculateDisplacements)
@@ -251,6 +255,7 @@ namespace THTool.Helpers
                     arrString[i, 0] = "=RC[-1]*9.81";
                 }
                 rAth.FormulaArray = arrString;
+                rAth.Style = "Calculation";
                 mBwApp.ReportProgress(1);
 
                 // VTH (m/s)
@@ -295,6 +300,7 @@ namespace THTool.Helpers
                 arrData[i, 0] = (double)(i * dt / 1000.0);
             }
             rTimeS.Value2 = arrData;
+            rTimeS.Style = "Input";
             mBwApp.ReportProgress(1);
 
             // ATH (G)
@@ -307,6 +313,7 @@ namespace THTool.Helpers
                 arrData[i, 0] = value;
             }
             rAthGS.Value2 = arrData;
+            rAthGS.Style = "Input";
             mBwApp.ReportProgress(1);
 
             if (this.Options.CalculateDisplacements)
@@ -370,9 +377,43 @@ namespace THTool.Helpers
                 Range disp_mm = (Range)ws.Cells[3, 16];
                 disp_mm.FormulaR1C1 = "=R[-1]C*1000";
                 disp_mm.Style = "Output";
+
                 mBwApp.ReportProgress(1);
 
+            } // Calculate Displacements
+
+            //*************
+            // Statistics
+            //*************
+
+            // Bracketed Duration
+            double a_threshold = 0.05;
+            ws.Cells[5, 15] = "Threshold Accel";
+            ws.Cells[5, 16] = a_threshold;
+
+            double t_first = 0.0;
+            double t_last = 0.0; 
+            bool bFirst = false;
+
+            for (int i = 0; i < accBase.Count; i++)
+            {
+                if (Math.Abs(double.Parse(accBase[i])) > a_threshold)
+                {
+                    if (!bFirst)
+                    {
+                        t_first = timeStepsBase[i];
+                        bFirst = true;
+                    }
+                    else
+                    {
+                        t_last = timeStepsBase[i];
+                    }
+                }
             }
+
+            ws.Cells[6, 15] = "Duration (s)";
+            ws.Cells[6, 16] = t_last - t_first;
+            ((Range)ws.Cells[6, 16]).Style = "Output";
 
             SetNumberFormat(ws, "B1", "E1", "0.0000E+00");
             SetNumberFormat(ws, "I1", "L1", "0.0000E+00");
