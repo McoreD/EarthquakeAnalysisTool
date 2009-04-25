@@ -82,7 +82,11 @@ namespace THTool.Helpers
                 mWSheet1 = (Worksheet)mWorkSheets.get_Item("Sheet1");
                 mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
                 mWSheet3 = (Worksheet)mWorkSheets.get_Item("Sheet3");
-
+                foreach (Worksheet ws in mWorkSheets)
+                {
+                    ws.Tab.Color = "65535";
+                }
+                
                 if (this.MyBaseATHMaker != null && this.MySurfaceATHMaker != null)
                 {
                     FillATHData(mWSheet1);
@@ -92,7 +96,8 @@ namespace THTool.Helpers
                 {
                     FillRPData(mWSheet2);
                     FillFASData(mWSheet3);
-                    GenerateChartFAS(mWSheet3, this.Options.MyFourierSpectraMaker);
+                    GenerateChartFASf(mWSheet3, this.Options.MyFourierSpectraMaker);
+                    GenerateChartFASp(mWSheet3, this.Options.MyFourierSpectraMaker);
                     FillCodeData(mWSheet2);
                     GenerateChartRP(mWSheet2);
                 }
@@ -105,8 +110,9 @@ namespace THTool.Helpers
                 time1 = (Range)mWSheet1.Columns["H", Missing.Value];
                 time1.ColumnWidth = 8.5;
 
-                mWSheet1.Name = "ATH and DTH";
-                mWSheet2.Name = "Response Spectra";
+                mWSheet1.Name = "ATH and DTH Data";
+                mWSheet2.Name = "Response Spectra Data";
+                mWSheet3.Name = "Fourier Spectra Data";
                 mWSheet1.Select(true);
 
                 string ext = Path.GetExtension(mPath);
@@ -133,9 +139,10 @@ namespace THTool.Helpers
 
         }
 
-        private void GenerateChartFAS(Worksheet ws, FASMaker fasm)
+        private void GenerateChartFASp(Worksheet ws, FASMaker fasm)
         {
             ChartObjects chartObjs = (ChartObjects)ws.ChartObjects(Type.Missing);
+
             ChartObject chartObj = chartObjs.Add(500, 20, 640, 480);
             Chart xlChart = chartObj.Chart;
 
@@ -143,8 +150,8 @@ namespace THTool.Helpers
 
             seriesCollection.NewSeries();
             seriesCollection.Item(1).Name = "Fourier Amplitude Spectra";
-            seriesCollection.Item(1).XValues = string.Format("={0}!$A{1}:$A{2}", ws.Name, startRow, fasm.FreqList.Count );
-            seriesCollection.Item(1).Values = string.Format("={0}!$B{1}:$B{2}", ws.Name, startRow, fasm.FourierAmplitudesList.Count);
+            seriesCollection.Item(1).XValues = string.Format("={0}!$B{1}:$B{2}", ws.Name, startRow, fasm.PeriodList.Count);
+            seriesCollection.Item(1).Values = string.Format("={0}!$C{1}:$C{2}", ws.Name, startRow, fasm.FourierAmplitudesList.Count);
 
             xlChart.ChartType = XlChartType.xlXYScatterSmoothNoMarkers;
 
@@ -152,8 +159,8 @@ namespace THTool.Helpers
             Axis xAxis = (Axis)xlChart.Axes(XlAxisType.xlCategory,
                 XlAxisGroup.xlPrimary);
             xAxis.HasTitle = true;
-            xAxis.AxisTitle.Text = "Frequency (Hz)";
-           // xAxis.MaximumScale = fasm.Options.XaxisMaxScale;
+            xAxis.AxisTitle.Text = "Period (s)";
+            xAxis.MaximumScale = fasm.Options.XaxisMaxScale;
 
             Axis yAxis = (Axis)xlChart.Axes(XlAxisType.xlValue,
                 XlAxisGroup.xlPrimary);
@@ -166,25 +173,68 @@ namespace THTool.Helpers
             // Remove legend:
             xlChart.HasLegend = false;
 
+            xlChart.Location(XlChartLocation.xlLocationAsNewSheet, "Fourier Spectra (p)");
+
+        }
+
+        private void GenerateChartFASf(Worksheet ws, FASMaker fasm)
+        {
+            ChartObjects chartObjs = (ChartObjects)ws.ChartObjects(Type.Missing);
+
+            ChartObject chartObj = chartObjs.Add(500, 20, 640, 480);
+            Chart xlChart = chartObj.Chart;
+
+            SeriesCollection seriesCollection = (SeriesCollection)xlChart.SeriesCollection(Type.Missing);
+
+            seriesCollection.NewSeries();
+            seriesCollection.Item(1).Name = "Fourier Amplitude Spectra";
+            seriesCollection.Item(1).XValues = string.Format("={0}!$A{1}:$A{2}", ws.Name, startRow, fasm.FreqList.Count);
+            seriesCollection.Item(1).Values = string.Format("={0}!$C{1}:$C{2}", ws.Name, startRow, fasm.FourierAmplitudesList.Count);
+
+            xlChart.ChartType = XlChartType.xlXYScatterSmoothNoMarkers;
+
+            // Customize axes:
+            Axis xAxis = (Axis)xlChart.Axes(XlAxisType.xlCategory,
+                XlAxisGroup.xlPrimary);
+            xAxis.HasTitle = true;
+            xAxis.AxisTitle.Text = "Frequency (Hz)";
+            // xAxis.MaximumScale = fasm.Options.XaxisMaxScale;
+
+            Axis yAxis = (Axis)xlChart.Axes(XlAxisType.xlValue,
+                XlAxisGroup.xlPrimary);
+            yAxis.HasTitle = true;
+            yAxis.AxisTitle.Text = "Fourier Amplitude (g-s)";
+
+            // Add title:
+            xlChart.HasTitle = true;
+            xlChart.ChartTitle.Text = "Fourier Amplitude Spectra";
+            // Remove legend:
+            xlChart.HasLegend = false;
+
+            xlChart.Location(XlChartLocation.xlLocationAsNewSheet, "Fourier Spectra (f)");
+
         }
 
         private void FillFASData(Worksheet ws)
         {
-            ws.Cells[2, 1] = "Frequency (s)";
-            ws.Cells[2, 2] = "Fourier Amplitude (g-s)";
+            ws.Cells[2, 1] = "Frequency (Hz)";
+            ws.Cells[2, 2] = "Seconds (s)";
+            ws.Cells[2, 3] = "Fourier Amplitude (g-s)";
 
             this.Options.MyFourierSpectraMaker.ReadData();
             if (this.Options.MyFourierSpectraMaker.FourierAmplitudesList.Count > 0 && this.Options.MyFourierSpectraMaker.FreqList.Count > 0)
             {
-                List<string> p = this.Options.MyFourierSpectraMaker.FreqList;
+                List<string> f = this.Options.MyFourierSpectraMaker.FreqList;
+                List<string> p = this.Options.MyFourierSpectraMaker.PeriodList;
                 List<string> acc = this.Options.MyFourierSpectraMaker.FourierAmplitudesList;
-                double[,] arrData = new double[p.Count, 2];
-                for (int i = 0; i < p.Count; i++)
+                double[,] arrData = new double[f.Count, 3];
+                for (int i = 0; i < f.Count; i++)
                 {
-                    double.TryParse(p[i], out arrData[i, 0]);
-                    double.TryParse(acc[i], out arrData[i, 1]);
+                    double.TryParse(f[i], out arrData[i, 0]);
+                    double.TryParse(p[i], out arrData[i, 1]);
+                    double.TryParse(acc[i], out arrData[i, 2]);
                 }
-                Range rng = ws.get_Range(string.Format("A{0}", startRow), string.Format("B{0}", startRow + acc.Count - 1));
+                Range rng = ws.get_Range(string.Format("A{0}", startRow), string.Format("C{0}", startRow + acc.Count - 1));
                 rng.Value2 = arrData;
             }
         }
@@ -449,10 +499,10 @@ namespace THTool.Helpers
 
             int headingStatsRow = 6;
             ws.Cells[headingStatsRow, 15] = "Statistics";
-            ((Range)ws.Cells[headingStatsRow, 15]).Style = "Heading 1"; 
+            ((Range)ws.Cells[headingStatsRow, 15]).Style = "Heading 1";
 
             // Bracketed Duration
-            
+
             double a_threshold = 0.05;
             ws.Cells[headingStatsRow + 1, 15] = "Threshold Accel";
             ws.Cells[headingStatsRow + 1, 16] = a_threshold;
@@ -554,7 +604,7 @@ namespace THTool.Helpers
             // Remove legend:
             xlChart.HasLegend = true;
 
-            //  xlChart.Location(XlChartLocation.xlLocationAsNewSheet, "RP (Shake91)");
+            xlChart.Location(XlChartLocation.xlLocationAsNewSheet, "Response Spectra");
 
         }
 
