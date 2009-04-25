@@ -11,10 +11,17 @@ namespace THTool.Helpers
 
         protected void RemoveDoubleSpaces(ref string line)
         {
-            line = line.Trim();
-            while (line.Contains("  "))
+            try
             {
-                line = Regex.Replace(line, "  ", " ");
+                line = line.Trim();
+                while (line.Contains("  "))
+                {
+                    line = Regex.Replace(line, "  ", " ");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
 
@@ -25,18 +32,26 @@ namespace THTool.Helpers
         /// <returns></returns>
         protected List<string> SplitLineToRow(string line)
         {
-            this.RemoveDoubleSpaces(ref line);
             List<string> acc = new List<string>();
-            string[] nums = Regex.Split(line, " ");
-            foreach (string s in nums)
+            if (!string.IsNullOrEmpty(line))
             {
-                acc.Add(s);
+                this.RemoveDoubleSpaces(ref line);
+                string[] nums = Regex.Split(line, " ");
+                foreach (string s in nums)
+                {
+                    acc.Add(s);
+                }
             }
             return acc;
         }
 
         protected bool IsValidNumberRow(List<string> row)
         {
+            if (row == null || row.Count == 0)
+            {
+                return false;
+            }
+
             foreach (string s in row)
             {
                 try

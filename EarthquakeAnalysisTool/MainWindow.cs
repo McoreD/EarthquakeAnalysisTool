@@ -143,13 +143,19 @@ namespace THTool
             acm.MaxValues = 8 * (int)nudATHCount.Value;
             BaseATHMaker bm = new BaseATHMaker(txtATHBaseFile.Text);
 
-            if (File.Exists(txtRPShake91.Text))
+            if (File.Exists(txtShake91PV.Text))
             {
                 RPSiteMakerOptions rpsm_opt = new RPSiteMakerOptions();
-                rpsm_opt.FilePath = txtRPShake91.Text;
+                rpsm_opt.FilePath = txtShake91PV.Text;
                 rpsm_opt.XaxisMaxScale = (double)nudXaxisMaxScale.Value;
-                RPSiteMaker rpsm = new RPSiteMaker(rpsm_opt);
-                ropt.MyRPSiteMaker = rpsm;
+                RPMaker rpsm = new RPMaker(rpsm_opt);
+                ropt.MyResponseSpectraMaker = rpsm;
+                FourierASMakerOptions fasm_opt = new FourierASMakerOptions();
+                fasm_opt.FilePath = txtShake91PV.Text;
+                fasm_opt.XaxisMaxScale = 10;
+                FASMaker fasm = new FASMaker(fasm_opt);
+                ropt.MyFourierSpectraMaker = fasm;
+                
             }
 
             ExcelReporter er = new ExcelReporter(ropt);

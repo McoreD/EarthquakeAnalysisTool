@@ -13,7 +13,8 @@ namespace THTool.Helpers
         public BackgroundWorker Worker { get; set; }
         public string WorkbookFilePath { get; set; }
         public bool CalculateDisplacements { get; set; }
-        public RPSiteMaker MyRPSiteMaker { get; set; }
+        public RPMaker MyResponseSpectraMaker { get; set; }
+        public FASMaker MyFourierSpectraMaker { get; set; }
         /// <summary>
         /// Yield Acceleration in g
         /// </summary>
@@ -41,6 +42,7 @@ namespace THTool.Helpers
 
         private Microsoft.Office.Interop.Excel.Worksheet mWSheet1 = new Microsoft.Office.Interop.Excel.WorksheetClass();
         private Worksheet mWSheet2 = new Worksheet();
+        private Worksheet mWSheet3 = new Worksheet();
 
         private BackgroundWorker mBwApp;
 
@@ -79,15 +81,18 @@ namespace THTool.Helpers
 
                 mWSheet1 = (Worksheet)mWorkSheets.get_Item("Sheet1");
                 mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
+                mWSheet3 = (Worksheet)mWorkSheets.get_Item("Sheet3");
 
                 if (this.MyBaseATHMaker != null && this.MySurfaceATHMaker != null)
                 {
                     FillATHData(mWSheet1);
                     GenerateChartATH(mWSheet1);
                 }
-                if (this.Options.MyRPSiteMaker != null)
+                if (this.Options.MyResponseSpectraMaker != null)
                 {
                     FillRPData(mWSheet2);
+                    FillFASData(mWSheet3);
+                    GenerateChartFAS(mWSheet3, this.Options.MyFourierSpectraMaker);
                     FillCodeData(mWSheet2);
                     GenerateChartRP(mWSheet2);
                 }
@@ -128,16 +133,72 @@ namespace THTool.Helpers
 
         }
 
+        private void GenerateChartFAS(Worksheet ws, FASMaker fasm)
+        {
+            ChartObjects chartObjs = (ChartObjects)ws.ChartObjects(Type.Missing);
+            ChartObject chartObj = chartObjs.Add(500, 20, 640, 480);
+            Chart xlChart = chartObj.Chart;
+
+            SeriesCollection seriesCollection = (SeriesCollection)xlChart.SeriesCollection(Type.Missing);
+
+            seriesCollection.NewSeries();
+            seriesCollection.Item(1).Name = "Fourier Amplitude Spectra";
+            seriesCollection.Item(1).XValues = string.Format("={0}!$A{1}:$A{2}", ws.Name, startRow, fasm.FreqList.Count );
+            seriesCollection.Item(1).Values = string.Format("={0}!$B{1}:$B{2}", ws.Name, startRow, fasm.FourierAmplitudesList.Count);
+
+            xlChart.ChartType = XlChartType.xlXYScatterSmoothNoMarkers;
+
+            // Customize axes:
+            Axis xAxis = (Axis)xlChart.Axes(XlAxisType.xlCategory,
+                XlAxisGroup.xlPrimary);
+            xAxis.HasTitle = true;
+            xAxis.AxisTitle.Text = "Frequency (Hz)";
+           // xAxis.MaximumScale = fasm.Options.XaxisMaxScale;
+
+            Axis yAxis = (Axis)xlChart.Axes(XlAxisType.xlValue,
+                XlAxisGroup.xlPrimary);
+            yAxis.HasTitle = true;
+            yAxis.AxisTitle.Text = "Fourier Amplitude (g-s)";
+
+            // Add title:
+            xlChart.HasTitle = true;
+            xlChart.ChartTitle.Text = "Fourier Amplitude Spectra";
+            // Remove legend:
+            xlChart.HasLegend = false;
+
+        }
+
+        private void FillFASData(Worksheet ws)
+        {
+            ws.Cells[2, 1] = "Frequency (s)";
+            ws.Cells[2, 2] = "Fourier Amplitude (g-s)";
+
+            this.Options.MyFourierSpectraMaker.ReadData();
+            if (this.Options.MyFourierSpectraMaker.FourierAmplitudesList.Count > 0 && this.Options.MyFourierSpectraMaker.FreqList.Count > 0)
+            {
+                List<string> p = this.Options.MyFourierSpectraMaker.FreqList;
+                List<string> acc = this.Options.MyFourierSpectraMaker.FourierAmplitudesList;
+                double[,] arrData = new double[p.Count, 2];
+                for (int i = 0; i < p.Count; i++)
+                {
+                    double.TryParse(p[i], out arrData[i, 0]);
+                    double.TryParse(acc[i], out arrData[i, 1]);
+                }
+                Range rng = ws.get_Range(string.Format("A{0}", startRow), string.Format("B{0}", startRow + acc.Count - 1));
+                rng.Value2 = arrData;
+            }
+        }
+
         private void FillRPData(Worksheet ws)
         {
             ws.Cells[2, 1] = "Period (s)";
             ws.Cells[2, 2] = "Accl(m/ss)";
 
-            this.Options.MyRPSiteMaker.ReadData();
-            if (this.Options.MyRPSiteMaker.ATH.Count > 0 && this.Options.MyRPSiteMaker.PeriodList.Count > 0)
+            this.Options.MyResponseSpectraMaker.ReadData();
+            if (this.Options.MyResponseSpectraMaker.ATH.Count > 0 && this.Options.MyResponseSpectraMaker.PeriodList.Count > 0)
             {
-                List<string> p = this.Options.MyRPSiteMaker.PeriodList;
-                List<string> acc = this.Options.MyRPSiteMaker.ATH;
+                List<string> p = this.Options.MyResponseSpectraMaker.PeriodList;
+                List<string> acc = this.Options.MyResponseSpectraMaker.ATH;
                 double[,] arrData = new double[p.Count, 2];
                 for (int i = 0; i < p.Count; i++)
                 {
@@ -460,8 +521,8 @@ namespace THTool.Helpers
 
             seriesCollection.NewSeries();
             seriesCollection.Item(1).Name = "Shake91";
-            seriesCollection.Item(1).XValues = string.Format("={0}!$A{1}:$A{2}", ws.Name, startRow, this.Options.MyRPSiteMaker.PeriodList.Count);
-            seriesCollection.Item(1).Values = string.Format("={0}!$B{1}:$B{2}", ws.Name, startRow, this.Options.MyRPSiteMaker.ATH.Count);
+            seriesCollection.Item(1).XValues = string.Format("={0}!$A{1}:$A{2}", ws.Name, startRow, this.Options.MyResponseSpectraMaker.PeriodList.Count);
+            seriesCollection.Item(1).Values = string.Format("={0}!$B{1}:$B{2}", ws.Name, startRow, this.Options.MyResponseSpectraMaker.ATH.Count);
 
             seriesCollection.NewSeries();
             seriesCollection.Item(2).Name = "AS1170.4 (Rock)";
@@ -480,7 +541,7 @@ namespace THTool.Helpers
                 XlAxisGroup.xlPrimary);
             xAxis.HasTitle = true;
             xAxis.AxisTitle.Text = "Period (s)";
-            xAxis.MaximumScale = this.Options.MyRPSiteMaker.Options.XaxisMaxScale;
+            xAxis.MaximumScale = this.Options.MyResponseSpectraMaker.Options.XaxisMaxScale;
 
             Axis yAxis = (Axis)xlChart.Axes(XlAxisType.xlValue,
                 XlAxisGroup.xlPrimary);
