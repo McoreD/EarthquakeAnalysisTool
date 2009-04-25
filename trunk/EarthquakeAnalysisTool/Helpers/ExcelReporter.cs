@@ -82,10 +82,10 @@ namespace THTool.Helpers
                 mWSheet1 = (Worksheet)mWorkSheets.get_Item("Sheet1");
                 mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
                 mWSheet3 = (Worksheet)mWorkSheets.get_Item("Sheet3");
-                foreach (Worksheet ws in mWorkSheets)
-                {
-                    ws.Tab.Color = "65535";
-                }
+
+                mWSheet1.Tab.Color = "65535";
+                mWSheet2.Tab.Color = "65535";
+                mWSheet3.Tab.Color = "65535";
                 
                 if (this.MyBaseATHMaker != null && this.MySurfaceATHMaker != null)
                 {
@@ -104,6 +104,7 @@ namespace THTool.Helpers
 
                 AutofitColumns(mWSheet1, "A1", "Z1");
                 AutofitColumns(mWSheet2, "A1", "H1");
+                AutofitColumns(mWSheet3, "A1", "H1");
 
                 Range time1 = (Range)mWSheet1.Columns["A", Missing.Value];
                 time1.ColumnWidth = 8.5;
