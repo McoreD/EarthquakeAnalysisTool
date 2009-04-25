@@ -82,10 +82,6 @@ namespace THTool.Helpers
                 mWSheet1 = (Worksheet)mWorkSheets.get_Item("Sheet1");
                 mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
                 mWSheet3 = (Worksheet)mWorkSheets.get_Item("Sheet3");
-
-                mWSheet1.Tab.Color = "65535";
-                mWSheet2.Tab.Color = "65535";
-                mWSheet3.Tab.Color = "65535";
                 
                 if (this.MyBaseATHMaker != null && this.MySurfaceATHMaker != null)
                 {
