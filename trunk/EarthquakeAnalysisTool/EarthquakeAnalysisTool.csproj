@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Helpers\BaseATHMaker.cs" />
     <Compile Include="Helpers\ExcelReporter.cs" />
+    <Compile Include="Helpers\FourierASMaker.cs" />
     <Compile Include="Helpers\RPSiteMaker.cs" />
     <Compile Include="Helpers\SurfaceATHMaker.cs" />
     <Compile Include="Helpers\FileProcessor.cs" />
