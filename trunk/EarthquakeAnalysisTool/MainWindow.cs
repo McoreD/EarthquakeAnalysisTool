@@ -152,7 +152,7 @@ namespace THTool
                 ropt.MyResponseSpectraMaker = rpsm;
                 FourierASMakerOptions fasm_opt = new FourierASMakerOptions();
                 fasm_opt.FilePath = txtShake91PV.Text;
-                fasm_opt.XaxisMaxScale = 10;
+                fasm_opt.XaxisMaxScale = 8;
                 FASMaker fasm = new FASMaker(fasm_opt);
                 ropt.MyFourierSpectraMaker = fasm;
                 

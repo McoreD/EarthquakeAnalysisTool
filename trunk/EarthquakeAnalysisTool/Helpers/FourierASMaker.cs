@@ -20,6 +20,7 @@ namespace THTool.Helpers
     public class FASMaker : FileProcessor
     {
         public List<string> FreqList { get; private set; }
+        public List<string> PeriodList { get; private set; }
         public List<string> FourierAmplitudesList { get; private set; }
         public FourierASMakerOptions Options { get; private set; }
 
@@ -29,14 +30,16 @@ namespace THTool.Helpers
             this.Options.XaxisMaxScale = 5.0;
 
             this.FreqList = new List<string>();
+            this.PeriodList = new List<string>();
             this.FourierAmplitudesList = new List<string>();
             this.Options = options;
         }
 
         public void ReadData()
-        {
+        {           
             this.FourierAmplitudesList.Clear();
-            this.FreqList.Clear(); 
+            this.FreqList.Clear();
+            this.PeriodList.Clear();
 
             using (StreamReader sr = new StreamReader(this.Options.FilePath))
             {
@@ -59,6 +62,27 @@ namespace THTool.Helpers
                     }
                 }
             }
+
+            foreach (string s in this.FreqList)
+            {
+                double f = 0.0;
+                double.TryParse(s, out f);
+                if (f > 0)
+                {
+                    this.PeriodList.Add((1.0 / f).ToString());
+                }
+                else
+                {
+                    f = 100.0;
+                    if (this.FreqList.Count > 1)
+                    {
+                        double.TryParse(this.FreqList[1], out f);                        
+                    }
+                    double p = 1.0 / f;
+                    p++;
+                    this.PeriodList.Add(p.ToString());
+                }
+            }
         }
 
 
@@ -67,17 +91,18 @@ namespace THTool.Helpers
         {
             if (row.Count > 0)
             {
-                this.AddPeriod(row);
-                this.AddAccel(row);
+                this.AddFreq(row);
+                this.AddAmplitude(row);
             }
         }
 
-        private void AddPeriod(List<string> row)
+        private void AddFreq(List<string> row)
         {
             this.FreqList.Add(row[0]);
+            
         }
 
-        private void AddAccel(List<string> row)
+        private void AddAmplitude(List<string> row)
         {
             this.FourierAmplitudesList.Add(row[1]);
         }
