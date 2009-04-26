@@ -63,8 +63,12 @@ namespace EqAT.Helpers
                 double.TryParse(row[1], out readCheck);
                 while (IsValidNumberRow(row) && readCheck > 0)
                 {
-                    row = SplitLineToRow(sr.ReadLine());
-                    double.TryParse(row[1], out readCheck);
+                    string l = sr.ReadLine();
+                    row = SplitLineToRow(l);
+                    if (!string.IsNullOrEmpty(l))
+                    {
+                        double.TryParse(row[1], out readCheck);
+                    }
                     if (IsValidNumberRow(row))
                     {
                         AddData(row);

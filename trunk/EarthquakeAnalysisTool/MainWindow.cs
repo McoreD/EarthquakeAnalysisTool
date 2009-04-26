@@ -155,18 +155,13 @@ namespace EqAT
                 fasm_opt.XaxisMaxScale = 8;
                 FASMaker fasm = new FASMaker(fasm_opt);
                 ropt.MyFourierSpectraMaker = fasm;
-                
+
             }
 
             ExcelReporter er = new ExcelReporter(ropt);
             er.MySurfaceATHMaker = acm;
             er.MyBaseATHMaker = bm;
             er.CreateReport();
-
-            if (File.Exists(txtExcelFile.Text))
-            {
-                Process.Start(txtExcelFile.Text);
-            }
 
         }
 
@@ -190,6 +185,12 @@ namespace EqAT
         private void bwApp_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             btnExport.Enabled = true;
+
+            if (File.Exists(txtExcelFile.Text))
+            {
+                Process.Start(txtExcelFile.Text);
+            }
+
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
