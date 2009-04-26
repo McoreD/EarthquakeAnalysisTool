@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace THTool
+namespace EqAT
 {
     public class SciFormat : IFormatProvider, ICustomFormatter
     {

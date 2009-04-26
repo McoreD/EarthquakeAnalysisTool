@@ -1,4 +1,4 @@
-﻿namespace THTool
+﻿namespace EqAT
 {
     partial class MainWindow
     {
@@ -144,9 +144,9 @@
             // chkMax4000Readings
             // 
             this.chkMax4000Readings.AutoSize = true;
-            this.chkMax4000Readings.Checked = global::THTool.Properties.Settings.Default.Limit4000Readings;
+            this.chkMax4000Readings.Checked = global::EqAT.Properties.Settings.Default.Limit4000Readings;
             this.chkMax4000Readings.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkMax4000Readings.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "Limit4000Readings", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkMax4000Readings.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "Limit4000Readings", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkMax4000Readings.Location = new System.Drawing.Point(280, 24);
             this.chkMax4000Readings.Name = "chkMax4000Readings";
             this.chkMax4000Readings.Size = new System.Drawing.Size(129, 17);
@@ -156,33 +156,33 @@
             // 
             // nudDT
             // 
-            this.nudDT.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "DT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudDT.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::EqAT.Properties.Settings.Default, "DT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.nudDT.DecimalPlaces = 3;
             this.nudDT.Location = new System.Drawing.Point(80, 72);
             this.nudDT.Name = "nudDT";
             this.nudDT.Size = new System.Drawing.Size(120, 20);
             this.nudDT.TabIndex = 11;
-            this.nudDT.Value = global::THTool.Properties.Settings.Default.DT;
+            this.nudDT.Value = global::EqAT.Properties.Settings.Default.DT;
             // 
             // nudLP
             // 
-            this.nudLP.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "LP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudLP.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::EqAT.Properties.Settings.Default, "LP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.nudLP.DecimalPlaces = 2;
             this.nudLP.Location = new System.Drawing.Point(80, 48);
             this.nudLP.Name = "nudLP";
             this.nudLP.Size = new System.Drawing.Size(120, 20);
             this.nudLP.TabIndex = 10;
-            this.nudLP.Value = global::THTool.Properties.Settings.Default.LP;
+            this.nudLP.Value = global::EqAT.Properties.Settings.Default.LP;
             // 
             // nudHP
             // 
-            this.nudHP.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "HP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudHP.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::EqAT.Properties.Settings.Default, "HP", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.nudHP.DecimalPlaces = 2;
             this.nudHP.Location = new System.Drawing.Point(80, 24);
             this.nudHP.Name = "nudHP";
             this.nudHP.Size = new System.Drawing.Size(120, 20);
             this.nudHP.TabIndex = 9;
-            this.nudHP.Value = global::THTool.Properties.Settings.Default.HP;
+            this.nudHP.Value = global::EqAT.Properties.Settings.Default.HP;
             // 
             // label4
             // 
@@ -218,9 +218,9 @@
             // chkCopyFile
             // 
             this.chkCopyFile.AutoSize = true;
-            this.chkCopyFile.Checked = global::THTool.Properties.Settings.Default.CopyTHFile;
+            this.chkCopyFile.Checked = global::EqAT.Properties.Settings.Default.CopyTHFile;
             this.chkCopyFile.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkCopyFile.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "CopyTHFile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkCopyFile.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "CopyTHFile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkCopyFile.Location = new System.Drawing.Point(27, 55);
             this.chkCopyFile.Name = "chkCopyFile";
             this.chkCopyFile.Size = new System.Drawing.Size(214, 17);
@@ -232,12 +232,12 @@
             // 
             this.txtShake91.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtShake91.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
-            this.txtShake91.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "Shake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtShake91.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EqAT.Properties.Settings.Default, "Shake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtShake91.Location = new System.Drawing.Point(113, 26);
             this.txtShake91.Name = "txtShake91";
             this.txtShake91.Size = new System.Drawing.Size(330, 20);
             this.txtShake91.TabIndex = 12;
-            this.txtShake91.Text = global::THTool.Properties.Settings.Default.Shake91;
+            this.txtShake91.Text = global::EqAT.Properties.Settings.Default.Shake91;
             // 
             // tcExcel
             // 
@@ -278,8 +278,8 @@
             // chkCalcDisp
             // 
             this.chkCalcDisp.AutoSize = true;
-            this.chkCalcDisp.Checked = global::THTool.Properties.Settings.Default.CalcDisp;
-            this.chkCalcDisp.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "CalcDisp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkCalcDisp.Checked = global::EqAT.Properties.Settings.Default.CalcDisp;
+            this.chkCalcDisp.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "CalcDisp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkCalcDisp.Location = new System.Drawing.Point(16, 24);
             this.chkCalcDisp.Name = "chkCalcDisp";
             this.chkCalcDisp.Size = new System.Drawing.Size(142, 17);
@@ -298,7 +298,7 @@
             // 
             // nudYieldAccel
             // 
-            this.nudYieldAccel.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "YieldAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudYieldAccel.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::EqAT.Properties.Settings.Default, "YieldAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.nudYieldAccel.DecimalPlaces = 4;
             this.nudYieldAccel.Increment = new decimal(new int[] {
             1,
@@ -309,7 +309,7 @@
             this.nudYieldAccel.Name = "nudYieldAccel";
             this.nudYieldAccel.Size = new System.Drawing.Size(120, 20);
             this.nudYieldAccel.TabIndex = 21;
-            this.nudYieldAccel.Value = global::THTool.Properties.Settings.Default.YieldAccel;
+            this.nudYieldAccel.Value = global::EqAT.Properties.Settings.Default.YieldAccel;
             // 
             // groupBox4
             // 
@@ -328,8 +328,8 @@
             // chkIgnoreZeroAccel
             // 
             this.chkIgnoreZeroAccel.AutoSize = true;
-            this.chkIgnoreZeroAccel.Checked = global::THTool.Properties.Settings.Default.IgnoreZeroBaseAccel;
-            this.chkIgnoreZeroAccel.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::THTool.Properties.Settings.Default, "IgnoreZeroBaseAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkIgnoreZeroAccel.Checked = global::EqAT.Properties.Settings.Default.IgnoreZeroBaseAccel;
+            this.chkIgnoreZeroAccel.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "IgnoreZeroBaseAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkIgnoreZeroAccel.Location = new System.Drawing.Point(232, 64);
             this.chkIgnoreZeroAccel.Name = "chkIgnoreZeroAccel";
             this.chkIgnoreZeroAccel.Size = new System.Drawing.Size(148, 17);
@@ -349,16 +349,16 @@
             // 
             // txtATHSurfaceFile
             // 
-            this.txtATHSurfaceFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "ATHSurface", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtATHSurfaceFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EqAT.Properties.Settings.Default, "ATHSurface", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtATHSurfaceFile.Location = new System.Drawing.Point(16, 24);
             this.txtATHSurfaceFile.Name = "txtATHSurfaceFile";
             this.txtATHSurfaceFile.Size = new System.Drawing.Size(472, 20);
             this.txtATHSurfaceFile.TabIndex = 13;
-            this.txtATHSurfaceFile.Text = global::THTool.Properties.Settings.Default.ATHSurface;
+            this.txtATHSurfaceFile.Text = global::EqAT.Properties.Settings.Default.ATHSurface;
             // 
             // nudATHCount
             // 
-            this.nudATHCount.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "ATHLineCount", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudATHCount.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::EqAT.Properties.Settings.Default, "ATHLineCount", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.nudATHCount.Location = new System.Drawing.Point(80, 62);
             this.nudATHCount.Maximum = new decimal(new int[] {
             99999,
@@ -373,7 +373,7 @@
             this.nudATHCount.Name = "nudATHCount";
             this.nudATHCount.Size = new System.Drawing.Size(120, 20);
             this.nudATHCount.TabIndex = 8;
-            this.nudATHCount.Value = global::THTool.Properties.Settings.Default.ATHLineCount;
+            this.nudATHCount.Value = global::EqAT.Properties.Settings.Default.ATHLineCount;
             // 
             // label7
             // 
@@ -408,12 +408,12 @@
             // txtATHBaseFile
             // 
             this.txtATHBaseFile.AllowDrop = true;
-            this.txtATHBaseFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "ATHBase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtATHBaseFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EqAT.Properties.Settings.Default, "ATHBase", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtATHBaseFile.Location = new System.Drawing.Point(16, 24);
             this.txtATHBaseFile.Name = "txtATHBaseFile";
             this.txtATHBaseFile.Size = new System.Drawing.Size(472, 20);
             this.txtATHBaseFile.TabIndex = 12;
-            this.txtATHBaseFile.Text = global::THTool.Properties.Settings.Default.ATHBase;
+            this.txtATHBaseFile.Text = global::EqAT.Properties.Settings.Default.ATHBase;
             // 
             // label8
             // 
@@ -426,7 +426,7 @@
             // 
             // nudXaxisMaxScale
             // 
-            this.nudXaxisMaxScale.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::THTool.Properties.Settings.Default, "RPXaxisMaxScale", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudXaxisMaxScale.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::EqAT.Properties.Settings.Default, "RPXaxisMaxScale", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.nudXaxisMaxScale.DecimalPlaces = 2;
             this.nudXaxisMaxScale.Location = new System.Drawing.Point(133, 29);
             this.nudXaxisMaxScale.Minimum = new decimal(new int[] {
@@ -437,7 +437,7 @@
             this.nudXaxisMaxScale.Name = "nudXaxisMaxScale";
             this.nudXaxisMaxScale.Size = new System.Drawing.Size(120, 20);
             this.nudXaxisMaxScale.TabIndex = 18;
-            this.nudXaxisMaxScale.Value = global::THTool.Properties.Settings.Default.RPXaxisMaxScale;
+            this.nudXaxisMaxScale.Value = global::EqAT.Properties.Settings.Default.RPXaxisMaxScale;
             // 
             // groupBox6
             // 
@@ -462,12 +462,12 @@
             // txtRPShake91
             // 
             this.txtShake91PV.AllowDrop = true;
-            this.txtShake91PV.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "RPShake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtShake91PV.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EqAT.Properties.Settings.Default, "RPShake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtShake91PV.Location = new System.Drawing.Point(16, 24);
             this.txtShake91PV.Name = "txtRPShake91";
             this.txtShake91PV.Size = new System.Drawing.Size(472, 20);
             this.txtShake91PV.TabIndex = 12;
-            this.txtShake91PV.Text = global::THTool.Properties.Settings.Default.RPShake91;
+            this.txtShake91PV.Text = global::EqAT.Properties.Settings.Default.RPShake91;
             // 
             // btnExportATH
             // 
@@ -534,12 +534,12 @@
             // 
             // txtExcelFile
             // 
-            this.txtExcelFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "ExcelFilePath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtExcelFile.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EqAT.Properties.Settings.Default, "ExcelFilePath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtExcelFile.Location = new System.Drawing.Point(16, 32);
             this.txtExcelFile.Name = "txtExcelFile";
             this.txtExcelFile.Size = new System.Drawing.Size(472, 20);
             this.txtExcelFile.TabIndex = 19;
-            this.txtExcelFile.Text = global::THTool.Properties.Settings.Default.ExcelFilePath;
+            this.txtExcelFile.Text = global::EqAT.Properties.Settings.Default.ExcelFilePath;
             // 
             // tcMain
             // 
@@ -580,12 +580,12 @@
             // 
             // txtShake91ATH
             // 
-            this.txtShake91ATH.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::THTool.Properties.Settings.Default, "Shake91ATHFile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtShake91ATH.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EqAT.Properties.Settings.Default, "Shake91ATHFile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtShake91ATH.Location = new System.Drawing.Point(21, 173);
             this.txtShake91ATH.Name = "txtShake91ATH";
             this.txtShake91ATH.Size = new System.Drawing.Size(472, 20);
             this.txtShake91ATH.TabIndex = 20;
-            this.txtShake91ATH.Text = global::THTool.Properties.Settings.Default.Shake91ATHFile;
+            this.txtShake91ATH.Text = global::EqAT.Properties.Settings.Default.Shake91ATHFile;
             // 
             // tabPage3
             // 

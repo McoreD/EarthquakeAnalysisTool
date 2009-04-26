@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using THTool.Helpers;
+using EqAT.Helpers;
 
-namespace THTool
+namespace EqAT
 {
     /// <summary>
     /// Reads Shake91 input file and generates an accelerogram in Excel

@@ -8,8 +8,8 @@
     <ProjectGuid>{35087AC0-5B2E-4640-BF40-788EC6590EC4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>THTool</RootNamespace>
-    <AssemblyName>THTool</AssemblyName>
+    <RootNamespace>EqAT</RootNamespace>
+    <AssemblyName>EqAT</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
