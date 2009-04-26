@@ -66,8 +66,8 @@ namespace EqAT.Helpers
         /// </summary>
         public void CreateReport()
         {
-            try
-            {
+            //try
+            //{
                 //************************
                 //* Initialize Worksheets
                 //************************
@@ -122,17 +122,18 @@ namespace EqAT.Helpers
                 {
                     ExcelFilePath = SaveAs2003(mPath);
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
 
-            finally
-            {
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.ToString());                
+            //}
+
+            //finally
+            //{
                 mExcelApp.DisplayAlerts = true;
                 mExcelApp.Quit();
-            }
+           // }
 
         }
 
