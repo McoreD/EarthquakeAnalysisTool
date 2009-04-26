@@ -248,7 +248,7 @@ namespace EqAT.Helpers
         private void FillRPData(Worksheet ws)
         {
             ws.Cells[2, 1] = "Period (s)";
-            ws.Cells[2, 2] = "Accl(m/ss)";
+            ws.Cells[2, 2] = "Accl(g)";
 
             this.Options.MyResponseSpectraMaker.ReadData();
             if (this.Options.MyResponseSpectraMaker.ATH.Count > 0 && this.Options.MyResponseSpectraMaker.PeriodList.Count > 0)
@@ -273,9 +273,9 @@ namespace EqAT.Helpers
             ws.Cells[1, 4] = "Code";
             ws.Cells[2, 4] = "Period (s)";
             ws.Cells[2, 5] = "Rock Ch";
-            ws.Cells[2, 6] = "Rock Accl (m/ss)";
+            ws.Cells[2, 6] = "Rock Accl (g)";
             ws.Cells[2, 7] = "Strong Rock Ch";
-            ws.Cells[2, 8] = "Strong Rock Accl (m/ss)";
+            ws.Cells[2, 8] = "Strong Rock Accl (g)";
 
             Range headings = ws.get_Range("A1", "H2");
             headings.Font.Bold = true;
