@@ -6,7 +6,7 @@ using Microsoft.Office.Interop.Excel;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 
-namespace THTool.Helpers
+namespace EqAT.Helpers
 {
     public struct ExcelReporterOptions
     {
@@ -91,7 +91,7 @@ namespace THTool.Helpers
                 if (this.Options.MyResponseSpectraMaker != null)
                 {
                     FillRPData(mWSheet2);
-                    FillFASData(mWSheet3);
+                    FillFASData(mWSheet3, this.Options.MyFourierSpectraMaker);
                     GenerateChartFASf(mWSheet3, this.Options.MyFourierSpectraMaker);
                     GenerateChartFASp(mWSheet3, this.Options.MyFourierSpectraMaker);
                     FillCodeData(mWSheet2);
@@ -212,18 +212,19 @@ namespace THTool.Helpers
 
         }
 
-        private void FillFASData(Worksheet ws)
+        private void FillFASData(Worksheet ws, FASMaker fasm)
         {
             ws.Cells[2, 1] = "Frequency (Hz)";
             ws.Cells[2, 2] = "Seconds (s)";
             ws.Cells[2, 3] = "Fourier Amplitude (g-s)";
 
-            this.Options.MyFourierSpectraMaker.ReadData();
-            if (this.Options.MyFourierSpectraMaker.FourierAmplitudesList.Count > 0 && this.Options.MyFourierSpectraMaker.FreqList.Count > 0)
+            fasm.ReadData();
+
+            if (fasm.FourierAmplitudesList.Count > 0 && fasm.FreqList.Count > 0)
             {
-                List<string> f = this.Options.MyFourierSpectraMaker.FreqList;
-                List<string> p = this.Options.MyFourierSpectraMaker.PeriodList;
-                List<string> acc = this.Options.MyFourierSpectraMaker.FourierAmplitudesList;
+                List<string> f = fasm.FreqList;
+                List<string> p = fasm.PeriodList;
+                List<string> acc = fasm.FourierAmplitudesList;
                 double[,] arrData = new double[f.Count, 3];
                 for (int i = 0; i < f.Count; i++)
                 {
@@ -234,6 +235,13 @@ namespace THTool.Helpers
                 Range rng = ws.get_Range(string.Format("A{0}", startRow), string.Format("C{0}", startRow + acc.Count - 1));
                 rng.Value2 = arrData;
             }
+
+            ws.Cells[2, 5] = "Bandwidth (Hz)";
+            ws.Cells[2, 6] = "from";
+            ws.Cells[2, 7] = this.Options.MyFourierSpectraMaker.BandwidthStart;
+            ws.Cells[3, 6] = "to";
+            ws.Cells[3, 7] = this.Options.MyFourierSpectraMaker.BandwidthFinish;
+
         }
 
         private void FillRPData(Worksheet ws)

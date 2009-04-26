@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using THTool.Properties;
+using EqAT.Properties;
 using System.Globalization;
 
-namespace THTool
+namespace EqAT
 {
     public class ATHMakerOptions
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using THTool.Helpers;
+using EqAT.Helpers;
 
 
-namespace THTool
+namespace EqAT
 {
 
     public struct SurfaceATHMakerOptions

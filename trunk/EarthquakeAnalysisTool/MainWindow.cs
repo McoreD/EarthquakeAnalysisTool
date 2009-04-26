@@ -7,10 +7,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
-using THTool.Helpers;
-using THTool.Properties;
+using EqAT.Helpers;
+using EqAT.Properties;
 
-namespace THTool
+namespace EqAT
 {
     public partial class MainWindow : Form
     {
