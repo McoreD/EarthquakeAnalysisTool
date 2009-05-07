@@ -48,6 +48,9 @@ namespace EqAT.Helpers
 
         private ExcelReporterOptions Options { get; set; }
 
+        private List<string> accBase;
+        private double[] timeStepsBase;
+
         int startRow = 3;
 
         /// <summary>
@@ -216,7 +219,7 @@ namespace EqAT.Helpers
         private void FillFASData(Worksheet ws, FASMaker fasm)
         {
             ws.Cells[2, 1] = "Frequency (Hz)";
-            ws.Cells[2, 2] = "Seconds (s)";
+            ws.Cells[2, 2] = "Period (s)";
             ws.Cells[2, 3] = "Fourier Amplitude (g-s)";
 
             fasm.ReadData();
@@ -322,7 +325,7 @@ namespace EqAT.Helpers
 
         private void FillATHData(Worksheet ws)
         {
-            List<string> accBase = MyBaseATHMaker.ReadATH();
+            accBase = MyBaseATHMaker.ReadATH();
             int dtBase = MyBaseATHMaker.DT;
 
             mBwApp.ReportProgress(0, (this.Options.CalculateDisplacements ? 10 : 4));
@@ -337,7 +340,7 @@ namespace EqAT.Helpers
             ws.Cells[1, 1] = "Base: " + MyBaseATHMaker.Title;
 
             // Times
-            double[] timeStepsBase = new double[accBase.Count];
+            timeStepsBase = new double[accBase.Count];
             ws.Cells[2, 1] = "Time (s)";
             Range rTime = ws.get_Range(string.Format("A{0}", startRow), string.Format("A{0}", startRow + accBase.Count - 1));
             for (int i = 0; i < accBase.Count; i++)
@@ -443,6 +446,7 @@ namespace EqAT.Helpers
                     arrString[i, 0] = "=RC[-1]*9.81";
                 }
                 rAthS.FormulaArray = arrString;
+                rAthS.Style = "Calculation";
                 mBwApp.ReportProgress(1);
 
                 // VTH (m/s)
@@ -499,6 +503,19 @@ namespace EqAT.Helpers
 
             } // Calculate Displacements
 
+            FillStatistics(ws);
+
+            // Number Formatting
+
+            SetNumberFormat(ws, "B1", "E1", "0.0000E+00");
+            SetNumberFormat(ws, "I1", "L1", "0.0000E+00");
+
+            mBwApp.ReportProgress(2, "Ready");
+
+        }
+
+        private void FillStatistics(Worksheet ws)
+        {
             //*************
             // Statistics
             //*************
@@ -510,8 +527,8 @@ namespace EqAT.Helpers
             // Bracketed Duration
 
             double a_threshold = 0.05;
-            ws.Cells[headingStatsRow + 1, 15] = "Threshold Accel";
-            ws.Cells[headingStatsRow + 1, 16] = a_threshold;
+            //ws.Cells[headingStatsRow + 1, 15] = "Threshold Accel";
+            //ws.Cells[headingStatsRow + 1, 16] = a_threshold;
 
             double t_first = 0.0;
             double t_last = 0.0;
@@ -539,27 +556,26 @@ namespace EqAT.Helpers
 
             // Peak Acceleration 
             ws.Cells[headingStatsRow + 3, 15] = "Peak accel (g)";
-            ((Range)ws.Cells[headingStatsRow + 3, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[-6]:R{1}C[-6]),ABS(MIN(R{0}C[-6]:R{1}C[-6])))", startRow, startRow + accSurface.Count - 1);
+            ((Range)ws.Cells[headingStatsRow + 3, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow, startRow + accBase.Count - 1, -13);
 
             if (this.Options.CalculateDisplacements)
             {
                 // Peak Velocity 
                 ws.Cells[headingStatsRow + 4, 15] = "Peak velo (m/s)";
-                ((Range)ws.Cells[headingStatsRow + 4, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[-5]:R{1}C[-5]),ABS(MIN(R{0}C[-5]:R{1}C[-5])))", startRow + 1, startRow + accSurface.Count - 1);
-
+                ((Range)ws.Cells[headingStatsRow + 4, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -12);
+        
                 // Peak Displacement 
                 ws.Cells[headingStatsRow + 5, 15] = "Peak disp (m)";
-                ((Range)ws.Cells[headingStatsRow + 5, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[-4]:R{1}C[-4]),ABS(MIN(R{0}C[-4]:R{1}C[-4])))", startRow + 1, startRow + accSurface.Count - 1);
+                ((Range)ws.Cells[headingStatsRow + 5, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -11);
             }
 
-            // Number Formatting
-
-            SetNumberFormat(ws, "B1", "E1", "0.0000E+00");
-            SetNumberFormat(ws, "I1", "L1", "0.0000E+00");
-
-            mBwApp.ReportProgress(2, "Ready");
-
+            for (int i = 3; i < 6; i++)
+            {
+                ((Range)ws.Cells[headingStatsRow + i, 16]).Style = "Output";
+            }
         }
+
+
 
         private void SetNumberFormat(Worksheet ws, string colStart, string colFinish, string numberFormat)
         {
@@ -590,7 +606,7 @@ namespace EqAT.Helpers
             seriesCollection.Item(3).XValues = string.Format("={0}!R{1}C4:R{2}C4", ws.Name, startRow, startRow + 20);
             seriesCollection.Item(3).Values = string.Format("={0}!R{1}C8:R{2}C8", ws.Name, startRow, startRow + 20);
 
-            xlChart.ChartType = XlChartType.xlXYScatterSmoothNoMarkers;
+            xlChart.ChartType = XlChartType.xlXYScatterLinesNoMarkers;
 
             // Customize axes:
             Axis xAxis = (Axis)xlChart.Axes(XlAxisType.xlCategory,
