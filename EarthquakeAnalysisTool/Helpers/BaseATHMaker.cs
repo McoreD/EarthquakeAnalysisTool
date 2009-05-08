@@ -19,6 +19,8 @@ namespace EqAT
         private int NTPS;
         private decimal mDT;
 
+        public string Title { get; protected set; }
+
         public BaseATHMaker(string fp)
         {
             ATH = new List<string>();
