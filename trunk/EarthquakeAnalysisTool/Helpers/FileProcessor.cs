@@ -7,8 +7,6 @@ namespace EqAT.Helpers
 {
     public class FileProcessor
     {
-        public string Title { get; protected set; }
-
         protected void RemoveDoubleSpaces(ref string line)
         {
             try
