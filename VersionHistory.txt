@@ -9,4 +9,4 @@
 0.4.0.0 Calculate Displacement for time steps with acceleration above Yield Acceleration
 0.3.0.0 Calculate VTH and DTH from Surface and Base ATH
 0.2.0.0 ATH from Shake91 to Excel graphs
-0.1.0.0 Generating ATH for Shake91 Soil Profile calculations (not working)
+0.1.0.0 Generating ATH for Shake91 Soil Profile calculations

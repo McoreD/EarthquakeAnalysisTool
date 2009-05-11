@@ -496,7 +496,7 @@ namespace EqAT.Helpers
                 Range rDthAy = ws.get_Range(string.Format("M{0}", startRow + 1), string.Format("M{0}", startRow + accSurface.Count - 1));
                 for (int i = 0; i < accSurface.Count; i++)
                 {
-                    arrString[i, 0] = "=IF(RC[-4]>ay,RC[-1],0)";
+                    arrString[i, 0] = "=IF(ABS(RC[-4])>ay,RC[-1],0)";
                 }
                 rDthAy.FormulaArray = arrString;
                 rDthAy.Style = "Output";
@@ -670,7 +670,7 @@ namespace EqAT.Helpers
                 seriesCollection.Item(2).XValues = string.Format("={0}!R{1}C8:R{2}C8", ws.Name, startRow, MySurfaceATHMaker.ATHMgr[0].Readings.Count);
                 seriesCollection.Item(2).Values = string.Format("={0}!R{1}C9:R{2}C9", ws.Name, startRow, MySurfaceATHMaker.ATHMgr[0].Readings.Count);
 
-                xlChart.ChartType = XlChartType.xlXYScatterSmoothNoMarkers;
+                xlChart.ChartType = XlChartType.xlXYScatterLinesNoMarkers;
 
                 // Customize axes:
                 Axis xAxis = (Axis)xlChart.Axes(XlAxisType.xlCategory,
