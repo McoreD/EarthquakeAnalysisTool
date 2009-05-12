@@ -328,7 +328,7 @@ namespace EqAT.Helpers
             accBase = MyBaseATHMaker.ReadATH();
             int dtBase = MyBaseATHMaker.DT;
 
-            mBwApp.ReportProgress(0, (this.Options.CalculateDisplacements ? 10 : 4));
+            mBwApp.ReportProgress(0, (this.Options.CalculateDisplacements ? 7 : 7));
             mBwApp.ReportProgress(2, "Filling Base ATH, VTH and DTH...");
 
             double[,] arrData = new double[accBase.Count, 1];
@@ -365,18 +365,20 @@ namespace EqAT.Helpers
             rAthG.Style = "Input";
             mBwApp.ReportProgress(1);
 
+            // ATH (m/ss)
+            ws.Cells[2, 3] = "Accel (m/ss)";
+            Range rAth = ws.get_Range(string.Format("C{0}", startRow), string.Format("C{0}", startRow + accBase.Count - 1));
+            for (int i = 0; i < accBase.Count; i++)
+            {
+                arrString[i, 0] = "=RC[-1]*9.81";
+            }
+            rAth.FormulaArray = arrString;
+            rAth.Style = "Calculation";
+            mBwApp.ReportProgress(1);
+
             if (this.Options.CalculateDisplacements)
             {
-                // ATH (m/ss)
-                ws.Cells[2, 3] = "Accel (m/ss)";
-                Range rAth = ws.get_Range(string.Format("C{0}", startRow), string.Format("C{0}", startRow + accBase.Count - 1));
-                for (int i = 0; i < accBase.Count; i++)
-                {
-                    arrString[i, 0] = "=RC[-1]*9.81";
-                }
-                rAth.FormulaArray = arrString;
-                rAth.Style = "Calculation";
-                mBwApp.ReportProgress(1);
+
 
                 // VTH (m/s)
                 ws.Cells[2, 4] = "veloc (m/s)";
@@ -440,6 +442,33 @@ namespace EqAT.Helpers
             rAthGS.Style = "Input";
             mBwApp.ReportProgress(1);
 
+
+            // ATH^2 
+            ws.Cells[2, 10] = "Accel (m/ss)";
+            Range rAthSurfaceSq = ws.get_Range(string.Format("T{0}", startRow), string.Format("T{0}", startRow + accBase.Count - 1));
+            for (int i = 0; i < accSurface.Count; i++)
+            {
+                arrString[i, 0] = "=RC[-17]^2";
+            }
+            rAthSurfaceSq.FormulaArray = arrString;
+            rAthSurfaceSq.Style = "Calculation";
+            mBwApp.ReportProgress(1);
+
+            // Arias dI (m/s)
+            ws.Cells[2, 11] = "veloc (m/s)";
+            Range dAriasIntsty = ws.get_Range(string.Format("U{0}", startRow + 1), string.Format("U{0}", startRow + accBase.Count - 1));
+            for (int i = 0; i < accBase.Count; i++)
+            {
+                arrString[i, 0] = "=((R[-1]C[-1]+RC[-1])/2)*(RC[-20]-R[-1]C[-20])";
+            }
+            dAriasIntsty.FormulaArray = arrString;
+            dAriasIntsty.Style = "Calculation";
+            mBwApp.ReportProgress(1);
+
+            ((Range)ws.Cells[12, 15]).Value2 = "Arias Intensity (m/s)";
+            ((Range)ws.Cells[12, 16]).FormulaR1C1 = string.Format("=SUM(R[-8]C[5]:R[{0}]C[5])*PI()/(2*9.81)", accBase.Count - 10);
+            ((Range)ws.Cells[12, 16]).Style = "Calculation";
+
             // ATH (m/ss)
             ws.Cells[2, 10] = "Accel (m/ss)";
             Range rAthSurface = ws.get_Range(string.Format("J{0}", startRow), string.Format("J{0}", startRow + accSurface.Count - 1));
@@ -451,6 +480,8 @@ namespace EqAT.Helpers
             rAthSurface.Style = "Calculation";
             mBwApp.ReportProgress(1);
 
+
+
             if (!this.Options.CalculateDisplacements)
             {
                 string fpPlaxisDynLoadMult = Path.ChangeExtension(this.Options.WorkbookFilePath, ".mult");
@@ -458,7 +489,7 @@ namespace EqAT.Helpers
                 {
                     for (int i = 0; i < rTimeSurface.Count; i++)
                     {
-                        sw.WriteLine(string.Format("{0} {1}", dTimeSurface[i], MySurfaceATHMaker.ATHdouble[i]));
+                        sw.WriteLine(string.Format("{0} {1}", dTimeSurface[i], MySurfaceATHMaker.ATHdouble[i] * 9.81));
                     }
                 }
             }
