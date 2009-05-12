@@ -33,6 +33,7 @@ namespace EqAT
         
         public List<ATH> ATHMgr { get; private set; }
 
+        public List<double> ATHdouble { get; private set; }
         /// <summary>
         /// Time Interval in Milliseconds
         /// </summary>
@@ -46,6 +47,7 @@ namespace EqAT
         public SurfaceATHMaker(SurfaceATHMakerOptions options)
         {
             ATHMgr = new List<ATH>();
+            ATHdouble = new List<double>();
             // this.DT = 20;
             this.Options = options;
             this.MaxValues = 8 * 128;
@@ -109,6 +111,9 @@ namespace EqAT
             for (int i = 0; i < nums.Count; i++)
             {
                 ath.Readings.Add(nums[i]);
+                double d = 0.0;
+                double.TryParse(nums[i], out d);
+                this.ATHdouble.Add(d);
             }
         }
 
