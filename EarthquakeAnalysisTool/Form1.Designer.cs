@@ -43,10 +43,6 @@
             this.txtShake91 = new System.Windows.Forms.TextBox();
             this.tcExcel = new System.Windows.Forms.TabControl();
             this.tpATHExcel = new System.Windows.Forms.TabPage();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.chkCalcDisp = new System.Windows.Forms.CheckBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.nudYieldAccel = new System.Windows.Forms.NumericUpDown();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chkIgnoreZeroAccel = new System.Windows.Forms.CheckBox();
             this.btnBrowseSurfaceATH = new System.Windows.Forms.Button();
@@ -56,11 +52,17 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnBrowseBaseATH = new System.Windows.Forms.Button();
             this.txtATHBaseFile = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.nudXaxisMaxScale = new System.Windows.Forms.NumericUpDown();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.btnBrowseRP1 = new System.Windows.Forms.Button();
             this.txtShake91PV = new System.Windows.Forms.TextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.nudXaxisMaxScale = new System.Windows.Forms.NumericUpDown();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.chkCalcDisp = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.nudYieldAccel = new System.Windows.Forms.NumericUpDown();
             this.btnExportATH = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.bwApp = new System.ComponentModel.BackgroundWorker();
@@ -73,8 +75,6 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtShake91ATH = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDT)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLP)).BeginInit();
@@ -82,20 +82,20 @@
             this.groupBox2.SuspendLayout();
             this.tcExcel.SuspendLayout();
             this.tpATHExcel.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudXaxisMaxScale)).BeginInit();
             this.groupBox6.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudXaxisMaxScale)).BeginInit();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -263,54 +263,6 @@
             this.tpATHExcel.Text = "Earthquake Data";
             this.tpATHExcel.UseVisualStyleBackColor = true;
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.chkCalcDisp);
-            this.groupBox5.Controls.Add(this.label6);
-            this.groupBox5.Controls.Add(this.nudYieldAccel);
-            this.groupBox5.Location = new System.Drawing.Point(10, 8);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(624, 96);
-            this.groupBox5.TabIndex = 20;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "ATH";
-            // 
-            // chkCalcDisp
-            // 
-            this.chkCalcDisp.AutoSize = true;
-            this.chkCalcDisp.Checked = global::EqAT.Properties.Settings.Default.CalcDisp;
-            this.chkCalcDisp.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "CalcDisp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkCalcDisp.Location = new System.Drawing.Point(16, 24);
-            this.chkCalcDisp.Name = "chkCalcDisp";
-            this.chkCalcDisp.Size = new System.Drawing.Size(142, 17);
-            this.chkCalcDisp.TabIndex = 21;
-            this.chkCalcDisp.Text = "Calculate Displacements";
-            this.chkCalcDisp.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(16, 56);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(107, 13);
-            this.label6.TabIndex = 22;
-            this.label6.Text = "Yield Acceleration (g)";
-            // 
-            // nudYieldAccel
-            // 
-            this.nudYieldAccel.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::EqAT.Properties.Settings.Default, "YieldAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.nudYieldAccel.DecimalPlaces = 4;
-            this.nudYieldAccel.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.nudYieldAccel.Location = new System.Drawing.Point(128, 56);
-            this.nudYieldAccel.Name = "nudYieldAccel";
-            this.nudYieldAccel.Size = new System.Drawing.Size(120, 20);
-            this.nudYieldAccel.TabIndex = 21;
-            this.nudYieldAccel.Value = global::EqAT.Properties.Settings.Default.YieldAccel;
-            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.chkIgnoreZeroAccel);
@@ -415,6 +367,59 @@
             this.txtATHBaseFile.TabIndex = 12;
             this.txtATHBaseFile.Text = global::EqAT.Properties.Settings.Default.ATHBase;
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnBrowseRP1);
+            this.groupBox6.Controls.Add(this.txtShake91PV);
+            this.groupBox6.Location = new System.Drawing.Point(16, 86);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(623, 65);
+            this.groupBox6.TabIndex = 17;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Peak Values (Shake91 Output File 1)";
+            // 
+            // btnBrowseRP1
+            // 
+            this.btnBrowseRP1.Location = new System.Drawing.Point(496, 24);
+            this.btnBrowseRP1.Name = "btnBrowseRP1";
+            this.btnBrowseRP1.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseRP1.TabIndex = 14;
+            this.btnBrowseRP1.Text = "&Browse";
+            this.btnBrowseRP1.UseVisualStyleBackColor = true;
+            // 
+            // txtShake91PV
+            // 
+            this.txtShake91PV.AllowDrop = true;
+            this.txtShake91PV.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EqAT.Properties.Settings.Default, "RPShake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtShake91PV.Location = new System.Drawing.Point(16, 24);
+            this.txtShake91PV.Name = "txtShake91PV";
+            this.txtShake91PV.Size = new System.Drawing.Size(472, 20);
+            this.txtShake91PV.TabIndex = 12;
+            this.txtShake91PV.Text = global::EqAT.Properties.Settings.Default.RPShake91;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.groupBox8);
+            this.tabPage3.Controls.Add(this.groupBox5);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(682, 342);
+            this.tabPage3.TabIndex = 3;
+            this.tabPage3.Text = "Options";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.label8);
+            this.groupBox8.Controls.Add(this.nudXaxisMaxScale);
+            this.groupBox8.Location = new System.Drawing.Point(10, 112);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(624, 71);
+            this.groupBox8.TabIndex = 21;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Response Spectra";
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -439,35 +444,54 @@
             this.nudXaxisMaxScale.TabIndex = 18;
             this.nudXaxisMaxScale.Value = global::EqAT.Properties.Settings.Default.RPXaxisMaxScale;
             // 
-            // groupBox6
+            // groupBox5
             // 
-            this.groupBox6.Controls.Add(this.btnBrowseRP1);
-            this.groupBox6.Controls.Add(this.txtShake91PV);
-            this.groupBox6.Location = new System.Drawing.Point(16, 86);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(623, 65);
-            this.groupBox6.TabIndex = 17;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Peak Values (Shake91 Output File 1)";
+            this.groupBox5.Controls.Add(this.chkCalcDisp);
+            this.groupBox5.Controls.Add(this.label6);
+            this.groupBox5.Controls.Add(this.nudYieldAccel);
+            this.groupBox5.Location = new System.Drawing.Point(10, 8);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(624, 96);
+            this.groupBox5.TabIndex = 20;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "ATH";
             // 
-            // btnBrowseRP1
+            // chkCalcDisp
             // 
-            this.btnBrowseRP1.Location = new System.Drawing.Point(496, 24);
-            this.btnBrowseRP1.Name = "btnBrowseRP1";
-            this.btnBrowseRP1.Size = new System.Drawing.Size(75, 23);
-            this.btnBrowseRP1.TabIndex = 14;
-            this.btnBrowseRP1.Text = "&Browse";
-            this.btnBrowseRP1.UseVisualStyleBackColor = true;
+            this.chkCalcDisp.AutoSize = true;
+            this.chkCalcDisp.Checked = global::EqAT.Properties.Settings.Default.CalcDisp;
+            this.chkCalcDisp.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "CalcDisp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkCalcDisp.Location = new System.Drawing.Point(16, 24);
+            this.chkCalcDisp.Name = "chkCalcDisp";
+            this.chkCalcDisp.Size = new System.Drawing.Size(486, 17);
+            this.chkCalcDisp.TabIndex = 21;
+            this.chkCalcDisp.Text = "Calculate Newmark Displacements (uncheck this to create Load Multiplier file for " +
+                "Plaxis Dynamics)";
+            this.chkCalcDisp.UseVisualStyleBackColor = true;
             // 
-            // txtRPShake91
+            // label6
             // 
-            this.txtShake91PV.AllowDrop = true;
-            this.txtShake91PV.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::EqAT.Properties.Settings.Default, "RPShake91", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtShake91PV.Location = new System.Drawing.Point(16, 24);
-            this.txtShake91PV.Name = "txtRPShake91";
-            this.txtShake91PV.Size = new System.Drawing.Size(472, 20);
-            this.txtShake91PV.TabIndex = 12;
-            this.txtShake91PV.Text = global::EqAT.Properties.Settings.Default.RPShake91;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(16, 56);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(107, 13);
+            this.label6.TabIndex = 22;
+            this.label6.Text = "Yield Acceleration (g)";
+            // 
+            // nudYieldAccel
+            // 
+            this.nudYieldAccel.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::EqAT.Properties.Settings.Default, "YieldAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudYieldAccel.DecimalPlaces = 4;
+            this.nudYieldAccel.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.nudYieldAccel.Location = new System.Drawing.Point(128, 56);
+            this.nudYieldAccel.Name = "nudYieldAccel";
+            this.nudYieldAccel.Size = new System.Drawing.Size(120, 20);
+            this.nudYieldAccel.TabIndex = 21;
+            this.nudYieldAccel.Value = global::EqAT.Properties.Settings.Default.YieldAccel;
             // 
             // btnExportATH
             // 
@@ -587,29 +611,6 @@
             this.txtShake91ATH.TabIndex = 20;
             this.txtShake91ATH.Text = global::EqAT.Properties.Settings.Default.Shake91ATHFile;
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.groupBox8);
-            this.tabPage3.Controls.Add(this.groupBox5);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(682, 342);
-            this.tabPage3.TabIndex = 3;
-            this.tabPage3.Text = "Options";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.label8);
-            this.groupBox8.Controls.Add(this.nudXaxisMaxScale);
-            this.groupBox8.Location = new System.Drawing.Point(10, 112);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(624, 71);
-            this.groupBox8.TabIndex = 21;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Response Spectra";
-            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -634,17 +635,20 @@
             this.groupBox2.PerformLayout();
             this.tcExcel.ResumeLayout(false);
             this.tpATHExcel.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudATHCount)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudXaxisMaxScale)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudXaxisMaxScale)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudYieldAccel)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.groupBox7.ResumeLayout(false);
@@ -653,9 +657,6 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

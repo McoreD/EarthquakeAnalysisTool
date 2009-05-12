@@ -451,12 +451,15 @@ namespace EqAT.Helpers
             rAthSurface.Style = "Calculation";
             mBwApp.ReportProgress(1);
 
-            string fpPlaxisDynLoadMult = Path.ChangeExtension(this.Options.WorkbookFilePath, ".mult");
-            using (StreamWriter sw = new StreamWriter(fpPlaxisDynLoadMult))
+            if (!this.Options.CalculateDisplacements)
             {
-                for (int i = 0; i < rTimeSurface.Count; i++)
+                string fpPlaxisDynLoadMult = Path.ChangeExtension(this.Options.WorkbookFilePath, ".mult");
+                using (StreamWriter sw = new StreamWriter(fpPlaxisDynLoadMult))
                 {
-                    sw.WriteLine(string.Format("{0} {1}", dTimeSurface[i], MySurfaceATHMaker.ATHdouble[i]));
+                    for (int i = 0; i < rTimeSurface.Count; i++)
+                    {
+                        sw.WriteLine(string.Format("{0} {1}", dTimeSurface[i], MySurfaceATHMaker.ATHdouble[i]));
+                    }
                 }
             }
 
