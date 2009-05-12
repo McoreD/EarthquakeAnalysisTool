@@ -35,13 +35,14 @@ namespace EqAT.Helpers
         public BaseATHMaker MyBaseATHMaker { get; set; }
 
         private Microsoft.Office.Interop.Excel.Application mExcelApp = new Microsoft.Office.Interop.Excel.ApplicationClass();
-        private Workbook mWorkBook;
+        private Microsoft.Office.Interop.Excel.Workbook mWorkBook;
+        private Microsoft.Office.Interop.Excel.Sheets mWorkSheets;
 
         public string ExcelFilePath { get; set; }
 
-        //private Worksheet mWSheet1 = new Worksheet();
-        private Worksheet mwWsRS = new Worksheet();
-        private Worksheet mWsFS = new Worksheet();
+        private Microsoft.Office.Interop.Excel.Worksheet mWSheet1 = new Microsoft.Office.Interop.Excel.WorksheetClass();
+        private Worksheet mWSheet2 = new Worksheet();
+        private Worksheet mWSheet3 = new Worksheet();
 
         private BackgroundWorker mBwApp;
 
@@ -76,48 +77,43 @@ namespace EqAT.Helpers
 
             mExcelApp.DisplayAlerts = false;
 
+            //mWorkBook = mExcelApp.Workbooks.Open(mXlsFilePath, 0, false, 5, "", "", true, XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
             mWorkBook = mExcelApp.Workbooks.Add(Missing.Value);
-            Sheets mWorkSheets = mWorkBook.Worksheets as Sheets;
 
-            // mWSheet1 = (Worksheet)mWorkSheets.get_Item("Sheet1");
-            mwWsRS = (Worksheet)mWorkSheets.get_Item("Sheet2");
-            mWsFS = (Worksheet)mWorkSheets.get_Item("Sheet3");
+            mWorkSheets = mWorkBook.Worksheets;
+
+            mWSheet1 = (Worksheet)mWorkSheets.get_Item("Sheet1");
+            mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
+            mWSheet3 = (Worksheet)mWorkSheets.get_Item("Sheet3");
 
             if (this.MyBaseATHMaker != null && this.MySurfaceATHMaker != null)
             {
-                MySurfaceATHMaker.ReadATH();
-                accBase = MyBaseATHMaker.ReadATH();
-
-                foreach (ATH ath in MySurfaceATHMaker.ATHMgr)
-                {
-                    Worksheet ws = (Worksheet)mExcelApp.ActiveWorkbook.Sheets.Add(Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-                    FillATHData(ath, ws);
-                    GenerateChartATH(ws);
-                }
+                FillATHData(mWSheet1);
+                GenerateChartATH(mWSheet1);
             }
             if (this.Options.MyResponseSpectraMaker != null)
             {
-                FillRPData(mwWsRS);
-                FillFASData(mWsFS, this.Options.MyFourierSpectraMaker);
-                GenerateChartFASf(mWsFS, this.Options.MyFourierSpectraMaker);
-                GenerateChartFASp(mWsFS, this.Options.MyFourierSpectraMaker);
-                FillCodeData(mwWsRS);
-                GenerateChartRP(mwWsRS);
+                FillRPData(mWSheet2);
+                FillFASData(mWSheet3, this.Options.MyFourierSpectraMaker);
+                GenerateChartFASf(mWSheet3, this.Options.MyFourierSpectraMaker);
+                GenerateChartFASp(mWSheet3, this.Options.MyFourierSpectraMaker);
+                FillCodeData(mWSheet2);
+                GenerateChartRP(mWSheet2);
             }
 
-            // AutofitColumns(mWSheet1, "A1", "Z1");
-            AutofitColumns(mwWsRS, "A1", "H1");
-            AutofitColumns(mWsFS, "A1", "H1");
+            AutofitColumns(mWSheet1, "A1", "Z1");
+            AutofitColumns(mWSheet2, "A1", "H1");
+            AutofitColumns(mWSheet3, "A1", "H1");
 
-            //Range time1 = (Range)mWSheet1.Columns["A", Missing.Value];
-            //time1.ColumnWidth = 8.5;
-            //time1 = (Range)mWSheet1.Columns["H", Missing.Value];
-            //time1.ColumnWidth = 8.5;
+            Range time1 = (Range)mWSheet1.Columns["A", Missing.Value];
+            time1.ColumnWidth = 8.5;
+            time1 = (Range)mWSheet1.Columns["H", Missing.Value];
+            time1.ColumnWidth = 8.5;
 
-            //mWSheet1.Name = "ATH and DTH Data";
-            mwWsRS.Name = "Response Spectra Data";
-            mWsFS.Name = "Fourier Spectra Data";
-            //mWSheet1.Select(true);
+            mWSheet1.Name = "ATH and DTH Data";
+            mWSheet2.Name = "Response Spectra Data";
+            mWSheet3.Name = "Fourier Spectra Data";
+            mWSheet1.Select(true);
 
             string ext = Path.GetExtension(mPath);
 
@@ -254,29 +250,22 @@ namespace EqAT.Helpers
 
         private void FillRPData(Worksheet ws)
         {
-            try
-            {
-                ws.Cells[2, 1] = "Period (s)";
-                ws.Cells[2, 2] = "Accl(g)";
+            ws.Cells[2, 1] = "Period (s)";
+            ws.Cells[2, 2] = "Accl(g)";
 
-                this.Options.MyResponseSpectraMaker.ReadData();
-                if (this.Options.MyResponseSpectraMaker.ATH.Count > 0 && this.Options.MyResponseSpectraMaker.PeriodList.Count > 0)
-                {
-                    List<string> p = this.Options.MyResponseSpectraMaker.PeriodList;
-                    List<string> acc = this.Options.MyResponseSpectraMaker.ATH;
-                    double[,] arrData = new double[p.Count, 2];
-                    for (int i = 0; i < p.Count; i++)
-                    {
-                        double.TryParse(p[i], out arrData[i, 0]);
-                        double.TryParse(acc[i], out arrData[i, 1]);
-                    }
-                    Range rng = ws.get_Range(string.Format("A{0}", startRow), string.Format("B{0}", startRow + acc.Count - 1));
-                    rng.Value2 = arrData;
-                }
-            }
-            catch (Exception ex)
+            this.Options.MyResponseSpectraMaker.ReadData();
+            if (this.Options.MyResponseSpectraMaker.ATH.Count > 0 && this.Options.MyResponseSpectraMaker.PeriodList.Count > 0)
             {
-                Console.WriteLine(ex.ToString());
+                List<string> p = this.Options.MyResponseSpectraMaker.PeriodList;
+                List<string> acc = this.Options.MyResponseSpectraMaker.ATH;
+                double[,] arrData = new double[p.Count, 2];
+                for (int i = 0; i < p.Count; i++)
+                {
+                    double.TryParse(p[i], out arrData[i, 0]);
+                    double.TryParse(acc[i], out arrData[i, 1]);
+                }
+                Range rng = ws.get_Range(string.Format("A{0}", startRow), string.Format("B{0}", startRow + acc.Count - 1));
+                rng.Value2 = arrData;
             }
 
         }
@@ -334,9 +323,9 @@ namespace EqAT.Helpers
             rStrongRockChAcc.FormulaArray = arrFormulae;
         }
 
-        private void FillATHData(ATH ath, Worksheet ws)
+        private void FillATHData(Worksheet ws)
         {
-
+            accBase = MyBaseATHMaker.ReadATH();
             int dtBase = MyBaseATHMaker.DT;
 
             mBwApp.ReportProgress(0, (this.Options.CalculateDisplacements ? 10 : 4));
@@ -413,8 +402,7 @@ namespace EqAT.Helpers
 
             }
 
-
-            List<string> accSurface = MySurfaceATHMaker.ATHMgr[0].Readings;
+            List<string> accSurface = MySurfaceATHMaker.ReadATH();
             double dt = ((double)accBase.Count / (double)accSurface.Count) * dtBase;
 
             arrData = new double[accSurface.Count, 1];
@@ -422,17 +410,21 @@ namespace EqAT.Helpers
 
             mBwApp.ReportProgress(2, "Filling Base ATH, VTH and DTH...");
 
-            ws.Cells[1, 8] = "Surface: " + ath.Title;
+            ws.Cells[1, 8] = "Surface: " + MySurfaceATHMaker.Title;
 
             // Times
             ws.Cells[2, 8] = "Time (s)";
-            Range rTimeS = ws.get_Range(string.Format("H{0}", startRow), string.Format("H{0}", startRow + accSurface.Count - 1));
+            Range rTimeSurface = ws.get_Range(string.Format("H{0}", startRow), string.Format("H{0}", startRow + accSurface.Count - 1));
+            List<double> dTimeSurface = new List<double>();
+
             for (int i = 0; i < accSurface.Count; i++)
             {
-                arrData[i, 0] = (double)(i * dt / 1000.0);
+                dTimeSurface.Add((double)(i * dt / 1000.0));
+                arrData[i, 0] = dTimeSurface[i];
             }
-            rTimeS.Value2 = arrData;
-            rTimeS.Style = "Input";
+
+            rTimeSurface.Value2 = arrData;
+            rTimeSurface.Style = "Input";
             mBwApp.ReportProgress(1);
 
             // ATH (G)
@@ -448,18 +440,29 @@ namespace EqAT.Helpers
             rAthGS.Style = "Input";
             mBwApp.ReportProgress(1);
 
+            // ATH (m/ss)
+            ws.Cells[2, 10] = "Accel (m/ss)";
+            Range rAthSurface = ws.get_Range(string.Format("J{0}", startRow), string.Format("J{0}", startRow + accSurface.Count - 1));
+            for (int i = 0; i < accSurface.Count; i++)
+            {
+                arrString[i, 0] = "=RC[-1]*9.81";
+            }
+            rAthSurface.FormulaArray = arrString;
+            rAthSurface.Style = "Calculation";
+            mBwApp.ReportProgress(1);
+
+            string fpPlaxisDynLoadMult = Path.ChangeExtension(this.Options.WorkbookFilePath, ".mult");
+            using (StreamWriter sw = new StreamWriter(fpPlaxisDynLoadMult))
+            {
+                for (int i = 0; i < rTimeSurface.Count; i++)
+                {
+                    sw.WriteLine(string.Format("{0} {1}", dTimeSurface[i], MySurfaceATHMaker.ATHdouble[i]));
+                }
+            }
+
             if (this.Options.CalculateDisplacements)
             {
-                // ATH (m/ss)
-                ws.Cells[2, 10] = "Accel (m/ss)";
-                Range rAthS = ws.get_Range(string.Format("J{0}", startRow), string.Format("J{0}", startRow + accSurface.Count - 1));
-                for (int i = 0; i < accSurface.Count; i++)
-                {
-                    arrString[i, 0] = "=RC[-1]*9.81";
-                }
-                rAthS.FormulaArray = arrString;
-                rAthS.Style = "Calculation";
-                mBwApp.ReportProgress(1);
+
 
                 // VTH (m/s)
                 ws.Cells[2, 11] = "veloc (m/s)";
@@ -521,10 +524,6 @@ namespace EqAT.Helpers
 
             SetNumberFormat(ws, "B1", "E1", "0.0000E+00");
             SetNumberFormat(ws, "I1", "L1", "0.0000E+00");
-
-
-
-          //  ws.Name = ath.Title.Trim();
 
             mBwApp.ReportProgress(2, "Ready");
 
@@ -667,8 +666,8 @@ namespace EqAT.Helpers
 
                 seriesCollection.NewSeries();
                 seriesCollection.Item(2).Name = "Surface";
-                seriesCollection.Item(2).XValues = string.Format("={0}!R{1}C8:R{2}C8", ws.Name, startRow, MySurfaceATHMaker.ATHMgr[0].Readings.Count);
-                seriesCollection.Item(2).Values = string.Format("={0}!R{1}C9:R{2}C9", ws.Name, startRow, MySurfaceATHMaker.ATHMgr[0].Readings.Count);
+                seriesCollection.Item(2).XValues = string.Format("={0}!R{1}C8:R{2}C8", ws.Name, startRow, MySurfaceATHMaker.ATH.Count);
+                seriesCollection.Item(2).Values = string.Format("={0}!R{1}C9:R{2}C9", ws.Name, startRow, MySurfaceATHMaker.ATH.Count);
 
                 xlChart.ChartType = XlChartType.xlXYScatterLinesNoMarkers;
 
