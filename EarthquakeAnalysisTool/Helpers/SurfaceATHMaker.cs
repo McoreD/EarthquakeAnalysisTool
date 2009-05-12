@@ -25,6 +25,9 @@ namespace EqAT
         /// Acceleration Time Histories
         /// </summary>
         public List<string> ATH { get; private set; }
+        /// <summary>
+        /// Acceleration Time History in g
+        /// </summary>
         public List<double> ATHdouble { get; private set; }
         /// <summary>
         /// Time Interval in Milliseconds
