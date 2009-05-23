@@ -9,7 +9,8 @@ namespace EqAT
 {
     public class ATHMakerOptions
     {
-        public bool LimitTo4000Readings { get; set; }
+        public bool MaxRecordsEnabled { get; set; }
+        public int MaxRecordCount { get; set; }
         public string[] Files { get; set; }
     }
 
@@ -63,7 +64,7 @@ namespace EqAT
                     }
                 }
 
-                int max = (this.Options.LimitTo4000Readings ? 4000 : lNum.Count);
+                int max = (this.Options.MaxRecordsEnabled ? this.Options.MaxRecordCount : lNum.Count);
                 int col = 0;
 
                 for (int i = 0; i < max; i++)

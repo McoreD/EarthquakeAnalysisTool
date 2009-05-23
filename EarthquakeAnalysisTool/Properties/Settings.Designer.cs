@@ -250,5 +250,17 @@ namespace EqAT.Properties {
                 this["NewmarkBeta"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3800")]
+        public decimal MaxATHRecords {
+            get {
+                return ((decimal)(this["MaxATHRecords"]));
+            }
+            set {
+                this["MaxATHRecords"] = value;
+            }
+        }
     }
 }
