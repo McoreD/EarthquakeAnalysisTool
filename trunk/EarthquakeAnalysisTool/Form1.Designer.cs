@@ -75,6 +75,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtShake91ATH = new System.Windows.Forms.TextBox();
+            this.chkNewmarkImplicitIntegration = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDT)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLP)).BeginInit();
@@ -413,7 +414,7 @@
             // 
             this.groupBox8.Controls.Add(this.label8);
             this.groupBox8.Controls.Add(this.nudXaxisMaxScale);
-            this.groupBox8.Location = new System.Drawing.Point(10, 112);
+            this.groupBox8.Location = new System.Drawing.Point(10, 144);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(624, 71);
             this.groupBox8.TabIndex = 21;
@@ -446,12 +447,13 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.chkNewmarkImplicitIntegration);
             this.groupBox5.Controls.Add(this.chkCalcDisp);
             this.groupBox5.Controls.Add(this.label6);
             this.groupBox5.Controls.Add(this.nudYieldAccel);
             this.groupBox5.Location = new System.Drawing.Point(10, 8);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(624, 96);
+            this.groupBox5.Size = new System.Drawing.Size(624, 120);
             this.groupBox5.TabIndex = 20;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "ATH";
@@ -472,7 +474,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(16, 56);
+            this.label6.Location = new System.Drawing.Point(16, 80);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(107, 13);
             this.label6.TabIndex = 22;
@@ -487,7 +489,7 @@
             0,
             0,
             65536});
-            this.nudYieldAccel.Location = new System.Drawing.Point(128, 56);
+            this.nudYieldAccel.Location = new System.Drawing.Point(128, 80);
             this.nudYieldAccel.Name = "nudYieldAccel";
             this.nudYieldAccel.Size = new System.Drawing.Size(120, 20);
             this.nudYieldAccel.TabIndex = 21;
@@ -518,8 +520,8 @@
             this.bwApp.WorkerReportsProgress = true;
             this.bwApp.WorkerSupportsCancellation = true;
             this.bwApp.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwApp_DoWork);
-            this.bwApp.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwApp_RunWorkerCompleted);
             this.bwApp.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwApp_ProgressChanged);
+            this.bwApp.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwApp_RunWorkerCompleted);
             // 
             // statusStrip1
             // 
@@ -611,6 +613,19 @@
             this.txtShake91ATH.TabIndex = 20;
             this.txtShake91ATH.Text = global::EqAT.Properties.Settings.Default.Shake91ATHFile;
             // 
+            // chkNewmarkImplicitIntegration
+            // 
+            this.chkNewmarkImplicitIntegration.AutoSize = true;
+            this.chkNewmarkImplicitIntegration.Checked = global::EqAT.Properties.Settings.Default.NewmarkImplicitIntegration;
+            this.chkNewmarkImplicitIntegration.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkNewmarkImplicitIntegration.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "NewmarkImplicitIntegration", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkNewmarkImplicitIntegration.Location = new System.Drawing.Point(16, 48);
+            this.chkNewmarkImplicitIntegration.Name = "chkNewmarkImplicitIntegration";
+            this.chkNewmarkImplicitIntegration.Size = new System.Drawing.Size(334, 17);
+            this.chkNewmarkImplicitIntegration.TabIndex = 22;
+            this.chkNewmarkImplicitIntegration.Text = "Use Implicit time intergration scheme of Newmark (more accurate)";
+            this.chkNewmarkImplicitIntegration.UseVisualStyleBackColor = true;
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -624,8 +639,8 @@
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EqAT - Earthquake Analysis Tool";
-            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
+            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDT)).EndInit();
@@ -711,6 +726,7 @@
         private System.Windows.Forms.CheckBox chkMax4000Readings;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.CheckBox chkNewmarkImplicitIntegration;
     }
 }
 
