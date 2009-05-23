@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="THTool.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EqAT.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="DT" Type="System.Decimal" Scope="User">
@@ -49,6 +49,15 @@
     </Setting>
     <Setting Name="Limit4000Readings" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="NewmarkImplicitIntegration" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="NewmarkAlpha" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.3025</Value>
+    </Setting>
+    <Setting Name="NewmarkBeta" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.6</Value>
     </Setting>
   </Settings>
 </SettingsFile>

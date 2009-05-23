@@ -13,12 +13,15 @@ namespace EqAT.Helpers
         public BackgroundWorker Worker { get; set; }
         public string WorkbookFilePath { get; set; }
         public bool CalculateDisplacements { get; set; }
+        public bool NewmarkImplicitIntegration { get; set; }
         public RPMaker MyResponseSpectraMaker { get; set; }
         public FASMaker MyFourierSpectraMaker { get; set; }
         /// <summary>
         /// Yield Acceleration in g
         /// </summary>
         public decimal YieldAccel { get; set; }
+        public double NewmarkAlpha { get; set; }
+        public double NewmarkBeta { get; set; }
     }
 
     public class ExcelReporter
@@ -497,35 +500,75 @@ namespace EqAT.Helpers
             if (this.Options.CalculateDisplacements)
             {
 
-
                 // VTH (m/s)
                 ws.Cells[2, 11] = "veloc (m/s)";
                 Range rVthS = ws.get_Range(string.Format("K{0}", startRow + 1), string.Format("K{0}", startRow + accSurface.Count - 1));
-                for (int i = 0; i < accSurface.Count; i++)
-                {
-                    arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])+R[-1]C";
-                }
-                rVthS.FormulaArray = arrString;
-                rVthS.Style = "Calculation";
-                mBwApp.ReportProgress(1);
-
                 // DTH (m)
                 ws.Cells[2, 12] = "disp (m)";
                 Range rDthS = ws.get_Range(string.Format("L{0}", startRow + 1), string.Format("L{0}", startRow + accSurface.Count - 1));
-                for (int i = 0; i < accSurface.Count; i++)
+
+                if (this.Options.NewmarkImplicitIntegration)
                 {
-                    arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])";
+
+                    ws.Cells[1, 24] = "α";
+                    ws.Cells[2, 24] = "β";
+
+                    Range alpha = (Range)ws.Cells[1,25];
+                    alpha.Name = "α";
+                    alpha.Value2 = this.Options.NewmarkAlpha;
+
+                    Range beta = (Range)ws.Cells[2, 25];
+                    beta.Name = "β";
+                    beta.Value2 = this.Options.NewmarkBeta;
+
+                    // VTH (m/s)
+                    for (int i = 0; i < accSurface.Count; i++)
+                    {
+                        arrString[i, 0] = "=R[-1]C+((1-β)*R[-1]C[-1]+β*RC[-1])*(RC[-3]-R[-1]C[-3])";
+                    }
+                    rVthS.FormulaArray = arrString;
+                    rVthS.Style = "Calculation";
+                    mBwApp.ReportProgress(1);
+
+                    // DTH (m)
+                    for (int i = 0; i < accSurface.Count; i++)
+                    {
+                        arrString[i, 0] = "=R[-1]C+RC[-1]*(RC[-4]-R[-1]C[-4])+((0.5-α)*R[-1]C[-3]+α*RC[-3])*(RC[-4]-R[-1]C[-4])^2";
+                    }
+                    rDthS.FormulaArray = arrString;
+                    rDthS.Style = "Output";
+                    mBwApp.ReportProgress(1);
+
                 }
-                rDthS.FormulaArray = arrString;
-                rDthS.Style = "Output";
-                mBwApp.ReportProgress(1);
+                else
+                {
+
+                    // VTH (m/s)
+                    for (int i = 0; i < accSurface.Count; i++)
+                    {
+                        arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])+R[-1]C";
+                    }
+                    rVthS.FormulaArray = arrString;
+                    rVthS.Style = "Calculation";
+                    mBwApp.ReportProgress(1);
+
+                    // DTH (m)
+                    for (int i = 0; i < accSurface.Count; i++)
+                    {
+                        arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])";
+                    }
+                    rDthS.FormulaArray = arrString;
+                    rDthS.Style = "Output";
+                    mBwApp.ReportProgress(1);
+
+                }
 
                 // DTH (m) above yield acceleration
-                ws.Cells[2, 12] = "disp (m)";
-
+                ws.Cells[2, 12] = "Disp (m)";
                 ws.Cells[1, 15] = "Yield Accel (g)";
                 ws.Cells[2, 15] = "Disp  (m)";
                 ws.Cells[3, 15] = "Disp (mm)";
+
                 Range ay = (Range)ws.Cells[1, 16];
                 ay.Name = "ay";
                 ay.Value2 = this.Options.YieldAccel;

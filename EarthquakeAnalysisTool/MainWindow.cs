@@ -134,6 +134,9 @@ namespace EqAT
             ropt.WorkbookFilePath = txtExcelFile.Text;
             ropt.CalculateDisplacements = chkCalcDisp.Checked;
             ropt.YieldAccel = nudYieldAccel.Value;
+            ropt.NewmarkImplicitIntegration = chkNewmarkImplicitIntegration.Checked;
+            ropt.NewmarkAlpha = 0.3025;
+            ropt.NewmarkBeta = 0.6;
 
             SurfaceATHMakerOptions sao = new SurfaceATHMakerOptions();
             sao.InputFilePath = txtATHSurfaceFile.Text;
