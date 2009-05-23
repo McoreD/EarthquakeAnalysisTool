@@ -61,12 +61,12 @@ namespace EqAT
             {
                 string line = sr.ReadLine();
                 this.Title = sr.ReadLine(); // Title
-                line = sr.ReadLine();
 
-                while (!sr.EndOfStream && ATH.Count < this.MaxValues)
+                while (!sr.EndOfStream && ATH.Count <= this.MaxValues)
                 {
-                    AddAccelelations(line);
+                   
                     line = sr.ReadLine();
+                    AddAccelelations(line);
                 }
             }
 
