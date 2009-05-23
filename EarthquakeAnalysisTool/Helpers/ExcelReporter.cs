@@ -164,6 +164,7 @@ namespace EqAT.Helpers
                 XlAxisGroup.xlPrimary);
             xAxis.HasTitle = true;
             xAxis.AxisTitle.Text = "Period (s)";
+            xAxis.MinimumScale = 0.0;
             xAxis.MaximumScale = fasm.Options.XaxisMaxScale;
 
             Axis yAxis = (Axis)xlChart.Axes(XlAxisType.xlValue,
@@ -173,9 +174,9 @@ namespace EqAT.Helpers
 
             // Add title:
             xlChart.HasTitle = true;
-            xlChart.ChartTitle.Text = "Fourier Amplitude Spectra";
-            // Remove legend:
-            xlChart.HasLegend = false;
+            xlChart.ChartTitle.Text = "Fourier Amplitude Spectrum";
+            xlChart.Legend.Position = XlLegendPosition.xlLegendPositionTop;
+            xlChart.HasLegend = true;
 
             xlChart.Location(XlChartLocation.xlLocationAsNewSheet, "Fourier Spectra (p)");
 
@@ -722,8 +723,9 @@ namespace EqAT.Helpers
    
             // Add title:
             xlChart.HasTitle = true;
-            xlChart.ChartTitle.Text = "Response Spectra (Shake91)";
-            // Remove legend:
+            xlChart.ChartTitle.Text = "Response Spectrum";
+            xlChart.Legend.Position = XlLegendPosition.xlLegendPositionTop;
+
             xlChart.HasLegend = true;
 
             xlChart.Location(XlChartLocation.xlLocationAsNewSheet, "Response Spectra");
