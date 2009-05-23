@@ -457,16 +457,23 @@ namespace EqAT.Helpers
             rAthSurfaceSq.Style = "Calculation";
             mBwApp.ReportProgress(1);
 
-            // Arias dI (m/s)
-            ws.Cells[2, 11] = "veloc (m/s)";
-            Range dAriasIntsty = ws.get_Range(string.Format("U{0}", startRow + 1), string.Format("U{0}", startRow + accBase.Count - 1));
-            for (int i = 0; i < accBase.Count; i++)
+            try
             {
-                arrString[i, 0] = "=((R[-1]C[-1]+RC[-1])/2)*(RC[-20]-R[-1]C[-20])";
+                // Arias dI (m/s)
+                ws.Cells[2, 11] = "veloc (m/s)";
+                Range dAriasIntsty = ws.get_Range(string.Format("U{0}", startRow + 1), string.Format("U{0}", startRow + accBase.Count - 1));
+                for (int i = 0; i < accBase.Count; i++)
+                {
+                    arrString[i, 0] = "=((R[-1]C[-1]+RC[-1])/2)*(RC[-20]-R[-1]C[-20])";
+                }
+                dAriasIntsty.FormulaArray = arrString;
+                dAriasIntsty.Style = "Calculation";
+                mBwApp.ReportProgress(1);
             }
-            dAriasIntsty.FormulaArray = arrString;
-            dAriasIntsty.Style = "Calculation";
-            mBwApp.ReportProgress(1);
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
             ((Range)ws.Cells[12, 15]).Value2 = "Arias Intensity (m/s)";
             ((Range)ws.Cells[12, 16]).FormulaR1C1 = string.Format("=SUM(R[-8]C[5]:R[{0}]C[5])*PI()/(2*9.81)", accBase.Count - 10);
