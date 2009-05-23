@@ -526,6 +526,7 @@ namespace EqAT.Helpers
                     {
                         arrString[i, 0] = "=R[-1]C+((1-β)*R[-1]C[-1]+β*RC[-1])*(RC[-3]-R[-1]C[-3])";
                     }
+                    rVthS.FormulaArray = arrString;
                     mBwApp.ReportProgress(1);
 
                     // DTH (m)
@@ -533,6 +534,7 @@ namespace EqAT.Helpers
                     {
                         arrString[i, 0] = "=R[-1]C+RC[-1]*(RC[-4]-R[-1]C[-4])+((0.5-α)*R[-1]C[-3]+α*RC[-3])*(RC[-4]-R[-1]C[-4])^2";
                     }
+                    rDthS.FormulaArray = arrString;
                     mBwApp.ReportProgress(1);
 
                 }
@@ -542,8 +544,10 @@ namespace EqAT.Helpers
                     // VTH (m/s)
                     for (int i = 0; i < accSurface.Count; i++)
                     {
-                        arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])+R[-1]C";
+                        arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])";
                     }
+                    rVthS.FormulaArray = arrString;
+               
                     mBwApp.ReportProgress(1);
 
                     // DTH (m)
@@ -551,13 +555,12 @@ namespace EqAT.Helpers
                     {
                         arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])";
                     }
+                    rDthS.FormulaArray = arrString;
                     mBwApp.ReportProgress(1);
 
                 }
 
-                rVthS.FormulaArray = arrString;
                 rVthS.Style = "Calculation";
-                rDthS.FormulaArray = arrString;
                 rDthS.Style = "Output";
 
                 // DTH (m) above yield acceleration
