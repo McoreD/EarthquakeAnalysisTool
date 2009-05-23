@@ -1,3 +1,4 @@
+0.7.4.2 ATH was 8 records less than the original
 0.7.4.1 Fixed Newmark displacement algorithm
 0.7.4.0 Added Implicit time integration of Newmark
 0.7.3.0 Statistics: Bandwidth
