@@ -204,7 +204,8 @@ namespace EqAT
             {
                 ATHMakerOptions amo = new ATHMakerOptions();
                 amo.Files = new string[] { txtShake91ATH.Text };
-                amo.LimitTo4000Readings = chkMax4000Readings.Checked;
+                amo.MaxRecordsEnabled = chkMaxReadings.Checked;
+                amo.MaxRecordCount = (int)nudMaxRecords.Value;
                 mAthGen = new ATHMaker(amo);
             }
         }

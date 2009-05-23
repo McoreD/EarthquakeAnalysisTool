@@ -712,13 +712,14 @@ namespace EqAT.Helpers
                 XlAxisGroup.xlPrimary);
             xAxis.HasTitle = true;
             xAxis.AxisTitle.Text = "Period (s)";
+            xAxis.MinimumScale = 0.0;
             xAxis.MaximumScale = this.Options.MyResponseSpectraMaker.Options.XaxisMaxScale;
 
             Axis yAxis = (Axis)xlChart.Axes(XlAxisType.xlValue,
                 XlAxisGroup.xlPrimary);
             yAxis.HasTitle = true;
             yAxis.AxisTitle.Text = "Acceleration (g)";
-
+   
             // Add title:
             xlChart.HasTitle = true;
             xlChart.ChartTitle.Text = "Response Spectra (Shake91)";

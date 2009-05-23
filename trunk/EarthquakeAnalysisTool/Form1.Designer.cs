@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.chkMax4000Readings = new System.Windows.Forms.CheckBox();
+            this.chkMaxReadings = new System.Windows.Forms.CheckBox();
             this.nudDT = new System.Windows.Forms.NumericUpDown();
             this.nudLP = new System.Windows.Forms.NumericUpDown();
             this.nudHP = new System.Windows.Forms.NumericUpDown();
@@ -60,6 +60,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.nudXaxisMaxScale = new System.Windows.Forms.NumericUpDown();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.chkNewmarkImplicitIntegration = new System.Windows.Forms.CheckBox();
             this.chkCalcDisp = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.nudYieldAccel = new System.Windows.Forms.NumericUpDown();
@@ -75,7 +76,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtShake91ATH = new System.Windows.Forms.TextBox();
-            this.chkNewmarkImplicitIntegration = new System.Windows.Forms.CheckBox();
+            this.nudMaxRecords = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDT)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLP)).BeginInit();
@@ -97,6 +98,7 @@
             this.tcMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxRecords)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -128,7 +130,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.chkMax4000Readings);
+            this.groupBox1.Controls.Add(this.nudMaxRecords);
+            this.groupBox1.Controls.Add(this.chkMaxReadings);
             this.groupBox1.Controls.Add(this.nudDT);
             this.groupBox1.Controls.Add(this.nudLP);
             this.groupBox1.Controls.Add(this.nudHP);
@@ -142,18 +145,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
             // 
-            // chkMax4000Readings
+            // chkMaxReadings
             // 
-            this.chkMax4000Readings.AutoSize = true;
-            this.chkMax4000Readings.Checked = global::EqAT.Properties.Settings.Default.Limit4000Readings;
-            this.chkMax4000Readings.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkMax4000Readings.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "Limit4000Readings", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkMax4000Readings.Location = new System.Drawing.Point(280, 24);
-            this.chkMax4000Readings.Name = "chkMax4000Readings";
-            this.chkMax4000Readings.Size = new System.Drawing.Size(129, 17);
-            this.chkMax4000Readings.TabIndex = 15;
-            this.chkMax4000Readings.Text = "Limit to 4000 readings";
-            this.chkMax4000Readings.UseVisualStyleBackColor = true;
+            this.chkMaxReadings.AutoSize = true;
+            this.chkMaxReadings.Checked = global::EqAT.Properties.Settings.Default.Limit4000Readings;
+            this.chkMaxReadings.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkMaxReadings.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "Limit4000Readings", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkMaxReadings.Location = new System.Drawing.Point(280, 24);
+            this.chkMaxReadings.Name = "chkMaxReadings";
+            this.chkMaxReadings.Size = new System.Drawing.Size(129, 17);
+            this.chkMaxReadings.TabIndex = 15;
+            this.chkMaxReadings.Text = "Limit to 4000 readings";
+            this.chkMaxReadings.UseVisualStyleBackColor = true;
             // 
             // nudDT
             // 
@@ -458,6 +461,19 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "ATH";
             // 
+            // chkNewmarkImplicitIntegration
+            // 
+            this.chkNewmarkImplicitIntegration.AutoSize = true;
+            this.chkNewmarkImplicitIntegration.Checked = global::EqAT.Properties.Settings.Default.NewmarkImplicitIntegration;
+            this.chkNewmarkImplicitIntegration.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkNewmarkImplicitIntegration.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "NewmarkImplicitIntegration", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkNewmarkImplicitIntegration.Location = new System.Drawing.Point(16, 48);
+            this.chkNewmarkImplicitIntegration.Name = "chkNewmarkImplicitIntegration";
+            this.chkNewmarkImplicitIntegration.Size = new System.Drawing.Size(334, 17);
+            this.chkNewmarkImplicitIntegration.TabIndex = 22;
+            this.chkNewmarkImplicitIntegration.Text = "Use Implicit time intergration scheme of Newmark (more accurate)";
+            this.chkNewmarkImplicitIntegration.UseVisualStyleBackColor = true;
+            // 
             // chkCalcDisp
             // 
             this.chkCalcDisp.AutoSize = true;
@@ -613,18 +629,24 @@
             this.txtShake91ATH.TabIndex = 20;
             this.txtShake91ATH.Text = global::EqAT.Properties.Settings.Default.Shake91ATHFile;
             // 
-            // chkNewmarkImplicitIntegration
+            // nudMaxRecords
             // 
-            this.chkNewmarkImplicitIntegration.AutoSize = true;
-            this.chkNewmarkImplicitIntegration.Checked = global::EqAT.Properties.Settings.Default.NewmarkImplicitIntegration;
-            this.chkNewmarkImplicitIntegration.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkNewmarkImplicitIntegration.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "NewmarkImplicitIntegration", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkNewmarkImplicitIntegration.Location = new System.Drawing.Point(16, 48);
-            this.chkNewmarkImplicitIntegration.Name = "chkNewmarkImplicitIntegration";
-            this.chkNewmarkImplicitIntegration.Size = new System.Drawing.Size(334, 17);
-            this.chkNewmarkImplicitIntegration.TabIndex = 22;
-            this.chkNewmarkImplicitIntegration.Text = "Use Implicit time intergration scheme of Newmark (more accurate)";
-            this.chkNewmarkImplicitIntegration.UseVisualStyleBackColor = true;
+            this.nudMaxRecords.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::EqAT.Properties.Settings.Default, "MaxATHRecords", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudMaxRecords.Location = new System.Drawing.Point(280, 48);
+            this.nudMaxRecords.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.nudMaxRecords.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudMaxRecords.Name = "nudMaxRecords";
+            this.nudMaxRecords.Size = new System.Drawing.Size(120, 20);
+            this.nudMaxRecords.TabIndex = 16;
+            this.nudMaxRecords.Value = global::EqAT.Properties.Settings.Default.MaxATHRecords;
             // 
             // MainWindow
             // 
@@ -672,6 +694,7 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxRecords)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -723,10 +746,11 @@
         private System.Windows.Forms.NumericUpDown nudDT;
         private System.Windows.Forms.NumericUpDown nudXaxisMaxScale;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox chkMax4000Readings;
+        private System.Windows.Forms.CheckBox chkMaxReadings;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.CheckBox chkNewmarkImplicitIntegration;
+        private System.Windows.Forms.NumericUpDown nudMaxRecords;
     }
 }
 

@@ -1,3 +1,4 @@
+0.7.5.0 Ability to customize the maximum number of ATH records from a raw file
 0.7.4.2 ATH was 8 records less than the original
 0.7.4.1 Fixed Newmark displacement algorithm
 0.7.4.0 Added Implicit time integration of Newmark
