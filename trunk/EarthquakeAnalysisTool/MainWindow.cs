@@ -214,7 +214,7 @@ namespace EqAT
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-
+            this.Text = "EqAT - Earthquake Analysis Tool " + Application.ProductVersion;
         }
 
     }

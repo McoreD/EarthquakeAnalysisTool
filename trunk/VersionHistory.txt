@@ -1,4 +1,6 @@
-0.7.3.0 Statistics: Bandwith
+0.7.4.1 Fixed Newmark displacement algorithm
+0.7.4.0 Added Implicit time integration of Newmark
+0.7.3.0 Statistics: Bandwidth
 0.7.2.0 Program will stop reading Fourier Amplitudes when they reach zero
 0.7.1.0 Fourier Amplitude Spectra plotted with Period 
 0.7.0.0 Fourier Amplitude Spectra plot with Frequency from Shake91 output file 1
