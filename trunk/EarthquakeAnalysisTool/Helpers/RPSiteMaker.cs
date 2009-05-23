@@ -63,8 +63,6 @@ namespace EqAT.Helpers
             }
         }
 
-
-
         private void AddData(List<string> row)
         {
             this.AddPeriod(row);

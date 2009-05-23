@@ -32,9 +32,6 @@ namespace EqAT
                 }
                 ctl = this.GetNextControl(ctl, true); // Get the next control in the tab order.
             }
-
-            decimal.Parse("0.00009181");
-
         }
 
         void TextBox_DragEnter(object sender, DragEventArgs e)
