@@ -32,6 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nudMaxRecords = new System.Windows.Forms.NumericUpDown();
             this.chkMaxReadings = new System.Windows.Forms.CheckBox();
             this.nudDT = new System.Windows.Forms.NumericUpDown();
             this.nudLP = new System.Windows.Forms.NumericUpDown();
@@ -61,7 +62,7 @@
             this.nudXaxisMaxScale = new System.Windows.Forms.NumericUpDown();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.chkNewmarkImplicitIntegration = new System.Windows.Forms.CheckBox();
-            this.chkCalcDisp = new System.Windows.Forms.CheckBox();
+            this.chkCreateLoadMultFile = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.nudYieldAccel = new System.Windows.Forms.NumericUpDown();
             this.btnExportATH = new System.Windows.Forms.Button();
@@ -76,8 +77,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtShake91ATH = new System.Windows.Forms.TextBox();
-            this.nudMaxRecords = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxRecords)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDT)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHP)).BeginInit();
@@ -98,7 +99,6 @@
             this.tcMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMaxRecords)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -144,6 +144,25 @@
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
+            // 
+            // nudMaxRecords
+            // 
+            this.nudMaxRecords.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::EqAT.Properties.Settings.Default, "MaxATHRecords", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.nudMaxRecords.Location = new System.Drawing.Point(280, 48);
+            this.nudMaxRecords.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.nudMaxRecords.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudMaxRecords.Name = "nudMaxRecords";
+            this.nudMaxRecords.Size = new System.Drawing.Size(120, 20);
+            this.nudMaxRecords.TabIndex = 16;
+            this.nudMaxRecords.Value = global::EqAT.Properties.Settings.Default.MaxATHRecords;
             // 
             // chkMaxReadings
             // 
@@ -451,7 +470,7 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.chkNewmarkImplicitIntegration);
-            this.groupBox5.Controls.Add(this.chkCalcDisp);
+            this.groupBox5.Controls.Add(this.chkCreateLoadMultFile);
             this.groupBox5.Controls.Add(this.label6);
             this.groupBox5.Controls.Add(this.nudYieldAccel);
             this.groupBox5.Location = new System.Drawing.Point(10, 8);
@@ -474,18 +493,17 @@
             this.chkNewmarkImplicitIntegration.Text = "Use Implicit time intergration scheme of Newmark (more accurate)";
             this.chkNewmarkImplicitIntegration.UseVisualStyleBackColor = true;
             // 
-            // chkCalcDisp
+            // chkCreateLoadMultFile
             // 
-            this.chkCalcDisp.AutoSize = true;
-            this.chkCalcDisp.Checked = global::EqAT.Properties.Settings.Default.CalcDisp;
-            this.chkCalcDisp.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "CalcDisp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkCalcDisp.Location = new System.Drawing.Point(16, 24);
-            this.chkCalcDisp.Name = "chkCalcDisp";
-            this.chkCalcDisp.Size = new System.Drawing.Size(486, 17);
-            this.chkCalcDisp.TabIndex = 21;
-            this.chkCalcDisp.Text = "Calculate Newmark Displacements (uncheck this to create Load Multiplier file for " +
-                "Plaxis Dynamics)";
-            this.chkCalcDisp.UseVisualStyleBackColor = true;
+            this.chkCreateLoadMultFile.AutoSize = true;
+            this.chkCreateLoadMultFile.Checked = global::EqAT.Properties.Settings.Default.CreateLoadMultFile;
+            this.chkCreateLoadMultFile.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EqAT.Properties.Settings.Default, "CreateLoadMultFile", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkCreateLoadMultFile.Location = new System.Drawing.Point(16, 24);
+            this.chkCreateLoadMultFile.Name = "chkCreateLoadMultFile";
+            this.chkCreateLoadMultFile.Size = new System.Drawing.Size(238, 17);
+            this.chkCreateLoadMultFile.TabIndex = 21;
+            this.chkCreateLoadMultFile.Text = "Create Load Multiplier file for Plaxis Dynamics";
+            this.chkCreateLoadMultFile.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -499,7 +517,7 @@
             // nudYieldAccel
             // 
             this.nudYieldAccel.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::EqAT.Properties.Settings.Default, "YieldAccel", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.nudYieldAccel.DecimalPlaces = 4;
+            this.nudYieldAccel.DecimalPlaces = 6;
             this.nudYieldAccel.Increment = new decimal(new int[] {
             1,
             0,
@@ -629,25 +647,6 @@
             this.txtShake91ATH.TabIndex = 20;
             this.txtShake91ATH.Text = global::EqAT.Properties.Settings.Default.Shake91ATHFile;
             // 
-            // nudMaxRecords
-            // 
-            this.nudMaxRecords.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::EqAT.Properties.Settings.Default, "MaxATHRecords", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.nudMaxRecords.Location = new System.Drawing.Point(280, 48);
-            this.nudMaxRecords.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-            this.nudMaxRecords.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudMaxRecords.Name = "nudMaxRecords";
-            this.nudMaxRecords.Size = new System.Drawing.Size(120, 20);
-            this.nudMaxRecords.TabIndex = 16;
-            this.nudMaxRecords.Value = global::EqAT.Properties.Settings.Default.MaxATHRecords;
-            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -665,6 +664,7 @@
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxRecords)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDT)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLP)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHP)).EndInit();
@@ -694,7 +694,6 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMaxRecords)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -728,7 +727,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel statusApp;
         private System.Windows.Forms.ToolStripProgressBar pbarApp;
-        private System.Windows.Forms.CheckBox chkCalcDisp;
+        private System.Windows.Forms.CheckBox chkCreateLoadMultFile;
         private System.Windows.Forms.CheckBox chkIgnoreZeroAccel;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.NumericUpDown nudYieldAccel;

@@ -29,7 +29,7 @@
     <Setting Name="ATHLineCount" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">512</Value>
     </Setting>
-    <Setting Name="CalcDisp" Type="System.Boolean" Scope="User">
+    <Setting Name="CreateLoadMultFile" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="IgnoreZeroBaseAccel" Type="System.Boolean" Scope="User">
