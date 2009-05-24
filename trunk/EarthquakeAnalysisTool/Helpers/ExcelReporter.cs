@@ -43,7 +43,7 @@ namespace EqAT.Helpers
 
         public string ExcelFilePath { get; set; }
 
-        private Microsoft.Office.Interop.Excel.Worksheet mWSheet1 = new Microsoft.Office.Interop.Excel.WorksheetClass();
+        private Microsoft.Office.Interop.Excel.Worksheet mWSheetATH = new Microsoft.Office.Interop.Excel.WorksheetClass();
         private Worksheet mWSheet2 = new Worksheet();
         private Worksheet mWSheet3 = new Worksheet();
 
@@ -85,14 +85,14 @@ namespace EqAT.Helpers
 
             mWorkSheets = mWorkBook.Worksheets;
 
-            mWSheet1 = (Worksheet)mWorkSheets.get_Item("Sheet1");
+            mWSheetATH = (Worksheet)mWorkSheets.get_Item("Sheet1");
             mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
             mWSheet3 = (Worksheet)mWorkSheets.get_Item("Sheet3");
 
             if (this.MyBaseATHMaker != null && this.MySurfaceATHMaker != null)
             {
-                FillATHData(mWSheet1);
-                GenerateChartATH(mWSheet1);
+                FillATHData(mWSheetATH);
+                GenerateChartATH(mWSheetATH);
             }
             if (this.Options.MyResponseSpectraMaker != null)
             {
@@ -104,19 +104,19 @@ namespace EqAT.Helpers
                 GenerateChartRP(mWSheet2);
             }
 
-            AutofitColumns(mWSheet1, "A1", "Z1");
+            AutofitColumns(mWSheetATH, "A1", "Z1");
             AutofitColumns(mWSheet2, "A1", "H1");
             AutofitColumns(mWSheet3, "A1", "H1");
 
-            Range time1 = (Range)mWSheet1.Columns["A", Missing.Value];
+            Range time1 = (Range)mWSheetATH.Columns["A", Missing.Value];
             time1.ColumnWidth = 8.5;
-            time1 = (Range)mWSheet1.Columns["H", Missing.Value];
+            time1 = (Range)mWSheetATH.Columns["H", Missing.Value];
             time1.ColumnWidth = 8.5;
 
-            mWSheet1.Name = "ATH and DTH Data";
+            mWSheetATH.Name = "ATH and DTH Data";
             mWSheet2.Name = "Response Spectra Data";
             mWSheet3.Name = "Fourier Spectra Data";
-            mWSheet1.Select(true);
+            mWSheetATH.Select(true);
 
             string ext = Path.GetExtension(mPath);
 
@@ -250,10 +250,10 @@ namespace EqAT.Helpers
             ws.Cells[3, 6] = "to";
             ws.Cells[3, 7] = this.Options.MyFourierSpectraMaker.BandwidthFinish;
 
-            // Predominant Period
-            ws.Cells[4, 6] = "Predominant Period (s)";
-            ws.Cells[4, 7] = this.Options.MyFourierSpectraMaker.PredominantPeriod;
-            ((Range)ws.Cells[4,7]).Style = "Output";
+            //// Predominant Period
+            //ws.Cells[2, 9] = "Predominant Period (s)";
+            //ws.Cells[2, 10] = this.Options.MyFourierSpectraMaker.PredominantPeriod;
+            //((Range)ws.Cells[2,10]).Style = "Output";
 
         }
 
@@ -526,7 +526,7 @@ namespace EqAT.Helpers
                     ws.Cells[1, 24] = "α";
                     ws.Cells[2, 24] = "β";
 
-                    Range alpha = (Range)ws.Cells[1,25];
+                    Range alpha = (Range)ws.Cells[1, 25];
                     alpha.Name = "α";
                     alpha.Value2 = this.Options.NewmarkAlpha;
 
@@ -560,7 +560,7 @@ namespace EqAT.Helpers
                         arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])";
                     }
                     rVthS.FormulaArray = arrString;
-               
+
                     mBwApp.ReportProgress(1);
 
                     // DTH (m)
@@ -725,7 +725,7 @@ namespace EqAT.Helpers
                 XlAxisGroup.xlPrimary);
             yAxis.HasTitle = true;
             yAxis.AxisTitle.Text = "Acceleration (g)";
-   
+
             // Add title:
             xlChart.HasTitle = true;
             xlChart.ChartTitle.Text = "Response Spectrum";
