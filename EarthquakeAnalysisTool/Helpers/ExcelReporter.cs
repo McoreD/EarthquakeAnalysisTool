@@ -629,6 +629,7 @@ namespace EqAT.Helpers
         /// <param name="ws"></param>
         private void FillDispSensitivity(Worksheet ws)
         {
+            double orig_ay = (double)((Range)ws.Cells[1, 16]).Value2;
             int headingRow = 20;
             ws.Cells[headingRow, 15] = "Sensitivity";
             ws.Cells[headingRow + 1, 15] = "ay (g)";
@@ -636,15 +637,17 @@ namespace EqAT.Helpers
 
             ((Range)ws.Cells[headingRow, 15]).Style = "Heading 1";
 
+            Range ay = (Range)ws.Cells[1, 16];
+            Range disp_mm = (Range)ws.Cells[2, 16];
+
             for (int r = headingRow + 2; r < headingRow + 23; r++)
-            {
-                Range ay = (Range)ws.Cells[1, 16];
-                Range disp_mm = (Range)ws.Cells[2, 16];
+            {           
                 ws.Cells[r, 15] = ay.Value2;
                 ws.Cells[r, 16] = disp_mm.Value2;
                 ay.Value2 = (double)ay.Value2 + 0.001;
             }
 
+            ay.Value2 = orig_ay;
         }
 
         private void FillStatistics(Worksheet ws)
