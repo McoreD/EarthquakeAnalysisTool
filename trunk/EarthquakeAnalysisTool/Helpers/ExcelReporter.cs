@@ -72,76 +72,75 @@ namespace EqAT.Helpers
         /// </summary>
         public void CreateReport()
         {
-            //try
-            //{
-            //************************
-            //* Initialize Worksheets
-            //************************
+            System.Windows.Forms.DialogResult ans = System.Windows.Forms.DialogResult.Yes;
 
-            mExcelApp.DisplayAlerts = false;
-
-            //mWorkBook = mExcelApp.Workbooks.Open(mXlsFilePath, 0, false, 5, "", "", true, XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
-            mWorkBook = mExcelApp.Workbooks.Add(Missing.Value);
-
-            mWorkSheets = mWorkBook.Worksheets;
-
-            mWSheetATH = (Worksheet)mWorkSheets.get_Item("Sheet1");
-            mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
-            mWSheet3 = (Worksheet)mWorkSheets.get_Item("Sheet3");
-
-            this.Options.MyFourierSpectraMaker.ReadData();
-
-            if (this.MyBaseATHMaker != null && this.MySurfaceATHMaker != null)
+            // Check if all the input files are in the same folder
+            if (this.Options.MyResponseSpectraMaker.WorkingDir != this.MySurfaceATHMaker.WorkingDir ||
+                this.MyBaseATHMaker.WorkingDir != this.MySurfaceATHMaker.WorkingDir)
             {
-                FillATHData(mWSheetATH);
-                GenerateChartATH(mWSheetATH);
-            }
-            if (this.Options.MyResponseSpectraMaker != null)
-            {
-                FillRPData(mWSheet2);
-                FillFASData(mWSheet3, this.Options.MyFourierSpectraMaker);
-                GenerateChartFASf(mWSheet3, this.Options.MyFourierSpectraMaker);
-                GenerateChartFASp(mWSheet3, this.Options.MyFourierSpectraMaker);
-                FillCodeData(mWSheet2);
-                GenerateChartRP(mWSheet2);
+                ans = System.Windows.Forms.MessageBox.Show("Not all the input files are located in the same directory. Possible cause is that you forgot to browse or drag one of the input files. Are you sure you want to continue?", "EqAT", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
             }
 
-            AutofitColumns(mWSheetATH, "A1", "Z1");
-            AutofitColumns(mWSheet2, "A1", "H1");
-            AutofitColumns(mWSheet3, "A1", "H1");
-
-            Range time1 = (Range)mWSheetATH.Columns["A", Missing.Value];
-            time1.ColumnWidth = 8.5;
-            time1 = (Range)mWSheetATH.Columns["H", Missing.Value];
-            time1.ColumnWidth = 8.5;
-
-            mWSheetATH.Name = "ATH and DTH Data";
-            mWSheet2.Name = "Response Spectra Data";
-            mWSheet3.Name = "Fourier Spectra Data";
-            mWSheetATH.Select(true);
-
-            string ext = Path.GetExtension(mPath);
-
-            if (ext.ToLower().Equals(".xlsx"))
+            if (ans == System.Windows.Forms.DialogResult.Yes)
             {
-                ExcelFilePath = SaveAs2007(mPath);
-            }
-            else if (ext.ToLower().Equals(".xls"))
-            {
-                ExcelFilePath = SaveAs2003(mPath);
-            }
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.ToString());                
-            //}
+                mExcelApp.DisplayAlerts = false;
 
-            //finally
-            //{
-            mExcelApp.DisplayAlerts = true;
-            mExcelApp.Quit();
-            // }
+                //mWorkBook = mExcelApp.Workbooks.Open(mXlsFilePath, 0, false, 5, "", "", true, XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                mWorkBook = mExcelApp.Workbooks.Add(Missing.Value);
+
+                mWorkSheets = mWorkBook.Worksheets;
+
+                mWSheetATH = (Worksheet)mWorkSheets.get_Item("Sheet1");
+                mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
+                mWSheet3 = (Worksheet)mWorkSheets.get_Item("Sheet3");
+
+                this.Options.MyFourierSpectraMaker.ReadData();
+
+                if (this.MyBaseATHMaker != null && this.MySurfaceATHMaker != null)
+                {
+                    FillATHData(mWSheetATH);
+                    GenerateChartATH(mWSheetATH);
+                }
+                if (this.Options.MyResponseSpectraMaker != null)
+                {
+                    FillRPData(mWSheet2);
+                    FillFASData(mWSheet3, this.Options.MyFourierSpectraMaker);
+                    GenerateChartFASf(mWSheet3, this.Options.MyFourierSpectraMaker);
+                    GenerateChartFASp(mWSheet3, this.Options.MyFourierSpectraMaker);
+                    FillCodeData(mWSheet2);
+                    GenerateChartRP(mWSheet2);
+                }
+
+                AutofitColumns(mWSheetATH, "A1", "Z1");
+                AutofitColumns(mWSheet2, "A1", "H1");
+                AutofitColumns(mWSheet3, "A1", "H1");
+
+                Range time1 = (Range)mWSheetATH.Columns["A", Missing.Value];
+                time1.ColumnWidth = 8.5;
+                time1 = (Range)mWSheetATH.Columns["H", Missing.Value];
+                time1.ColumnWidth = 8.5;
+
+                mWSheetATH.Name = "ATH and DTH Data";
+                mWSheet2.Name = "Response Spectra Data";
+                mWSheet3.Name = "Fourier Spectra Data";
+                mWSheetATH.Select(true);
+
+                string ext = Path.GetExtension(mPath);
+
+                if (ext.ToLower().Equals(".xlsx"))
+                {
+                    ExcelFilePath = SaveAs2007(mPath);
+                }
+                else if (ext.ToLower().Equals(".xls"))
+                {
+                    ExcelFilePath = SaveAs2003(mPath);
+                }
+
+                mExcelApp.DisplayAlerts = true;
+                mExcelApp.Quit();
+
+            }
 
         }
 
