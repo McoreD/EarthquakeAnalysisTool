@@ -339,7 +339,7 @@ namespace EqAT.Helpers
             accBase = MyBaseATHMaker.ReadATH();
             int dtBase = MyBaseATHMaker.DT;
 
-            mBwApp.ReportProgress(0, 14);
+            mBwApp.ReportProgress(0, 13);
             mBwApp.ReportProgress(2, "Filling Base ATH, VTH and DTH...");
 
             double[,] arrData = new double[accBase.Count, 1];
