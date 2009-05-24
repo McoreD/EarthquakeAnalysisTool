@@ -12,7 +12,7 @@ namespace EqAT.Helpers
     {
         public BackgroundWorker Worker { get; set; }
         public string WorkbookFilePath { get; set; }
-        public bool CalculateDisplacements { get; set; }
+        public bool CreateMultiplier { get; set; }
         public bool NewmarkImplicitIntegration { get; set; }
         public RPMaker MyResponseSpectraMaker { get; set; }
         public FASMaker MyFourierSpectraMaker { get; set; }
@@ -339,7 +339,7 @@ namespace EqAT.Helpers
             accBase = MyBaseATHMaker.ReadATH();
             int dtBase = MyBaseATHMaker.DT;
 
-            mBwApp.ReportProgress(0, (this.Options.CalculateDisplacements ? 7 : 7));
+            mBwApp.ReportProgress(0, 14);
             mBwApp.ReportProgress(2, "Filling Base ATH, VTH and DTH...");
 
             double[,] arrData = new double[accBase.Count, 1];
@@ -387,33 +387,27 @@ namespace EqAT.Helpers
             rAth.Style = "Calculation";
             mBwApp.ReportProgress(1);
 
-            if (this.Options.CalculateDisplacements)
+            // VTH (m/s)
+            ws.Cells[2, 4] = "veloc (m/s)";
+            Range rVth = ws.get_Range(string.Format("D{0}", startRow + 1), string.Format("D{0}", startRow + accBase.Count - 1));
+            for (int i = 0; i < accBase.Count; i++)
             {
-
-
-                // VTH (m/s)
-                ws.Cells[2, 4] = "veloc (m/s)";
-                Range rVth = ws.get_Range(string.Format("D{0}", startRow + 1), string.Format("D{0}", startRow + accBase.Count - 1));
-                for (int i = 0; i < accBase.Count; i++)
-                {
-                    arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])+R[-1]C";
-                }
-                rVth.FormulaArray = arrString;
-                rVth.Style = "Calculation";
-                mBwApp.ReportProgress(1);
-
-                // DTH (m)
-                ws.Cells[2, 5] = "disp (m)";
-                Range rDth = ws.get_Range(string.Format("E{0}", startRow + 1), string.Format("E{0}", startRow + accBase.Count - 1));
-                for (int i = 0; i < accBase.Count; i++)
-                {
-                    arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])+R[-1]C";
-                }
-                rDth.FormulaArray = arrString;
-                rDth.Style = "Output";
-                mBwApp.ReportProgress(1);
-
+                arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])+R[-1]C";
             }
+            rVth.FormulaArray = arrString;
+            rVth.Style = "Calculation";
+            mBwApp.ReportProgress(1);
+
+            // DTH (m)
+            ws.Cells[2, 5] = "disp (m)";
+            Range rDth = ws.get_Range(string.Format("E{0}", startRow + 1), string.Format("E{0}", startRow + accBase.Count - 1));
+            for (int i = 0; i < accBase.Count; i++)
+            {
+                arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])+R[-1]C";
+            }
+            rDth.FormulaArray = arrString;
+            rDth.Style = "Output";
+            mBwApp.ReportProgress(1);
 
             List<string> accSurface = MySurfaceATHMaker.ReadATH();
             double dt = ((double)accBase.Count / (double)accSurface.Count) * dtBase;
@@ -500,7 +494,7 @@ namespace EqAT.Helpers
 
 
 
-            if (!this.Options.CalculateDisplacements)
+            if (this.Options.CreateMultiplier)
             {
                 string fpPlaxisDynLoadMult = Path.ChangeExtension(this.Options.WorkbookFilePath, ".mult");
                 using (StreamWriter sw = new StreamWriter(fpPlaxisDynLoadMult))
@@ -511,105 +505,99 @@ namespace EqAT.Helpers
                     }
                 }
             }
+            // VTH (m/s)
+            ws.Cells[2, 11] = "veloc (m/s)";
+            Range rVthS = ws.get_Range(string.Format("K{0}", startRow + 1), string.Format("K{0}", startRow + accSurface.Count - 1));
+            // DTH (m)
+            ws.Cells[2, 12] = "disp (m)";
+            Range rDthS = ws.get_Range(string.Format("L{0}", startRow + 1), string.Format("L{0}", startRow + accSurface.Count - 1));
 
-            if (this.Options.CalculateDisplacements)
+            if (this.Options.NewmarkImplicitIntegration)
+            {
+
+                ws.Cells[1, 24] = "α";
+                ws.Cells[2, 24] = "β";
+
+                Range alpha = (Range)ws.Cells[1, 25];
+                alpha.Name = "α";
+                alpha.Value2 = this.Options.NewmarkAlpha;
+
+                Range beta = (Range)ws.Cells[2, 25];
+                beta.Name = "β";
+                beta.Value2 = this.Options.NewmarkBeta;
+
+                // VTH (m/s)
+                for (int i = 0; i < accSurface.Count; i++)
+                {
+                    arrString[i, 0] = "=R[-1]C+((1-β)*R[-1]C[-1]+β*RC[-1])*(RC[-3]-R[-1]C[-3])";
+                }
+                rVthS.FormulaArray = arrString;
+                mBwApp.ReportProgress(1);
+
+                // DTH (m)
+                for (int i = 0; i < accSurface.Count; i++)
+                {
+                    arrString[i, 0] = "=R[-1]C+RC[-1]*(RC[-4]-R[-1]C[-4])+((0.5-α)*R[-1]C[-3]+α*RC[-3])*(RC[-4]-R[-1]C[-4])^2";
+                }
+                rDthS.FormulaArray = arrString;
+                mBwApp.ReportProgress(1);
+
+            }
+            else
             {
 
                 // VTH (m/s)
-                ws.Cells[2, 11] = "veloc (m/s)";
-                Range rVthS = ws.get_Range(string.Format("K{0}", startRow + 1), string.Format("K{0}", startRow + accSurface.Count - 1));
-                // DTH (m)
-                ws.Cells[2, 12] = "disp (m)";
-                Range rDthS = ws.get_Range(string.Format("L{0}", startRow + 1), string.Format("L{0}", startRow + accSurface.Count - 1));
-
-                if (this.Options.NewmarkImplicitIntegration)
-                {
-
-                    ws.Cells[1, 24] = "α";
-                    ws.Cells[2, 24] = "β";
-
-                    Range alpha = (Range)ws.Cells[1, 25];
-                    alpha.Name = "α";
-                    alpha.Value2 = this.Options.NewmarkAlpha;
-
-                    Range beta = (Range)ws.Cells[2, 25];
-                    beta.Name = "β";
-                    beta.Value2 = this.Options.NewmarkBeta;
-
-                    // VTH (m/s)
-                    for (int i = 0; i < accSurface.Count; i++)
-                    {
-                        arrString[i, 0] = "=R[-1]C+((1-β)*R[-1]C[-1]+β*RC[-1])*(RC[-3]-R[-1]C[-3])";
-                    }
-                    rVthS.FormulaArray = arrString;
-                    mBwApp.ReportProgress(1);
-
-                    // DTH (m)
-                    for (int i = 0; i < accSurface.Count; i++)
-                    {
-                        arrString[i, 0] = "=R[-1]C+RC[-1]*(RC[-4]-R[-1]C[-4])+((0.5-α)*R[-1]C[-3]+α*RC[-3])*(RC[-4]-R[-1]C[-4])^2";
-                    }
-                    rDthS.FormulaArray = arrString;
-                    mBwApp.ReportProgress(1);
-
-                }
-                else
-                {
-
-                    // VTH (m/s)
-                    for (int i = 0; i < accSurface.Count; i++)
-                    {
-                        arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])";
-                    }
-                    rVthS.FormulaArray = arrString;
-
-                    mBwApp.ReportProgress(1);
-
-                    // DTH (m)
-                    for (int i = 0; i < accSurface.Count; i++)
-                    {
-                        arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])";
-                    }
-                    rDthS.FormulaArray = arrString;
-                    mBwApp.ReportProgress(1);
-
-                }
-
-                rVthS.Style = "Calculation";
-                rDthS.Style = "Output";
-
-                // DTH (m) above yield acceleration
-                ws.Cells[2, 12] = "Disp (m)";
-                ws.Cells[1, 15] = "Yield Accel (g)";
-                ws.Cells[2, 15] = "Disp  (m)";
-                ws.Cells[3, 15] = "Disp (mm)";
-
-                Range ay = (Range)ws.Cells[1, 16];
-                ay.Name = "ay";
-                ay.Value2 = this.Options.YieldAccel;
-                ay.Style = "Input";
-                Range rDthAy = ws.get_Range(string.Format("M{0}", startRow + 1), string.Format("M{0}", startRow + accSurface.Count - 1));
                 for (int i = 0; i < accSurface.Count; i++)
                 {
-                    arrString[i, 0] = "=IF(RC[-4]>ay,RC[-1],0)";
+                    arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])";
                 }
-                rDthAy.FormulaArray = arrString;
-                rDthAy.Style = "Output";
-
-                // Total Positive Displacement above Yield Acceleration
-                ws.Cells[2, 13] = "disp (above a_y)";
-                Range disp = (Range)ws.Cells[2, 16];
-                disp.FormulaR1C1 = string.Format("=SUM(R[{0}]C[-3]:R[{1}]C[-3])", startRow - 1, accSurface.Count + startRow - 1);
-                disp.Style = "Calculation";
-                // also show in mm
-                Range disp_mm = (Range)ws.Cells[3, 16];
-                disp_mm.Name = "disp_mm";
-                disp_mm.FormulaR1C1 = "=R[-1]C*1000";
-                disp_mm.Style = "Output";
+                rVthS.FormulaArray = arrString;
 
                 mBwApp.ReportProgress(1);
 
-            } // Calculate Displacements
+                // DTH (m)
+                for (int i = 0; i < accSurface.Count; i++)
+                {
+                    arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])";
+                }
+                rDthS.FormulaArray = arrString;
+                mBwApp.ReportProgress(1);
+
+            }
+
+            rVthS.Style = "Calculation";
+            rDthS.Style = "Output";
+
+            // DTH (m) above yield acceleration
+            ws.Cells[2, 12] = "Disp (m)";
+            ws.Cells[1, 15] = "Yield Accel (g)";
+            ws.Cells[2, 15] = "Disp  (m)";
+            ws.Cells[3, 15] = "Disp (mm)";
+
+            Range ay = (Range)ws.Cells[1, 16];
+            ay.Name = "ay";
+            ay.Value2 = this.Options.YieldAccel;
+            ay.Style = "Input";
+            Range rDthAy = ws.get_Range(string.Format("M{0}", startRow + 1), string.Format("M{0}", startRow + accSurface.Count - 1));
+            for (int i = 0; i < accSurface.Count; i++)
+            {
+                arrString[i, 0] = "=IF(RC[-4]>ay,RC[-1],0)";
+            }
+            rDthAy.FormulaArray = arrString;
+            rDthAy.Style = "Output";
+
+            // Total Positive Displacement above Yield Acceleration
+            ws.Cells[2, 13] = "disp (above a_y)";
+            Range disp = (Range)ws.Cells[2, 16];
+            disp.FormulaR1C1 = string.Format("=SUM(R[{0}]C[-3]:R[{1}]C[-3])", startRow - 1, accSurface.Count + startRow - 1);
+            disp.Style = "Calculation";
+            // also show in mm
+            Range disp_mm = (Range)ws.Cells[3, 16];
+            disp_mm.Name = "disp_mm";
+            disp_mm.FormulaR1C1 = "=R[-1]C*1000";
+            disp_mm.Style = "Output";
+
+            mBwApp.ReportProgress(1);
 
             FillStatistics(ws);
             FillDispSensitivity(ws);
@@ -648,7 +636,7 @@ namespace EqAT.Helpers
                 disp_mm_double = Math.Abs((double)disp_mm.Value2);
                 ws.Cells[r, 16] = disp_mm_double;
                 ay.Value2 = (double)ay.Value2 + 0.001;
-                
+
                 r++;
             }
 
@@ -698,17 +686,12 @@ namespace EqAT.Helpers
             // Peak Acceleration 
             ws.Cells[headingRow + 3, 15] = "Peak accel (g)";
             ((Range)ws.Cells[headingRow + 3, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow, startRow + accBase.Count - 1, -13);
-
-            if (this.Options.CalculateDisplacements)
-            {
-                // Peak Velocity 
-                ws.Cells[headingRow + 4, 15] = "Peak velo (m/s)";
-                ((Range)ws.Cells[headingRow + 4, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -12);
-
-                // Peak Displacement 
-                ws.Cells[headingRow + 5, 15] = "Peak disp (m)";
-                ((Range)ws.Cells[headingRow + 5, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -11);
-            }
+            // Peak Velocity 
+            ws.Cells[headingRow + 4, 15] = "Peak velo (m/s)";
+            ((Range)ws.Cells[headingRow + 4, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -12);
+            // Peak Displacement 
+            ws.Cells[headingRow + 5, 15] = "Peak disp (m)";
+            ((Range)ws.Cells[headingRow + 5, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -11);
 
             // Predominant Period
             ws.Cells[headingRow + 6, 15] = "Predominant Period (s)";

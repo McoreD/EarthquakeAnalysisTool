@@ -134,12 +134,12 @@ namespace EqAT.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CalcDisp {
+        public bool CreateLoadMultFile {
             get {
-                return ((bool)(this["CalcDisp"]));
+                return ((bool)(this["CreateLoadMultFile"]));
             }
             set {
-                this["CalcDisp"] = value;
+                this["CreateLoadMultFile"] = value;
             }
         }
         
