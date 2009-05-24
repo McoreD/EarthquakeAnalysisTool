@@ -89,6 +89,8 @@ namespace EqAT.Helpers
             mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
             mWSheet3 = (Worksheet)mWorkSheets.get_Item("Sheet3");
 
+            this.Options.MyFourierSpectraMaker.ReadData();
+
             if (this.MyBaseATHMaker != null && this.MySurfaceATHMaker != null)
             {
                 FillATHData(mWSheetATH);
@@ -226,8 +228,6 @@ namespace EqAT.Helpers
             ws.Cells[2, 2] = "Period (s)";
             ws.Cells[2, 3] = "Fourier Amplitude (g-s)";
 
-            fasm.ReadData();
-
             if (fasm.FourierAmplitudesList.Count > 0 && fasm.FreqList.Count > 0)
             {
                 List<string> f = fasm.FreqList;
@@ -249,6 +249,8 @@ namespace EqAT.Helpers
             ws.Cells[2, 7] = this.Options.MyFourierSpectraMaker.BandwidthStart;
             ws.Cells[3, 6] = "to";
             ws.Cells[3, 7] = this.Options.MyFourierSpectraMaker.BandwidthFinish;
+
+            Console.WriteLine(this.Options.MyFourierSpectraMaker.PredominantPeriod);
 
             //// Predominant Period
             //ws.Cells[2, 9] = "Predominant Period (s)";
@@ -674,11 +676,16 @@ namespace EqAT.Helpers
                 ((Range)ws.Cells[headingStatsRow + 5, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -11);
             }
 
-            for (int i = 3; i < 6; i++)
+            // Predominant Period
+            ws.Cells[headingStatsRow + 6, 15] = "Predominant Period (s)";
+            ws.Cells[headingStatsRow + 6, 16] = this.Options.MyFourierSpectraMaker.PredominantPeriod;
+
+            for (int i = 3; i < 7; i++)
             {
                 ((Range)ws.Cells[headingStatsRow + i, 16]).Style = "Output";
             }
-        }
+
+        } // Fill statistics
 
 
 

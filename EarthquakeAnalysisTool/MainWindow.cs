@@ -129,7 +129,7 @@ namespace EqAT
             ExcelReporterOptions ropt = new ExcelReporterOptions();
             ropt.Worker = this.bwApp;
             ropt.WorkbookFilePath = txtExcelFile.Text;
-            ropt.CalculateDisplacements = chkCalcDisp.Checked;
+            ropt.CalculateDisplacements = Settings.Default.CalcDisp;
             ropt.YieldAccel = nudYieldAccel.Value;
             ropt.NewmarkImplicitIntegration = chkNewmarkImplicitIntegration.Checked;
             ropt.NewmarkAlpha = 0.3025;
@@ -159,6 +159,7 @@ namespace EqAT
             }
 
             ExcelReporter er = new ExcelReporter(ropt);
+
             er.MySurfaceATHMaker = acm;
             er.MyBaseATHMaker = bm;
             er.CreateReport();
