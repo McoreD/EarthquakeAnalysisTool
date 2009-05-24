@@ -641,13 +641,14 @@ namespace EqAT.Helpers
             Range disp_mm = (Range)ws.Cells[3, 16];
 
             int r = headingRow + 2;
-            double disp_mm_double = (double)disp_mm.Value2;
+            double disp_mm_double = Math.Abs((double)disp_mm.Value2);
             while (disp_mm_double > 0)
             {
                 ws.Cells[r, 15] = ay.Value2;
-                ws.Cells[r, 16] = disp_mm.Value2;
+                disp_mm_double = Math.Abs((double)disp_mm.Value2);
+                ws.Cells[r, 16] = disp_mm_double;
                 ay.Value2 = (double)ay.Value2 + 0.001;
-                disp_mm_double = (double)disp_mm.Value2;
+                
                 r++;
             }
 
