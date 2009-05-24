@@ -1,3 +1,4 @@
+0.7.6.0 Statistics: Predominant Period
 0.7.5.0 Ability to customize the maximum number of ATH records from a raw file
 0.7.4.2 ATH was 8 records less than the original
 0.7.4.1 Fixed Newmark displacement algorithm
@@ -7,7 +8,7 @@
 0.7.1.0 Fourier Amplitude Spectra plotted with Period 
 0.7.0.0 Fourier Amplitude Spectra plot with Frequency from Shake91 output file 1
 0.6.1.0 Statistics: Peak Acceleration, Peak Velocity and Peak Displacement
-0.6.0.0 Added Statistics: Bracketed Duration
+0.6.0.0 Added Statistics: starting with Bracketed Duration
 0.5.1.0 Option to limit ATH readings to 4000
 0.5.0.0 Response Spectra plots from Shake91 output file 1
 0.4.0.0 Calculate Displacement for time steps with acceleration above Yield Acceleration

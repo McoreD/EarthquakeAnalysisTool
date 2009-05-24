@@ -250,6 +250,11 @@ namespace EqAT.Helpers
             ws.Cells[3, 6] = "to";
             ws.Cells[3, 7] = this.Options.MyFourierSpectraMaker.BandwidthFinish;
 
+            // Predominant Period
+            ws.Cells[4, 6] = "Predominant Period (s)";
+            ws.Cells[4, 7] = this.Options.MyFourierSpectraMaker.PredominantPeriod;
+            ((Range)ws.Cells[4,7]).Style = "Output";
+
         }
 
         private void FillRPData(Worksheet ws)
