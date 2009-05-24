@@ -87,6 +87,7 @@ namespace EqAT.Helpers
                 if (f > 0)
                 {
                     this.PeriodList.Add((1.0 / f).ToString());
+                    this.PeriodList_double.Add(1.0 / f);
                 }
                 else
                 {
@@ -110,6 +111,7 @@ namespace EqAT.Helpers
                     this.MaximumAmplitude = d;
                     this.PredominantPeriod = PeriodList_double[i];
                 }
+                i++;
         
             } // record maximum amplitude
 
