@@ -11,6 +11,9 @@ namespace EqAT
     /// </summary>
     public class BaseATHMaker : FileProcessor
     {
+        /// <summary>
+        /// diam.acc
+        /// </summary>
         private string mPath;
         /// <summary>
         /// Acceleration Time Histories
@@ -25,6 +28,7 @@ namespace EqAT
         {
             ATH = new List<string>();
             this.mPath = fp;
+            this.WorkingDir = Path.GetDirectoryName(fp);
         }
 
         public int DT { get { return (int)(mDT * 1000); } private set { ; } }

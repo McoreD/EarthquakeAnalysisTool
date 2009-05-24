@@ -39,7 +39,7 @@ namespace EqAT
         public int MaxValues { get; set; }
         private SurfaceATHMakerOptions Options { get; set; }
         public string Title { get; set; }
-
+        
         public SurfaceATHMaker(SurfaceATHMakerOptions options)
         {
             ATH = new List<string>();
@@ -48,6 +48,7 @@ namespace EqAT
             this.Options = options;
             this.MaxValues = 8 * 128;
             this.mPath = options.InputFilePath;
+            this.WorkingDir = Path.GetDirectoryName(mPath);
         }
 
         /// <summary>

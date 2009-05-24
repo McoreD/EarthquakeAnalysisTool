@@ -27,16 +27,16 @@ namespace EqAT.Helpers
         {
             this.Options = new RPSiteMakerOptions();
             this.Options.XaxisMaxScale = 5.0;
-
             this.PeriodList = new List<string>();
             this.ATH = new List<string>();
             this.Options = options;
+            this.WorkingDir = Path.GetDirectoryName(this.Options.FilePath);
         }
 
         public void ReadData()
         {
             this.ATH.Clear();
-            this.PeriodList.Clear(); 
+            this.PeriodList.Clear();
 
             using (StreamReader sr = new StreamReader(this.Options.FilePath))
             {
