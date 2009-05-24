@@ -640,11 +640,15 @@ namespace EqAT.Helpers
             Range ay = (Range)ws.Cells[1, 16];
             Range disp_mm = (Range)ws.Cells[3, 16];
 
-            for (int r = headingRow + 2; r < headingRow + 23; r++)
-            {           
+            int r = headingRow + 2;
+            double disp_mm_double = (double)disp_mm.Value2;
+            while (disp_mm_double > 0)
+            {
                 ws.Cells[r, 15] = ay.Value2;
                 ws.Cells[r, 16] = disp_mm.Value2;
                 ay.Value2 = (double)ay.Value2 + 0.001;
+                disp_mm_double = (double)disp_mm.Value2;
+                r++;
             }
 
             ay.Value2 = orig_ay;
