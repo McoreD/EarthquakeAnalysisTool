@@ -638,7 +638,7 @@ namespace EqAT.Helpers
             ((Range)ws.Cells[headingRow, 15]).Style = "Heading 1";
 
             Range ay = (Range)ws.Cells[1, 16];
-            Range disp_mm = (Range)ws.Cells[2, 16];
+            Range disp_mm = (Range)ws.Cells[3, 16];
 
             for (int r = headingRow + 2; r < headingRow + 23; r++)
             {           
