@@ -476,10 +476,6 @@ namespace EqAT.Helpers
                 Console.WriteLine(ex.ToString());
             }
 
-            ((Range)ws.Cells[12, 15]).Value2 = "Arias Intensity (m/s)";
-            ((Range)ws.Cells[12, 16]).FormulaR1C1 = string.Format("=SUM(R[-8]C[5]:R[{0}]C[5])*PI()/(2*9.81)", accBase.Count - 10);
-            ((Range)ws.Cells[12, 16]).Style = "Calculation";
-
             // ATH (m/ss)
             ws.Cells[2, 10] = "Accel (m/ss)";
             Range rAthSurface = ws.get_Range(string.Format("J{0}", startRow), string.Format("J{0}", startRow + accSurface.Count - 1));
@@ -692,14 +688,20 @@ namespace EqAT.Helpers
             ws.Cells[headingRow + 5, 15] = "Peak disp (m)";
             ((Range)ws.Cells[headingRow + 5, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -11);
 
-            // Predominant Period
-            ws.Cells[headingRow + 6, 15] = "Predominant Period (s)";
-            ws.Cells[headingRow + 6, 16] = this.Options.MyFourierSpectraMaker.PredominantPeriod;
-
-            for (int i = 3; i < 7; i++)
+            for (int i = 3; i <= 5; i++)
             {
                 ((Range)ws.Cells[headingRow + i, 16]).Style = "Output";
             }
+
+            // Arias Intensity
+            ((Range)ws.Cells[headingRow + 6, 15]).Value2 = "Arias Intensity (m/s)";
+            ((Range)ws.Cells[headingRow + 6, 16]).FormulaR1C1 = string.Format("=SUM(R[-8]C[5]:R[{0}]C[5])*PI()/(2*9.81)", accBase.Count - 10);
+            ((Range)ws.Cells[headingRow + 6, 16]).Style = "Calculation";
+
+            // Predominant Period
+            ws.Cells[headingRow + 7, 15] = "Predominant Period (s)";
+            ws.Cells[headingRow + 7, 16] = this.Options.MyFourierSpectraMaker.PredominantPeriod;
+            ((Range)ws.Cells[headingRow + 7, 16]).Style = "Output";
 
         } // Fill statistics
 
