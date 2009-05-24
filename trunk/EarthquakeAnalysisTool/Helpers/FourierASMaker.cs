@@ -21,11 +21,13 @@ namespace EqAT.Helpers
     {
         public List<string> FreqList { get; private set; }
         public List<string> PeriodList { get; private set; }
+        private List<double> PeriodList_double { get; set; }
         public List<string> FourierAmplitudesList { get; private set; }
         private List<double> FourierAmplitudesList_double { get; set; }
         public FourierASMakerOptions Options { get; private set; }
 
         public double MaximumAmplitude { get; private set; }
+        public double PredominantPeriod { get; private set; }
         public double BandwidthStart { get; private set; }
         public double BandwidthFinish { get; private set; }
 
@@ -36,6 +38,7 @@ namespace EqAT.Helpers
 
             this.FreqList = new List<string>();
             this.PeriodList = new List<string>();
+            this.PeriodList_double = new List<double>();
             this.FourierAmplitudesList = new List<string>();
             this.FourierAmplitudesList_double = new List<double>();
 
@@ -47,6 +50,7 @@ namespace EqAT.Helpers
             this.FourierAmplitudesList.Clear();
             this.FreqList.Clear();
             this.PeriodList.Clear();
+            this.PeriodList_double.Clear();
 
             using (StreamReader sr = new StreamReader(this.Options.FilePath))
             {
@@ -94,19 +98,25 @@ namespace EqAT.Helpers
                     double p = 1.0 / f;
                     p++;
                     this.PeriodList.Add(p.ToString());
+                    this.PeriodList_double.Add(p);
                 }
             } // fill period list
 
-            foreach (string s in this.FourierAmplitudesList)
+            int i = 0;
+            foreach (double d in this.FourierAmplitudesList_double)
             {
-                double a = 0.0;
-                double.TryParse(s, out a);
-                this.MaximumAmplitude = Math.Max(a, this.MaximumAmplitude);
+                if (d > this.MaximumAmplitude)
+                {
+                    this.MaximumAmplitude = d;
+                    this.PredominantPeriod = PeriodList_double[i];
+                }
+        
             } // record maximum amplitude
 
             double bandwidthThreshold = this.MaximumAmplitude / Math.Sqrt(2.0);
             bool bFirst = false;
-            int i = 0;
+
+            i = 0;
             foreach (double d in this.FourierAmplitudesList_double)
             {
                 double temp = 0.0;
