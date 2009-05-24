@@ -603,6 +603,7 @@ namespace EqAT.Helpers
                 disp.Style = "Calculation";
                 // also show in mm
                 Range disp_mm = (Range)ws.Cells[3, 16];
+                disp_mm.Name = "disp_mm";
                 disp_mm.FormulaR1C1 = "=R[-1]C*1000";
                 disp_mm.Style = "Output";
 
@@ -611,6 +612,7 @@ namespace EqAT.Helpers
             } // Calculate Displacements
 
             FillStatistics(ws);
+            FillDispSensitivity(ws);
 
             // Number Formatting
 
@@ -621,15 +623,39 @@ namespace EqAT.Helpers
 
         }
 
+        /// <summary>
+        /// Demonstrates displacement sensitivity to Yield Acceleration
+        /// </summary>
+        /// <param name="ws"></param>
+        private void FillDispSensitivity(Worksheet ws)
+        {
+            int headingRow = 20;
+            ws.Cells[headingRow, 15] = "Sensitivity";
+            ws.Cells[headingRow + 1, 15] = "ay (g)";
+            ws.Cells[headingRow + 1, 16] = "disp (mm)";
+
+            ((Range)ws.Cells[headingRow, 15]).Style = "Heading 1";
+
+            for (int r = headingRow + 2; r < headingRow + 23; r++)
+            {
+                Range ay = (Range)ws.Cells[1, 16];
+                Range disp_mm = (Range)ws.Cells[2, 16];
+                ws.Cells[r, 15] = ay.Value2;
+                ws.Cells[r, 16] = disp_mm.Value2;
+                ay.Value2 = (double)ay.Value2 + 0.001;
+            }
+
+        }
+
         private void FillStatistics(Worksheet ws)
         {
             //*************
             // Statistics
             //*************
 
-            int headingStatsRow = 6;
-            ws.Cells[headingStatsRow, 15] = "Statistics";
-            ((Range)ws.Cells[headingStatsRow, 15]).Style = "Heading 1";
+            int headingRow = 6;
+            ws.Cells[headingRow, 15] = "Statistics";
+            ((Range)ws.Cells[headingRow, 15]).Style = "Heading 1";
 
             // Bracketed Duration
 
@@ -657,32 +683,32 @@ namespace EqAT.Helpers
                 }
             }
 
-            ws.Cells[headingStatsRow + 2, 15] = "Duration (s)";
-            ws.Cells[headingStatsRow + 2, 16] = t_last - t_first;
-            ((Range)ws.Cells[headingStatsRow + 2, 16]).Style = "Output";
+            ws.Cells[headingRow + 2, 15] = "Duration (s)";
+            ws.Cells[headingRow + 2, 16] = t_last - t_first;
+            ((Range)ws.Cells[headingRow + 2, 16]).Style = "Output";
 
             // Peak Acceleration 
-            ws.Cells[headingStatsRow + 3, 15] = "Peak accel (g)";
-            ((Range)ws.Cells[headingStatsRow + 3, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow, startRow + accBase.Count - 1, -13);
+            ws.Cells[headingRow + 3, 15] = "Peak accel (g)";
+            ((Range)ws.Cells[headingRow + 3, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow, startRow + accBase.Count - 1, -13);
 
             if (this.Options.CalculateDisplacements)
             {
                 // Peak Velocity 
-                ws.Cells[headingStatsRow + 4, 15] = "Peak velo (m/s)";
-                ((Range)ws.Cells[headingStatsRow + 4, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -12);
+                ws.Cells[headingRow + 4, 15] = "Peak velo (m/s)";
+                ((Range)ws.Cells[headingRow + 4, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -12);
 
                 // Peak Displacement 
-                ws.Cells[headingStatsRow + 5, 15] = "Peak disp (m)";
-                ((Range)ws.Cells[headingStatsRow + 5, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -11);
+                ws.Cells[headingRow + 5, 15] = "Peak disp (m)";
+                ((Range)ws.Cells[headingRow + 5, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -11);
             }
 
             // Predominant Period
-            ws.Cells[headingStatsRow + 6, 15] = "Predominant Period (s)";
-            ws.Cells[headingStatsRow + 6, 16] = this.Options.MyFourierSpectraMaker.PredominantPeriod;
+            ws.Cells[headingRow + 6, 15] = "Predominant Period (s)";
+            ws.Cells[headingRow + 6, 16] = this.Options.MyFourierSpectraMaker.PredominantPeriod;
 
             for (int i = 3; i < 7; i++)
             {
-                ((Range)ws.Cells[headingStatsRow + i, 16]).Style = "Output";
+                ((Range)ws.Cells[headingRow + i, 16]).Style = "Output";
             }
 
         } // Fill statistics
