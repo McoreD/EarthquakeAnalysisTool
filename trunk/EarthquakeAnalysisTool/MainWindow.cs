@@ -130,7 +130,9 @@ namespace EqAT
             ropt.Worker = this.bwApp;
             ropt.WorkbookFilePath = txtExcelFile.Text;
             ropt.CreateMultiplier = Settings.Default.CreateLoadMultFile;
-            ropt.YieldAccel = nudYieldAccel.Value;
+            ropt.YieldAccel = Settings.Default.YieldAccel;
+            ropt.CalcNewmarkDisplacements = Settings.Default.CalcDisplacements;
+            ropt.DrawResponseSpectrum = Settings.Default.GenResponseSpectrum;
             ropt.NewmarkImplicitIntegration = chkNewmarkImplicitIntegration.Checked;
             ropt.NewmarkAlpha = 0.3025;
             ropt.NewmarkBeta = 0.6;
@@ -160,8 +162,8 @@ namespace EqAT
 
             ExcelReporter er = new ExcelReporter(ropt);
 
-            er.MySurfaceATHMaker = acm;
-            er.MyBaseATHMaker = bm;
+            er.MySiteData = acm;
+            er.MyEqData = bm;
             er.CreateReport();
 
         }

@@ -20,7 +20,7 @@ namespace EqAT
         /// </summary>
         public List<string> ATH { get; private set; }
         private int NTPS;
-        private decimal mDT;
+        private double mDT;
 
         public string Title { get; protected set; }
 
@@ -31,7 +31,10 @@ namespace EqAT
             this.WorkingDir = Path.GetDirectoryName(fp);
         }
 
-        public int DT { get { return (int)(mDT * 1000); } private set { ; } }
+        /// <summary>
+        /// Time Step in seconds
+        /// </summary>
+        public double TimeStep { get { return mDT; } private set { ; } }
 
         public List<string> ReadATH()
         {
@@ -45,7 +48,7 @@ namespace EqAT
                 RemoveDoubleSpaces(ref line);
                 GroupCollection gc = Regex.Match(line, "NPTS= (?<NTPS>.+), DT= (?<DT>.+) SEC").Groups;
                 int.TryParse(gc[1].Value, out this.NTPS);
-                decimal.TryParse(gc[2].Value, out this.mDT);
+                double.TryParse(gc[2].Value, out this.mDT);
                 if (this.mDT == 0)
                     throw new Exception("DT is Zero");
 

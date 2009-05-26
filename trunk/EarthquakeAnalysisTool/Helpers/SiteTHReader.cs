@@ -28,7 +28,7 @@ namespace EqAT
         /// <summary>
         /// Acceleration Time History in g
         /// </summary>
-        public List<double> ATHdouble { get; private set; }
+        public List<double> ATH_double { get; private set; }
         /// <summary>
         /// Time Interval in Milliseconds
         /// </summary>
@@ -43,7 +43,7 @@ namespace EqAT
         public SurfaceATHMaker(SurfaceATHMakerOptions options)
         {
             ATH = new List<string>();
-            ATHdouble = new List<double>();
+            ATH_double = new List<double>();
             // this.DT = 20;
             this.Options = options;
             this.MaxValues = 8 * 128;
@@ -93,7 +93,7 @@ namespace EqAT
                 ATH.Add(nums[i]);
                 double d = 0.0;
                 double.TryParse(nums[i], out d);
-                this.ATHdouble.Add(d);
+                this.ATH_double.Add(d);
             }
         }
 
