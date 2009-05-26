@@ -62,5 +62,11 @@
     <Setting Name="MaxATHRecords" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">3800</Value>
     </Setting>
+    <Setting Name="CalcDisplacements" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="GenResponseSpectrum" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

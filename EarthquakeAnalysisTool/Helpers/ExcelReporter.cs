@@ -12,6 +12,8 @@ namespace EqAT.Helpers
     {
         public BackgroundWorker Worker { get; set; }
         public string WorkbookFilePath { get; set; }
+        public bool DrawResponseSpectrum { get; set; }
+        public bool CalcNewmarkDisplacements { get; set; }
         public bool CreateMultiplier { get; set; }
         public bool NewmarkImplicitIntegration { get; set; }
         public RPMaker MyResponseSpectraMaker { get; set; }
@@ -31,11 +33,11 @@ namespace EqAT.Helpers
         /// <summary>
         /// ATH from Shake91
         /// </summary>
-        public SurfaceATHMaker MySurfaceATHMaker { get; set; }
+        public SurfaceATHMaker MySiteData { get; set; }
         /// <summary>
         /// ATH from Earthquake Location
         /// </summary>
-        public BaseATHMaker MyBaseATHMaker { get; set; }
+        public BaseATHMaker MyEqData { get; set; }
 
         private Microsoft.Office.Interop.Excel.Application mExcelApp = new Microsoft.Office.Interop.Excel.ApplicationClass();
         private Microsoft.Office.Interop.Excel.Workbook mWorkBook;
@@ -51,8 +53,12 @@ namespace EqAT.Helpers
 
         private ExcelReporterOptions Options { get; set; }
 
-        private List<string> accBase;
-        private double[] timeStepsBase;
+        private List<string> m_athEq = null;
+        private List<string> m_athSite = null;
+
+        private double m_dtEq;
+        private List<double> m_dtSite_list = new List<double>();
+        private double[] dtEq_arr;
 
         int startRow = 3;
 
@@ -75,8 +81,8 @@ namespace EqAT.Helpers
             System.Windows.Forms.DialogResult ans = System.Windows.Forms.DialogResult.Yes;
 
             // Check if all the input files are in the same folder
-            if (this.Options.MyResponseSpectraMaker.WorkingDir != this.MySurfaceATHMaker.WorkingDir ||
-                this.MyBaseATHMaker.WorkingDir != this.MySurfaceATHMaker.WorkingDir)
+            if (this.Options.MyResponseSpectraMaker.WorkingDir != this.MySiteData.WorkingDir ||
+                this.MyEqData.WorkingDir != this.MySiteData.WorkingDir)
             {
                 ans = System.Windows.Forms.MessageBox.Show("Not all the input files are located in the same directory. Possible cause is that you forgot to browse or drag one of the input files. Are you sure you want to continue?", "EqAT", System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button2);
             }
@@ -95,16 +101,49 @@ namespace EqAT.Helpers
                 mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
                 mWSheet3 = (Worksheet)mWorkSheets.get_Item("Sheet3");
 
+                // read ATH data
+                m_athEq = MyEqData.ReadATH();
+                m_dtEq = MyEqData.TimeStep;
+                m_athSite = MySiteData.ReadATH();
+
+                // calculate dt for site
+                double dtSite = ((double)m_athEq.Count / (double)m_athSite.Count) * m_dtEq;
+                // fill scaled dt for site
+                for (int i = 0; i < m_athSite.Count; i++)
+                {
+                    m_dtSite_list.Add((double)(i * dtSite));
+                }
+
+                // create multiplier data file for Plaxis
+                if (this.Options.CreateMultiplier)
+                {
+                    string fpPlaxisDynLoadMult = Path.ChangeExtension(this.Options.WorkbookFilePath, ".mult");
+                    using (StreamWriter sw = new StreamWriter(fpPlaxisDynLoadMult))
+                    {
+                        for (int i = 0; i < m_dtSite_list.Count; i++)
+                        {
+                            sw.WriteLine(string.Format("{0} {1}", m_dtSite_list[i], MySiteData.ATH_double[i] * 9.81));
+                        }
+                    }
+                }
+
+                // process fourier amplitude data
                 this.Options.MyFourierSpectraMaker.ReadData();
 
-                if (this.MyBaseATHMaker != null && this.MySurfaceATHMaker != null)
+                // process ath data
+                if (this.Options.CalcNewmarkDisplacements)
                 {
-                    FillATHData(mWSheetATH);
-                    GenerateChartATH(mWSheetATH);
+                    if (this.MyEqData != null && this.MySiteData != null)
+                    {
+                        FillATHData(mWSheetATH);
+                        GenerateChartATH(mWSheetATH);
+                    }
                 }
+
+                // process response spectra data
                 if (this.Options.MyResponseSpectraMaker != null)
                 {
-                    FillRPData(mWSheet2);
+                    FillRSData(mWSheet2);
                     FillFASData(mWSheet3, this.Options.MyFourierSpectraMaker);
                     GenerateChartFASf(mWSheet3, this.Options.MyFourierSpectraMaker);
                     GenerateChartFASp(mWSheet3, this.Options.MyFourierSpectraMaker);
@@ -124,8 +163,16 @@ namespace EqAT.Helpers
                 mWSheetATH.Name = "ATH and DTH Data";
                 mWSheet2.Name = "Response Spectra Data";
                 mWSheet3.Name = "Fourier Spectra Data";
-                mWSheetATH.Select(true);
 
+                if (this.Options.CalcNewmarkDisplacements)
+                {
+                    mWSheetATH.Select(true);
+                }
+                else
+                {
+                    mWSheetATH.Delete();
+                }
+          
                 string ext = Path.GetExtension(mPath);
 
                 if (ext.ToLower().Equals(".xlsx"))
@@ -223,6 +270,9 @@ namespace EqAT.Helpers
 
         private void FillFASData(Worksheet ws, FASMaker fasm)
         {
+
+            mBwApp.ReportProgress(2, "Filling Fourier Amplitude Spectrum data...");
+
             ws.Cells[2, 1] = "Frequency (Hz)";
             ws.Cells[2, 2] = "Period (s)";
             ws.Cells[2, 3] = "Fourier Amplitude (g-s)";
@@ -258,8 +308,11 @@ namespace EqAT.Helpers
 
         }
 
-        private void FillRPData(Worksheet ws)
+        private void FillRSData(Worksheet ws)
         {
+
+            mBwApp.ReportProgress(2, "Filling Response Spectrum data...");
+
             ws.Cells[2, 1] = "Period (s)";
             ws.Cells[2, 2] = "Accl(g)";
 
@@ -335,28 +388,26 @@ namespace EqAT.Helpers
 
         private void FillATHData(Worksheet ws)
         {
-            accBase = MyBaseATHMaker.ReadATH();
-            int dtBase = MyBaseATHMaker.DT;
 
             mBwApp.ReportProgress(0, 13);
-            mBwApp.ReportProgress(2, "Filling Base ATH, VTH and DTH...");
+            mBwApp.ReportProgress(2, "Filling Earthquake ATH, VTH and DTH...");
 
-            double[,] arrData = new double[accBase.Count, 1];
-            string[,] arrString = new string[accBase.Count, 1];
+            double[,] arrData = new double[m_athEq.Count, 1];
+            string[,] arrString = new string[m_athEq.Count, 1];
 
             Range headings = ws.get_Range("A1", "Z2");
             headings.Font.Bold = true;
 
-            ws.Cells[1, 1] = "Base: " + MyBaseATHMaker.Title;
+            ws.Cells[1, 1] = "Earthquake: " + MyEqData.Title;
 
             // Times
-            timeStepsBase = new double[accBase.Count];
+            dtEq_arr = new double[m_athEq.Count];
             ws.Cells[2, 1] = "Time (s)";
-            Range rTime = ws.get_Range(string.Format("A{0}", startRow), string.Format("A{0}", startRow + accBase.Count - 1));
-            for (int i = 0; i < accBase.Count; i++)
+            Range rTime = ws.get_Range(string.Format("A{0}", startRow), string.Format("A{0}", startRow + m_athEq.Count - 1));
+            for (int i = 0; i < m_athEq.Count; i++)
             {
-                timeStepsBase[i] = (double)(i * dtBase / 1000.0);
-                arrData[i, 0] = timeStepsBase[i];
+                dtEq_arr[i] = (double)(i * m_dtEq);
+                arrData[i, 0] = dtEq_arr[i];
             }
             rTime.Value2 = arrData;
             rTime.Style = "Input";
@@ -364,11 +415,11 @@ namespace EqAT.Helpers
 
             // ATH (G)
             ws.Cells[2, 2] = "Accel (g)";
-            Range rAthG = ws.get_Range(string.Format("B{0}", startRow), string.Format("B{0}", startRow + accBase.Count - 1));
-            for (int i = 0; i < accBase.Count; i++)
+            Range rAthG = ws.get_Range(string.Format("B{0}", startRow), string.Format("B{0}", startRow + m_athEq.Count - 1));
+            for (int i = 0; i < m_athEq.Count; i++)
             {
                 double value;
-                double.TryParse(accBase[i], out value);
+                double.TryParse(m_athEq[i], out value);
                 arrData[i, 0] = value;
             }
             rAthG.Value2 = arrData;
@@ -377,8 +428,8 @@ namespace EqAT.Helpers
 
             // ATH (m/ss)
             ws.Cells[2, 3] = "Accel (m/ss)";
-            Range rAth = ws.get_Range(string.Format("C{0}", startRow), string.Format("C{0}", startRow + accBase.Count - 1));
-            for (int i = 0; i < accBase.Count; i++)
+            Range rAth = ws.get_Range(string.Format("C{0}", startRow), string.Format("C{0}", startRow + m_athEq.Count - 1));
+            for (int i = 0; i < m_athEq.Count; i++)
             {
                 arrString[i, 0] = "=RC[-1]*9.81";
             }
@@ -388,8 +439,8 @@ namespace EqAT.Helpers
 
             // VTH (m/s)
             ws.Cells[2, 4] = "veloc (m/s)";
-            Range rVth = ws.get_Range(string.Format("D{0}", startRow + 1), string.Format("D{0}", startRow + accBase.Count - 1));
-            for (int i = 0; i < accBase.Count; i++)
+            Range rVth = ws.get_Range(string.Format("D{0}", startRow + 1), string.Format("D{0}", startRow + m_athEq.Count - 1));
+            for (int i = 0; i < m_athEq.Count; i++)
             {
                 arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])+R[-1]C";
             }
@@ -399,8 +450,8 @@ namespace EqAT.Helpers
 
             // DTH (m)
             ws.Cells[2, 5] = "disp (m)";
-            Range rDth = ws.get_Range(string.Format("E{0}", startRow + 1), string.Format("E{0}", startRow + accBase.Count - 1));
-            for (int i = 0; i < accBase.Count; i++)
+            Range rDth = ws.get_Range(string.Format("E{0}", startRow + 1), string.Format("E{0}", startRow + m_athEq.Count - 1));
+            for (int i = 0; i < m_athEq.Count; i++)
             {
                 arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])+R[-1]C";
             }
@@ -408,25 +459,22 @@ namespace EqAT.Helpers
             rDth.Style = "Output";
             mBwApp.ReportProgress(1);
 
-            List<string> accSurface = MySurfaceATHMaker.ReadATH();
-            double dt = ((double)accBase.Count / (double)accSurface.Count) * dtBase;
 
-            arrData = new double[accSurface.Count, 1];
-            arrString = new string[accSurface.Count, 1];
+            arrData = new double[m_athSite.Count, 1];
+            arrString = new string[m_athSite.Count, 1];
 
-            mBwApp.ReportProgress(2, "Filling Base ATH, VTH and DTH...");
+            mBwApp.ReportProgress(2, "Filling Site ATH, VTH and DTH...");
 
-            ws.Cells[1, 8] = "Surface: " + MySurfaceATHMaker.Title;
+            ws.Cells[1, 8] = "Site: " + MySiteData.Title;
 
             // Times
             ws.Cells[2, 8] = "Time (s)";
-            Range rTimeSurface = ws.get_Range(string.Format("H{0}", startRow), string.Format("H{0}", startRow + accSurface.Count - 1));
-            List<double> dTimeSurface = new List<double>();
+            Range rTimeSurface = ws.get_Range(string.Format("H{0}", startRow), string.Format("H{0}", startRow + m_athSite.Count - 1));
 
-            for (int i = 0; i < accSurface.Count; i++)
+
+            for (int i = 0; i < m_athSite.Count; i++)
             {
-                dTimeSurface.Add((double)(i * dt / 1000.0));
-                arrData[i, 0] = dTimeSurface[i];
+                arrData[i, 0] = m_dtSite_list[i];
             }
 
             rTimeSurface.Value2 = arrData;
@@ -435,11 +483,11 @@ namespace EqAT.Helpers
 
             // ATH (G)
             ws.Cells[2, 9] = "Accel (g)";
-            Range rAthGS = ws.get_Range(string.Format("I{0}", startRow), string.Format("I{0}", startRow + accSurface.Count - 1));
-            for (int i = 0; i < accSurface.Count; i++)
+            Range rAthGS = ws.get_Range(string.Format("I{0}", startRow), string.Format("I{0}", startRow + m_athSite.Count - 1));
+            for (int i = 0; i < m_athSite.Count; i++)
             {
                 double value;
-                double.TryParse(accSurface[i], out value);
+                double.TryParse(m_athSite[i], out value);
                 arrData[i, 0] = value;
             }
             rAthGS.Value2 = arrData;
@@ -449,8 +497,8 @@ namespace EqAT.Helpers
 
             // ATH^2 
             ws.Cells[2, 10] = "Accel (m/ss)";
-            Range rAthSurfaceSq = ws.get_Range(string.Format("T{0}", startRow), string.Format("T{0}", startRow + accBase.Count - 1));
-            for (int i = 0; i < accSurface.Count; i++)
+            Range rAthSurfaceSq = ws.get_Range(string.Format("T{0}", startRow), string.Format("T{0}", startRow + m_athEq.Count - 1));
+            for (int i = 0; i < m_athSite.Count; i++)
             {
                 arrString[i, 0] = "=RC[-17]^2";
             }
@@ -462,8 +510,8 @@ namespace EqAT.Helpers
             {
                 // Arias dI (m/s)
                 ws.Cells[2, 11] = "veloc (m/s)";
-                Range dAriasIntsty = ws.get_Range(string.Format("U{0}", startRow + 1), string.Format("U{0}", startRow + accBase.Count - 1));
-                for (int i = 0; i < accBase.Count; i++)
+                Range dAriasIntsty = ws.get_Range(string.Format("U{0}", startRow + 1), string.Format("U{0}", startRow + m_athEq.Count - 1));
+                for (int i = 0; i < m_athEq.Count; i++)
                 {
                     arrString[i, 0] = "=((R[-1]C[-1]+RC[-1])/2)*(RC[-20]-R[-1]C[-20])";
                 }
@@ -478,8 +526,8 @@ namespace EqAT.Helpers
 
             // ATH (m/ss)
             ws.Cells[2, 10] = "Accel (m/ss)";
-            Range rAthSurface = ws.get_Range(string.Format("J{0}", startRow), string.Format("J{0}", startRow + accSurface.Count - 1));
-            for (int i = 0; i < accSurface.Count; i++)
+            Range rAthSurface = ws.get_Range(string.Format("J{0}", startRow), string.Format("J{0}", startRow + m_athSite.Count - 1));
+            for (int i = 0; i < m_athSite.Count; i++)
             {
                 arrString[i, 0] = "=RC[-1]*9.81";
             }
@@ -487,25 +535,12 @@ namespace EqAT.Helpers
             rAthSurface.Style = "Calculation";
             mBwApp.ReportProgress(1);
 
-
-
-            if (this.Options.CreateMultiplier)
-            {
-                string fpPlaxisDynLoadMult = Path.ChangeExtension(this.Options.WorkbookFilePath, ".mult");
-                using (StreamWriter sw = new StreamWriter(fpPlaxisDynLoadMult))
-                {
-                    for (int i = 0; i < rTimeSurface.Count; i++)
-                    {
-                        sw.WriteLine(string.Format("{0} {1}", dTimeSurface[i], MySurfaceATHMaker.ATHdouble[i] * 9.81));
-                    }
-                }
-            }
             // VTH (m/s)
             ws.Cells[2, 11] = "veloc (m/s)";
-            Range rVthS = ws.get_Range(string.Format("K{0}", startRow + 1), string.Format("K{0}", startRow + accSurface.Count - 1));
+            Range rVthS = ws.get_Range(string.Format("K{0}", startRow + 1), string.Format("K{0}", startRow + m_athSite.Count - 1));
             // DTH (m)
             ws.Cells[2, 12] = "disp (m)";
-            Range rDthS = ws.get_Range(string.Format("L{0}", startRow + 1), string.Format("L{0}", startRow + accSurface.Count - 1));
+            Range rDthS = ws.get_Range(string.Format("L{0}", startRow + 1), string.Format("L{0}", startRow + m_athSite.Count - 1));
 
             if (this.Options.NewmarkImplicitIntegration)
             {
@@ -522,7 +557,7 @@ namespace EqAT.Helpers
                 beta.Value2 = this.Options.NewmarkBeta;
 
                 // VTH (m/s)
-                for (int i = 0; i < accSurface.Count; i++)
+                for (int i = 0; i < m_athSite.Count; i++)
                 {
                     arrString[i, 0] = "=R[-1]C+((1-β)*R[-1]C[-1]+β*RC[-1])*(RC[-3]-R[-1]C[-3])";
                 }
@@ -530,7 +565,7 @@ namespace EqAT.Helpers
                 mBwApp.ReportProgress(1);
 
                 // DTH (m)
-                for (int i = 0; i < accSurface.Count; i++)
+                for (int i = 0; i < m_athSite.Count; i++)
                 {
                     arrString[i, 0] = "=R[-1]C+RC[-1]*(RC[-4]-R[-1]C[-4])+((0.5-α)*R[-1]C[-3]+α*RC[-3])*(RC[-4]-R[-1]C[-4])^2";
                 }
@@ -542,7 +577,7 @@ namespace EqAT.Helpers
             {
 
                 // VTH (m/s)
-                for (int i = 0; i < accSurface.Count; i++)
+                for (int i = 0; i < m_athSite.Count; i++)
                 {
                     arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])";
                 }
@@ -551,7 +586,7 @@ namespace EqAT.Helpers
                 mBwApp.ReportProgress(1);
 
                 // DTH (m)
-                for (int i = 0; i < accSurface.Count; i++)
+                for (int i = 0; i < m_athSite.Count; i++)
                 {
                     arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])";
                 }
@@ -573,8 +608,8 @@ namespace EqAT.Helpers
             ay.Name = "ay";
             ay.Value2 = this.Options.YieldAccel;
             ay.Style = "Input";
-            Range rDthAy = ws.get_Range(string.Format("M{0}", startRow + 1), string.Format("M{0}", startRow + accSurface.Count - 1));
-            for (int i = 0; i < accSurface.Count; i++)
+            Range rDthAy = ws.get_Range(string.Format("M{0}", startRow + 1), string.Format("M{0}", startRow + m_athSite.Count - 1));
+            for (int i = 0; i < m_athSite.Count; i++)
             {
                 arrString[i, 0] = "=IF(RC[-4]>ay,RC[-1],0)";
             }
@@ -584,7 +619,7 @@ namespace EqAT.Helpers
             // Total Positive Displacement above Yield Acceleration
             ws.Cells[2, 13] = "disp (above a_y)";
             Range disp = (Range)ws.Cells[2, 16];
-            disp.FormulaR1C1 = string.Format("=SUM(R[{0}]C[-3]:R[{1}]C[-3])", startRow - 1, accSurface.Count + startRow - 1);
+            disp.FormulaR1C1 = string.Format("=SUM(R[{0}]C[-3]:R[{1}]C[-3])", startRow - 1, m_athSite.Count + startRow - 1);
             disp.Style = "Calculation";
             // also show in mm
             Range disp_mm = (Range)ws.Cells[3, 16];
@@ -658,18 +693,18 @@ namespace EqAT.Helpers
             double t_last = 0.0;
             bool bFirst = false;
 
-            for (int i = 0; i < accBase.Count; i++)
+            for (int i = 0; i < m_athEq.Count; i++)
             {
-                if (Math.Abs(double.Parse(accBase[i])) > a_threshold)
+                if (Math.Abs(double.Parse(m_athEq[i])) > a_threshold)
                 {
                     if (!bFirst)
                     {
-                        t_first = timeStepsBase[i];
+                        t_first = dtEq_arr[i];
                         bFirst = true;
                     }
                     else
                     {
-                        t_last = timeStepsBase[i];
+                        t_last = dtEq_arr[i];
                     }
                 }
             }
@@ -680,13 +715,13 @@ namespace EqAT.Helpers
 
             // Peak Acceleration 
             ws.Cells[headingRow + 3, 15] = "Peak accel (g)";
-            ((Range)ws.Cells[headingRow + 3, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow, startRow + accBase.Count - 1, -13);
+            ((Range)ws.Cells[headingRow + 3, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow, startRow + m_athEq.Count - 1, -13);
             // Peak Velocity 
             ws.Cells[headingRow + 4, 15] = "Peak velo (m/s)";
-            ((Range)ws.Cells[headingRow + 4, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -12);
+            ((Range)ws.Cells[headingRow + 4, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + m_athEq.Count - 1, -12);
             // Peak Displacement 
             ws.Cells[headingRow + 5, 15] = "Peak disp (m)";
-            ((Range)ws.Cells[headingRow + 5, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + accBase.Count - 1, -11);
+            ((Range)ws.Cells[headingRow + 5, 16]).FormulaR1C1 = string.Format("=MAX(MAX(R{0}C[{2}]:R{1}C[{2}]),ABS(MIN(R{0}C[{2}]:R{1}C[{2}])))", startRow + 1, startRow + m_athEq.Count - 1, -11);
 
             for (int i = 3; i <= 5; i++)
             {
@@ -695,7 +730,7 @@ namespace EqAT.Helpers
 
             // Arias Intensity
             ((Range)ws.Cells[headingRow + 6, 15]).Value2 = "Arias Intensity (m/s)";
-            ((Range)ws.Cells[headingRow + 6, 16]).FormulaR1C1 = string.Format("=SUM(R[-8]C[5]:R[{0}]C[5])*PI()/(2*9.81)", accBase.Count - 10);
+            ((Range)ws.Cells[headingRow + 6, 16]).FormulaR1C1 = string.Format("=SUM(R[-8]C[5]:R[{0}]C[5])*PI()/(2*9.81)", m_athEq.Count - 10);
             ((Range)ws.Cells[headingRow + 6, 16]).Style = "Calculation";
 
             // Predominant Period
@@ -778,13 +813,13 @@ namespace EqAT.Helpers
 
                 seriesCollection.NewSeries();
                 seriesCollection.Item(1).Name = "Base";
-                seriesCollection.Item(1).XValues = string.Format("={0}!$A{1}:$A{2}", ws.Name, startRow, MyBaseATHMaker.ATH.Count);
-                seriesCollection.Item(1).Values = string.Format("={0}!$B{1}:$B{2}", ws.Name, startRow, MyBaseATHMaker.ATH.Count);
+                seriesCollection.Item(1).XValues = string.Format("={0}!$A{1}:$A{2}", ws.Name, startRow, MyEqData.ATH.Count);
+                seriesCollection.Item(1).Values = string.Format("={0}!$B{1}:$B{2}", ws.Name, startRow, MyEqData.ATH.Count);
 
                 seriesCollection.NewSeries();
                 seriesCollection.Item(2).Name = "Surface";
-                seriesCollection.Item(2).XValues = string.Format("={0}!R{1}C8:R{2}C8", ws.Name, startRow, MySurfaceATHMaker.ATH.Count);
-                seriesCollection.Item(2).Values = string.Format("={0}!R{1}C9:R{2}C9", ws.Name, startRow, MySurfaceATHMaker.ATH.Count);
+                seriesCollection.Item(2).XValues = string.Format("={0}!R{1}C8:R{2}C8", ws.Name, startRow, MySiteData.ATH.Count);
+                seriesCollection.Item(2).Values = string.Format("={0}!R{1}C9:R{2}C9", ws.Name, startRow, MySiteData.ATH.Count);
 
                 xlChart.ChartType = XlChartType.xlXYScatterLinesNoMarkers;
 

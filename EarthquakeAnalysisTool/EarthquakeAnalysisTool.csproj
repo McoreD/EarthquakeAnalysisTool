@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{35087AC0-5B2E-4640-BF40-788EC6590EC4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -59,14 +59,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\BaseATHMaker.cs" />
+    <Compile Include="Helpers\EqATHReader.cs" />
     <Compile Include="Helpers\ExcelReporter.cs" />
-    <Compile Include="Helpers\FourierASMaker.cs" />
-    <Compile Include="Helpers\RPSiteMaker.cs" />
-    <Compile Include="Helpers\SurfaceATHMaker.cs" />
+    <Compile Include="Helpers\SiteFASMaker.cs" />
+    <Compile Include="Helpers\SiteRSMaker.cs" />
+    <Compile Include="Helpers\SiteTHReader.cs" />
     <Compile Include="Helpers\FileProcessor.cs" />
     <Compile Include="SciFormat.cs" />
-    <Compile Include="Helpers\ATHMaker.cs" />
+    <Compile Include="Helpers\EqATHMaker.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -262,5 +262,29 @@ namespace EqAT.Properties {
                 this["MaxATHRecords"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CalcDisplacements {
+            get {
+                return ((bool)(this["CalcDisplacements"]));
+            }
+            set {
+                this["CalcDisplacements"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GenResponseSpectrum {
+            get {
+                return ((bool)(this["GenResponseSpectrum"]));
+            }
+            set {
+                this["GenResponseSpectrum"] = value;
+            }
+        }
     }
 }
