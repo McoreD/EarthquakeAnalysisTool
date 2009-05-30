@@ -35,8 +35,8 @@
     <Setting Name="IgnoreZeroBaseAccel" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="YieldAccel" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">0.0500</Value>
+    <Setting Name="YieldAccel" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.0664</Value>
     </Setting>
     <Setting Name="RPShake91" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
