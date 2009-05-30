@@ -21,7 +21,7 @@ namespace EqAT.Helpers
         /// <summary>
         /// Yield Acceleration in g
         /// </summary>
-        public decimal YieldAccel { get; set; }
+        public double YieldAccel { get; set; }
         public double NewmarkAlpha { get; set; }
         public double NewmarkBeta { get; set; }
     }
@@ -33,7 +33,7 @@ namespace EqAT.Helpers
         /// <summary>
         /// ATH from Shake91
         /// </summary>
-        public SurfaceATHMaker MySiteData { get; set; }
+        public SiteTHReader MySiteData { get; set; }
         /// <summary>
         /// ATH from Earthquake Location
         /// </summary>
@@ -55,8 +55,10 @@ namespace EqAT.Helpers
 
         private List<string> m_athEq = null;
         private List<string> m_athSite = null;
+        private double NewmarkDisplacement = 0.0;
 
         private double m_dtEq;
+        private double dtSite;
         private List<double> m_dtSite_list = new List<double>();
         private double[] dtEq_arr;
 
@@ -101,13 +103,18 @@ namespace EqAT.Helpers
                 mWSheet2 = (Worksheet)mWorkSheets.get_Item("Sheet2");
                 mWSheet3 = (Worksheet)mWorkSheets.get_Item("Sheet3");
 
+                Worksheet wsEqAT = null;
+                wsEqAT = (Worksheet)mWorkSheets.Add(mWorkSheets[1], Type.Missing, Type.Missing, Type.Missing);
+                wsEqAT.Name = "EqAT " + System.Windows.Forms.Application.ProductVersion; 
+
                 // read ATH data
                 m_athEq = MyEqData.ReadATH();
                 m_dtEq = MyEqData.TimeStep;
                 m_athSite = MySiteData.ReadATH();
 
                 // calculate dt for site
-                double dtSite = ((double)m_athEq.Count / (double)m_athSite.Count) * m_dtEq;
+                dtSite = ((double)m_athEq.Count / (double)m_athSite.Count) * m_dtEq;
+                this.NewmarkDisplacement = MySiteData.NewmarkIntegration(dtSite, this.Options.YieldAccel);
                 // fill scaled dt for site
                 for (int i = 0; i < m_athSite.Count; i++)
                 {
@@ -172,7 +179,7 @@ namespace EqAT.Helpers
                 {
                     mWSheetATH.Delete();
                 }
-          
+
                 string ext = Path.GetExtension(mPath);
 
                 if (ext.ToLower().Equals(".xlsx"))
@@ -389,10 +396,33 @@ namespace EqAT.Helpers
         private void FillATHData(Worksheet ws)
         {
 
+            if (this.Options.NewmarkImplicitIntegration)
+            {
+
+                ws.Cells[1, 24] = "α";
+                ws.Cells[2, 24] = "β";
+
+                Range alpha = (Range)ws.Cells[1, 25];
+                alpha.Name = "α";
+                alpha.Value2 = this.Options.NewmarkAlpha;
+
+                Range beta = (Range)ws.Cells[2, 25];
+                beta.Name = "β";
+                beta.Value2 = this.Options.NewmarkBeta;
+
+            }
+
+            FillATHData_Eq(ws);
+            FillATHData_Site(ws);
+
+        }
+
+        private void FillATHData_Eq(Worksheet ws)
+        {
             mBwApp.ReportProgress(0, 13);
             mBwApp.ReportProgress(2, "Filling Earthquake ATH, VTH and DTH...");
 
-            double[,] arrData = new double[m_athEq.Count, 1];
+            double[,] arrDouble = new double[m_athEq.Count, 1];
             string[,] arrString = new string[m_athEq.Count, 1];
 
             Range headings = ws.get_Range("A1", "Z2");
@@ -407,9 +437,9 @@ namespace EqAT.Helpers
             for (int i = 0; i < m_athEq.Count; i++)
             {
                 dtEq_arr[i] = (double)(i * m_dtEq);
-                arrData[i, 0] = dtEq_arr[i];
+                arrDouble[i, 0] = dtEq_arr[i];
             }
-            rTime.Value2 = arrData;
+            rTime.Value2 = arrDouble;
             rTime.Style = "Input";
             mBwApp.ReportProgress(1);
 
@@ -420,9 +450,9 @@ namespace EqAT.Helpers
             {
                 double value;
                 double.TryParse(m_athEq[i], out value);
-                arrData[i, 0] = value;
+                arrDouble[i, 0] = value;
             }
-            rAthG.Value2 = arrData;
+            rAthG.Value2 = arrDouble;
             rAthG.Style = "Input";
             mBwApp.ReportProgress(1);
 
@@ -437,31 +467,66 @@ namespace EqAT.Helpers
             rAth.Style = "Calculation";
             mBwApp.ReportProgress(1);
 
+
             // VTH (m/s)
             ws.Cells[2, 4] = "veloc (m/s)";
             Range rVth = ws.get_Range(string.Format("D{0}", startRow + 1), string.Format("D{0}", startRow + m_athEq.Count - 1));
-            for (int i = 0; i < m_athEq.Count; i++)
-            {
-                arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])+R[-1]C";
-            }
-            rVth.FormulaArray = arrString;
             rVth.Style = "Calculation";
-            mBwApp.ReportProgress(1);
 
             // DTH (m)
             ws.Cells[2, 5] = "disp (m)";
             Range rDth = ws.get_Range(string.Format("E{0}", startRow + 1), string.Format("E{0}", startRow + m_athEq.Count - 1));
-            for (int i = 0; i < m_athEq.Count; i++)
-            {
-                arrString[i, 0] = "=0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])+R[-1]C";
-            }
-            rDth.FormulaArray = arrString;
             rDth.Style = "Output";
-            mBwApp.ReportProgress(1);
 
+            if (this.Options.NewmarkImplicitIntegration)
+            {
 
-            arrData = new double[m_athSite.Count, 1];
-            arrString = new string[m_athSite.Count, 1];
+                // VTH (m/s)
+                for (int i = 0; i < m_athEq.Count; i++)
+                {
+                    arrString[i, 0] = "=R[-1]C+((1-β)*R[-1]C[-1]+β*RC[-1])*(RC[-3]-R[-1]C[-3])";
+                }
+                rVth.FormulaArray = arrString;
+                mBwApp.ReportProgress(1);
+
+                // DTH (m)
+                for (int i = 0; i < m_athEq.Count; i++)
+                {
+                    arrString[i, 0] = "=R[-1]C+RC[-1]*(RC[-4]-R[-1]C[-4])+((0.5-α)*R[-1]C[-3]+α*RC[-3])*(RC[-4]-R[-1]C[-4])^2";
+                }
+                rDth.FormulaArray = arrString;
+                mBwApp.ReportProgress(1);
+
+            }
+            else
+            {
+
+                // VTH (m/s)
+                for (int i = 0; i < m_athEq.Count; i++)
+                {
+                    arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])";
+                }
+                rVth.FormulaArray = arrString;
+
+                mBwApp.ReportProgress(1);
+
+                // DTH (m)
+                for (int i = 0; i < m_athEq.Count; i++)
+                {
+                    arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])";
+                }
+                rDth.FormulaArray = arrString;
+                mBwApp.ReportProgress(1);
+
+            }
+
+        }
+
+        private void FillATHData_Site(Worksheet ws)
+        {
+
+            double[,] arrData = new double[m_athSite.Count, 1];
+            string[,] arrString = new string[m_athSite.Count, 1];
 
             mBwApp.ReportProgress(2, "Filling Site ATH, VTH and DTH...");
 
@@ -497,23 +562,23 @@ namespace EqAT.Helpers
 
             // ATH^2 
             ws.Cells[2, 10] = "Accel (m/ss)";
-            Range rAthSurfaceSq = ws.get_Range(string.Format("T{0}", startRow), string.Format("T{0}", startRow + m_athEq.Count - 1));
+            Range rAthSiteSq = ws.get_Range(string.Format("T{0}", startRow), string.Format("T{0}", startRow + m_athSite.Count - 1));
             for (int i = 0; i < m_athSite.Count; i++)
             {
-                arrString[i, 0] = "=RC[-17]^2";
+                arrString[i, 0] = "=RC[-10]^2";
             }
-            rAthSurfaceSq.FormulaArray = arrString;
-            rAthSurfaceSq.Style = "Calculation";
+            rAthSiteSq.FormulaArray = arrString;
+            rAthSiteSq.Style = "Calculation";
             mBwApp.ReportProgress(1);
 
             try
             {
                 // Arias dI (m/s)
                 ws.Cells[2, 11] = "veloc (m/s)";
-                Range dAriasIntsty = ws.get_Range(string.Format("U{0}", startRow + 1), string.Format("U{0}", startRow + m_athEq.Count - 1));
-                for (int i = 0; i < m_athEq.Count; i++)
+                Range dAriasIntsty = ws.get_Range(string.Format("U{0}", startRow + 1), string.Format("U{0}", startRow + m_athSite.Count - 1));
+                for (int i = 0; i < m_athSite.Count; i++)
                 {
-                    arrString[i, 0] = "=((R[-1]C[-1]+RC[-1])/2)*(RC[-20]-R[-1]C[-20])";
+                    arrString[i, 0] = "=((R[-1]C[-1]+RC[-1])/2)*(RC[-13]-R[-1]C[-13])";
                 }
                 dAriasIntsty.FormulaArray = arrString;
                 dAriasIntsty.Style = "Calculation";
@@ -537,94 +602,44 @@ namespace EqAT.Helpers
 
             // VTH (m/s)
             ws.Cells[2, 11] = "veloc (m/s)";
-            Range rVthS = ws.get_Range(string.Format("K{0}", startRow + 1), string.Format("K{0}", startRow + m_athSite.Count - 1));
+            Range rVth = ws.get_Range(string.Format("K{0}", startRow + 1), string.Format("K{0}", startRow + m_athSite.Count - 1));
             // DTH (m)
             ws.Cells[2, 12] = "disp (m)";
-            Range rDthS = ws.get_Range(string.Format("L{0}", startRow + 1), string.Format("L{0}", startRow + m_athSite.Count - 1));
+            Range rDth = ws.get_Range(string.Format("L{0}", startRow + 1), string.Format("L{0}", startRow + m_athSite.Count - 1));
 
-            if (this.Options.NewmarkImplicitIntegration)
+            // VTH (m/s)
+            for (int i = 0; i < m_athSite.Count; i++)
             {
-
-                ws.Cells[1, 24] = "α";
-                ws.Cells[2, 24] = "β";
-
-                Range alpha = (Range)ws.Cells[1, 25];
-                alpha.Name = "α";
-                alpha.Value2 = this.Options.NewmarkAlpha;
-
-                Range beta = (Range)ws.Cells[2, 25];
-                beta.Name = "β";
-                beta.Value2 = this.Options.NewmarkBeta;
-
-                // VTH (m/s)
-                for (int i = 0; i < m_athSite.Count; i++)
-                {
-                    arrString[i, 0] = "=R[-1]C+((1-β)*R[-1]C[-1]+β*RC[-1])*(RC[-3]-R[-1]C[-3])";
-                }
-                rVthS.FormulaArray = arrString;
-                mBwApp.ReportProgress(1);
-
-                // DTH (m)
-                for (int i = 0; i < m_athSite.Count; i++)
-                {
-                    arrString[i, 0] = "=R[-1]C+RC[-1]*(RC[-4]-R[-1]C[-4])+((0.5-α)*R[-1]C[-3]+α*RC[-3])*(RC[-4]-R[-1]C[-4])^2";
-                }
-                rDthS.FormulaArray = arrString;
-                mBwApp.ReportProgress(1);
-
+                arrData[i, 0] = MySiteData.VTH_Newmark[i];
             }
-            else
+            rVth.Value2 = arrData;
+            mBwApp.ReportProgress(1);
+
+            // DTH (m)
+            for (int i = 0; i < m_athSite.Count; i++)
             {
-
-                // VTH (m/s)
-                for (int i = 0; i < m_athSite.Count; i++)
-                {
-                    arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-3]-R[-1]C[-3])";
-                }
-                rVthS.FormulaArray = arrString;
-
-                mBwApp.ReportProgress(1);
-
-                // DTH (m)
-                for (int i = 0; i < m_athSite.Count; i++)
-                {
-                    arrString[i, 0] = "=R[-1]C+0.5*(RC[-1]+R[-1]C[-1])*(RC[-4]-R[-1]C[-4])";
-                }
-                rDthS.FormulaArray = arrString;
-                mBwApp.ReportProgress(1);
-
+                arrData[i, 0] = MySiteData.DTH_Newmark[i];
             }
+            rDth.Value2 = arrData;
+            mBwApp.ReportProgress(1);
 
-            rVthS.Style = "Calculation";
-            rDthS.Style = "Output";
+            rVth.Style = "Calculation";
+            rDth.Style = "Output";
 
             // DTH (m) above yield acceleration
             ws.Cells[2, 12] = "Disp (m)";
             ws.Cells[1, 15] = "Yield Accel (g)";
-            ws.Cells[2, 15] = "Disp  (m)";
-            ws.Cells[3, 15] = "Disp (mm)";
-
+            ws.Cells[2, 15] = "Disp (mm)";
+ 
             Range ay = (Range)ws.Cells[1, 16];
             ay.Name = "ay";
             ay.Value2 = this.Options.YieldAccel;
             ay.Style = "Input";
-            Range rDthAy = ws.get_Range(string.Format("M{0}", startRow + 1), string.Format("M{0}", startRow + m_athSite.Count - 1));
-            for (int i = 0; i < m_athSite.Count; i++)
-            {
-                arrString[i, 0] = "=IF(RC[-4]>ay,RC[-1],0)";
-            }
-            rDthAy.FormulaArray = arrString;
-            rDthAy.Style = "Output";
 
-            // Total Positive Displacement above Yield Acceleration
-            ws.Cells[2, 13] = "disp (above a_y)";
-            Range disp = (Range)ws.Cells[2, 16];
-            disp.FormulaR1C1 = string.Format("=SUM(R[{0}]C[-3]:R[{1}]C[-3])", startRow - 1, m_athSite.Count + startRow - 1);
-            disp.Style = "Calculation";
-            // also show in mm
-            Range disp_mm = (Range)ws.Cells[3, 16];
+            // Fill Newmark displacement
+            Range disp_mm = (Range)ws.Cells[2, 16];
             disp_mm.Name = "disp_mm";
-            disp_mm.FormulaR1C1 = "=R[-1]C*1000";
+            disp_mm.Value2 = string.Format("=SUM(R[2]C[-4]:R[{0}]C[-4])", MySiteData.ATH.Count);
             disp_mm.Style = "Output";
 
             mBwApp.ReportProgress(1);
@@ -656,14 +671,14 @@ namespace EqAT.Helpers
             ((Range)ws.Cells[headingRow, 15]).Style = "Heading 1";
 
             Range ay = (Range)ws.Cells[1, 16];
-            Range disp_mm = (Range)ws.Cells[3, 16];
+            double disp_mm_double = MySiteData.NewmarkIntegration(dtSite, (double)ay.Value2);
 
             int r = headingRow + 2;
-            double disp_mm_double = Math.Abs((double)disp_mm.Value2);
+
             while (disp_mm_double > 0)
             {
                 ws.Cells[r, 15] = ay.Value2;
-                disp_mm_double = Math.Abs((double)disp_mm.Value2);
+                disp_mm_double = MySiteData.NewmarkIntegration(dtSite, (double)ay.Value2);
                 ws.Cells[r, 16] = disp_mm_double;
                 ay.Value2 = (double)ay.Value2 + 0.001;
 

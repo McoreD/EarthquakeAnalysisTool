@@ -570,7 +570,7 @@
             this.nudYieldAccel.Name = "nudYieldAccel";
             this.nudYieldAccel.Size = new System.Drawing.Size(120, 20);
             this.nudYieldAccel.TabIndex = 21;
-            this.nudYieldAccel.Value = global::EqAT.Properties.Settings.Default.YieldAccel;
+            this.nudYieldAccel.Value = (decimal)global::EqAT.Properties.Settings.Default.YieldAccel;
             // 
             // txtExcelFile
             // 

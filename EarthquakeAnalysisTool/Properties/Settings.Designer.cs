@@ -157,10 +157,10 @@ namespace EqAT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.0500")]
-        public decimal YieldAccel {
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0664")]
+        public double YieldAccel {
             get {
-                return ((decimal)(this["YieldAccel"]));
+                return ((double)(this["YieldAccel"]));
             }
             set {
                 this["YieldAccel"] = value;

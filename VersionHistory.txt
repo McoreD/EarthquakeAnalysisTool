@@ -1,3 +1,5 @@
+0.8.2.0 Arias Intensity is calculated from Point C Outcropping instrad of Point B
+0.8.1.0 Revised Newmark Integration alogorithm by Dr. James Doherty
 0.8.0.0 Sensitivity Analysis: Yield Acceleration vs. Displacement
 0.7.6.0 Statistics: Predominant Period
 0.7.5.0 Ability to customize the maximum number of ATH records from a raw file

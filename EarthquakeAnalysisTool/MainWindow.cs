@@ -141,7 +141,7 @@ namespace EqAT
             sao.InputFilePath = txtATHSurfaceFile.Text;
             sao.IgnoreZeroAcc = chkIgnoreZeroAccel.Checked;
 
-            SurfaceATHMaker acm = new SurfaceATHMaker(sao);
+            SiteTHReader acm = new SiteTHReader(sao);
             acm.MaxValues = 8 * (int)nudATHCount.Value;
             BaseATHMaker bm = new BaseATHMaker(txtATHBaseFile.Text);
 
