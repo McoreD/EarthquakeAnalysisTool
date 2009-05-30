@@ -90,7 +90,7 @@ namespace EqAT
         /// </summary>
         /// <param name="dt">Timestep in seconds</param>
         /// <param name="ay">Yield Acceleration in g</param>
-        public double NewmarkIntegration(double dt, double ay)
+        public double NewmarkIntegrate(double dt, double ay)
         {
 
             double dispNewmark = 0.0;
