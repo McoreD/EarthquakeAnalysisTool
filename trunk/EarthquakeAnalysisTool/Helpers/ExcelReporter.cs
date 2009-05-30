@@ -58,7 +58,7 @@ namespace EqAT.Helpers
         private double NewmarkDisplacement = 0.0;
 
         private double m_dtEq;
-        private double dtSite;
+        private double md_dtSite;
         private List<double> m_dtSite_list = new List<double>();
         private double[] dtEq_arr;
 
@@ -113,12 +113,12 @@ namespace EqAT.Helpers
                 m_athSite = MySiteData.ReadATH();
 
                 // calculate dt for site
-                dtSite = ((double)m_athEq.Count / (double)m_athSite.Count) * m_dtEq;
-                this.NewmarkDisplacement = MySiteData.NewmarkIntegration(dtSite, this.Options.YieldAccel);
+                md_dtSite = ((double)m_athEq.Count / (double)m_athSite.Count) * m_dtEq;
+                this.NewmarkDisplacement = MySiteData.NewmarkIntegrate(md_dtSite, this.Options.YieldAccel);
                 // fill scaled dt for site
                 for (int i = 0; i < m_athSite.Count; i++)
                 {
-                    m_dtSite_list.Add((double)(i * dtSite));
+                    m_dtSite_list.Add((double)(i * md_dtSite));
                 }
 
                 // create multiplier data file for Plaxis
@@ -639,7 +639,7 @@ namespace EqAT.Helpers
             // Fill Newmark displacement
             Range disp_mm = (Range)ws.Cells[2, 16];
             disp_mm.Name = "disp_mm";
-            disp_mm.Value2 = string.Format("=SUM(R[2]C[-4]:R[{0}]C[-4])", MySiteData.ATH.Count);
+            disp_mm.Value2 = this.NewmarkDisplacement;
             disp_mm.Style = "Output";
 
             mBwApp.ReportProgress(1);
@@ -671,17 +671,17 @@ namespace EqAT.Helpers
             ((Range)ws.Cells[headingRow, 15]).Style = "Heading 1";
 
             Range ay = (Range)ws.Cells[1, 16];
-            double disp_mm_double = MySiteData.NewmarkIntegration(dtSite, (double)ay.Value2);
+            double disp_mm_double = (double)((Range)ws.Cells[2, 16]).Value2; ;
 
             int r = headingRow + 2;
 
             while (disp_mm_double > 0)
             {
                 ws.Cells[r, 15] = ay.Value2;
-                disp_mm_double = MySiteData.NewmarkIntegration(dtSite, (double)ay.Value2);
                 ws.Cells[r, 16] = disp_mm_double;
                 ay.Value2 = (double)ay.Value2 + 0.001;
-
+                disp_mm_double = MySiteData.NewmarkIntegrate(md_dtSite, (double)ay.Value2);
+            
                 r++;
             }
 
